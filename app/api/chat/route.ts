@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'stepfun/step-3.5-flash:free',
+      model: 'cohere/north-mini-code:free',
       messages: openaiMessages,
       stream: true,
     }),
@@ -90,6 +90,7 @@ export async function POST(req: NextRequest) {
       const reader = res.body!.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
+      let errored = false;
 
       try {
         while (true) {
@@ -106,6 +107,15 @@ export async function POST(req: NextRequest) {
             if (data === '[DONE]') return;
             try {
               const json = JSON.parse(data);
+              if (json.error) {
+                // Provider can fail mid-stream after already sending a 200 —
+                // surface it as a stream error so the client's catch block
+                // shows a real message instead of silently going nowhere.
+                console.error('[/api/chat] mid-stream error:', json.error);
+                errored = true;
+                controller.error(new Error('Something went wrong. Please try again.'));
+                return;
+              }
               const delta = json.choices?.[0]?.delta?.content;
               if (delta) controller.enqueue(new TextEncoder().encode(delta));
             } catch {
@@ -114,7 +124,7 @@ export async function POST(req: NextRequest) {
           }
         }
       } finally {
-        controller.close();
+        if (!errored) controller.close();
       }
     },
   });
