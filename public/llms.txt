@@ -1,0 +1,12 @@
+# NoowaH Blog
+
+> Welcome to NoowaH's blog.
+
+Personal site and blog covering frontend engineering, tools, and industry work. Available in English and Korean.
+
+## Pages
+
+- [Home (EN)](https://noowah.dev/en): Landing page and introduction
+- [Home (KO)](https://noowah.dev/ko): 랜딩 페이지 및 소개
+- [About (EN)](https://noowah.dev/en/about): Background, skills, and work timeline
+- [About (KO)](https://noowah.dev/ko/about): 배경, 기술, 경력 타임라인
