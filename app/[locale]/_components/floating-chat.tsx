@@ -25,75 +25,64 @@ export function FloatingChat({ locale }: { locale: string }) {
   const isHome =
     pathname === '/' || pathname === `/${locale}` || pathname === `/${locale}/`;
 
-  const isHomeRef = useRef(isHome);
-  isHomeRef.current = isHome;
+  // Spline measures its container once on load and doesn't notice the box
+  // resizing afterward, so cursor-tracking drifts out of sync with the box's
+  // real size (most visible on the small bubble). Force a fresh mount after
+  // each resize settles so Spline re-measures against the correct size.
+  const [reloadKey, setReloadKey] = useState(0);
 
-  // Defer Spline rendering until the layout animation finishes
-  const [layoutReady, setLayoutReady] = useState(true);
-  const prevIsHome = useRef(isHome);
-  useEffect(() => {
-    if (prevIsHome.current !== isHome) {
-      setLayoutReady(false);
-      prevIsHome.current = isHome;
-    }
-  }, [isHome]);
+  // Hidden while the box is resizing (glitchy mid-spring) and while the
+  // reloaded scene boots back up — revealed once the fresh instance loads.
+  const [isSplineHidden, setIsSplineHidden] = useState(false);
 
-  // Track latest mouse position so we can re-dispatch after the container moves
-  const mousePosRef = useRef({ x: 0, y: 0 });
-  useEffect(() => {
-    const track = (e: MouseEvent) => {
-      mousePosRef.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener('mousemove', track);
-    return () => window.removeEventListener('mousemove', track);
-  }, []);
-
-  const onLoad = (spline: Application) => {
-    splineRef.current = spline;
-  };
+  // Last isHome value we've fully reloaded for. `onAnimationStart`/
+  // `onAnimationComplete` also fire for the unrelated whileHover/whileTap
+  // scale animations (and once per animated property, e.g. backgroundColor
+  // resolves instantly while width/height are still springing) — comparing
+  // against isHome lets us ignore those and react only to a real home↔bubble
+  // transition, exactly once.
+  const reloadedForRef = useRef(isHome);
 
   // Close chat immediately when leaving home (don't wait for transition)
   useEffect(() => {
     if (!isHome) setIsOpen(false);
   }, [isHome]);
 
-  const onAnimationComplete = () => {
-    setLayoutReady(true);
-
-    // Re-dispatch mousemove so Spline recalculates cursor offset against new canvas position
-    window.dispatchEvent(
-      new MouseEvent('mousemove', {
-        clientX: mousePosRef.current.x,
-        clientY: mousePosRef.current.y,
-      })
-    );
-
-    if (!splineRef.current || !splitBotId) return;
-    if (isHome) {
-      if (isHomeRef.current) {
-        const bot = splineRef.current.findObjectByName(splitBotId);
-        bot?.emitEvent('mouseDown');
-      } else {
-        splineRef.current.emitEventReverse('mouseDown', splitBotId);
-      }
+  const onLoad = (spline: Application) => {
+    splineRef.current = spline;
+    setIsSplineHidden(false);
+    if (!splitBotId) return;
+    if (isHome && isOpen) {
+      spline.emitEvent('mouseDown', splitBotId);
     }
+  };
+
+  const onAnimationStart = () => {
+    if (reloadedForRef.current === isHome) return; // hover/tap, not a real transition
+    setIsSplineHidden(true);
+  };
+
+  const onAnimationComplete = () => {
+    if (reloadedForRef.current === isHome) return;
+    reloadedForRef.current = isHome;
+    setReloadKey(key => key + 1);
   };
 
   // Sync Spline bot animation with chat open state (home only)
   useEffect(() => {
     if (!splineRef.current || !splitBotId || !isHome) return;
-    if (isHome) {
-      if (isOpen) {
-        splineRef.current.emitEvent('mouseDown', splitBotId);
-      } else {
-        splineRef.current.emitEventReverse('mouseDown', splitBotId);
-      }
+    if (isOpen) {
+      splineRef.current.emitEvent('mouseDown', splitBotId);
+    } else {
+      splineRef.current.emitEventReverse('mouseDown', splitBotId);
     }
   }, [isOpen, isHome]);
 
   return (
     <>
-      {/* Spline scene — morphs between full-screen (home) and bubble (other pages) */}
+      {/* Spline scene — morphs between full-screen (home) and bubble (other pages).
+          Reloaded (via `key`) once the resize settles so it re-measures its
+          container at the correct size; hidden until that reload completes. */}
       <motion.div
         initial={false}
         animate={isHome ? 'home' : 'bubble'}
@@ -128,31 +117,33 @@ export function FloatingChat({ locale }: { locale: string }) {
         }}
         className="shadow-xl"
         transition={{ type: 'spring', stiffness: 150, damping: 25 }}
+        onAnimationStart={onAnimationStart}
         onAnimationComplete={onAnimationComplete}
         onClick={!isHome ? () => setIsOpen(!isOpen) : undefined}
         whileHover={!isHome ? { scale: 1.1 } : undefined}
         whileTap={!isHome ? { scale: 0.95 } : undefined}
       >
-        {layoutReady &&
-          (isHome ? (
-            <Spline scene={scene} onLoad={onLoad} />
-          ) : (
-            // Render at 400×400, scale down to fit 64px bubble
-            <div
-              style={{
-                position: 'absolute',
-                width: 400,
-                height: 400,
-                top: '50%',
-                left: '50%',
-                transformOrigin: 'center center',
-                transform: 'translate(-50%, -50%) scale(0.14)',
-                pointerEvents: 'none',
-              }}
-            >
-              <Spline scene={scene} onLoad={onLoad} />
-            </div>
-          ))}
+        <div
+          style={{
+            ...(isHome
+              ? { width: '100%', height: '100%' }
+              : {
+                  // Render at 400×400, scale down to fit the 64px bubble
+                  position: 'absolute',
+                  width: 400,
+                  height: 400,
+                  top: '50%',
+                  left: '50%',
+                  transformOrigin: 'center center',
+                  transform: 'translate(-50%, -50%) scale(0.14)',
+                  pointerEvents: 'none',
+                }),
+            opacity: isSplineHidden ? 0 : 1,
+            transition: 'opacity 0.15s ease',
+          }}
+        >
+          <Spline key={reloadKey} scene={scene} onLoad={onLoad} />
+        </div>
       </motion.div>
 
       {/* Chat box */}
