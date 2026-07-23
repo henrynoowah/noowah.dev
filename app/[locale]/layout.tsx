@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: {
-    canonical: 'https://noowah.vercel.app',
+    canonical: 'https://noowah.dev',
   },
   openGraph: {
     title,
