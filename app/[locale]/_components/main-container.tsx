@@ -40,6 +40,13 @@ const MainContainer = () => {
         />
       </div>
 
+      <h1 className="fixed top-4 start-4 z-30 font-display text-sm leading-tight">
+        {content.hero.name}
+        <span className="block text-xs font-normal opacity-60">
+          {content.hero.role}
+        </span>
+      </h1>
+
       <div
         className={`fixed flex gap-2 justify-end z-30 pointer-events-auto top-4 end-4`}
       >

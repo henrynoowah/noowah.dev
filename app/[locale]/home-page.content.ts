@@ -9,6 +9,13 @@ const homePageContent: Dictionary = {
         ko: '홈',
       }),
     },
+    hero: {
+      name: 'NOOWAH',
+      role: t({
+        en: 'Frontend Developer',
+        ko: '프론트엔드 개발자',
+      }),
+    },
     posts: {
       title: t({
         en: 'Posts',
