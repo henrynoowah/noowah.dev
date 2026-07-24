@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SYSTEM_PROMPT = `You are an AI assistant on Hawoon Joh's personal blog. Henry goes by the handle "NOOWAH" online.
+const SYSTEM_PROMPT = `You are an AI assistant on Hawoon Joh's personal blog. Henry goes by the handle "NOOWAH" online (pronounced "누와", not "노와").
 
 ## Identity
 - Name: Hawoon Joh (조하운)

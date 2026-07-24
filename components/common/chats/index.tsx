@@ -177,7 +177,7 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
           onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
           placeholder="Ask me anything..."
           disabled={isLoading}
-          className="flex-1 bg-primary/20 rounded-full px-4 py-2 text-sm outline-none placeholder:text-foreground/40 disabled:opacity-50"
+          className="flex-1 bg-primary/20 rounded-full px-4 py-2 text-base outline-none placeholder:text-foreground/40 disabled:opacity-50"
         />
         <button
           onClick={sendMessage}
