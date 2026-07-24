@@ -296,3 +296,17 @@
     animation: none;
     mix-blend-mode: normal;
 }
+
+/* Radix positions its popper wrapper via a `transform`, which makes it the
+   containing block for any `position: fixed` descendant — so the chat
+   popover's own fixed/inset-0 override resolves against that tiny wrapper,
+   not the viewport. Reset the wrapper itself, scoped to just this popover
+   (the wrapper is shared by every Radix popper: tooltips, dropdowns, etc). */
+@media (max-width: 639px) {
+  [data-radix-popper-content-wrapper]:has(> .chat-popover-content) {
+    position: fixed !important;
+    inset: 0 !important;
+    transform: none !important;
+    min-width: 0 !important;
+  }
+}

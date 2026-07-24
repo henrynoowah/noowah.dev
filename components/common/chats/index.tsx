@@ -182,7 +182,7 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
         <button
           onClick={sendMessage}
           disabled={isLoading || !input.trim()}
-          className="p-2 rounded-full bg-primary text-primary-foreground disabled:opacity-40 transition-opacity hover:opacity-80"
+          className="size-9 shrink-0 flex items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40 transition-opacity hover:opacity-80"
         >
           <IconSend className="size-4" />
         </button>
@@ -201,6 +201,8 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxParams) => {
     <motion.div
       className={cn(
         'w-[calc(100vw-3rem)] sm:w-[400px] max-w-full h-[60vh] sm:h-[480px] max-h-full bg-primary/20 end-0 rounded-[24px] shadow-xl backdrop-filter backdrop-blur-lg overflow-hidden',
+        // Full screen on mobile so the on-screen keyboard doesn't crush the chat into a sliver
+        'max-sm:!fixed max-sm:!inset-0 max-sm:!w-full max-sm:!h-dvh max-sm:!max-h-dvh max-sm:!rounded-none',
         isOpen ? 'pointer-events-auto' : 'pointer-events-none'
       )}
       initial={{ opacity: 0 }}

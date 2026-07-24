@@ -149,7 +149,7 @@ export function FloatingChat({ locale }: { locale: string }) {
       {/* Chat box */}
       {isHome ? (
         // Home: original centered overlay (no popover)
-        <div className="fixed inset-0 flex justify-center items-center pointer-events-none z-40 px-6 lg:translate-x-1/6">
+        <div className="fixed inset-0 flex justify-center items-center pointer-events-none z-[60] px-6 lg:translate-x-1/6">
           <ChatBox isOpen={isOpen} onClose={() => setIsOpen(false)} />
         </div>
       ) : (
@@ -160,7 +160,7 @@ export function FloatingChat({ locale }: { locale: string }) {
             side="top"
             align="end"
             sideOffset={16}
-            className="w-[calc(100vw-3rem)] sm:w-[400px] h-[60vh] sm:h-[480px] max-h-[70vh] p-0 bg-primary/20 backdrop-blur-lg rounded-[24px] shadow-xl overflow-hidden"
+            className="chat-popover-content w-[calc(100vw-3rem)] sm:w-[400px] h-[60vh] sm:h-[480px] max-h-[70vh] p-0 bg-primary/20 backdrop-blur-lg rounded-[24px] shadow-xl overflow-hidden max-sm:!w-full max-sm:!h-full max-sm:!max-h-full max-sm:!rounded-none"
             onOpenAutoFocus={e => e.preventDefault()}
           >
             <ChatBoxContent onClose={() => setIsOpen(false)} />
