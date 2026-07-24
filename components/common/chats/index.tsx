@@ -54,6 +54,27 @@ const MarkdownContent = ({ content }: { content: string }) => (
           {children}
         </a>
       ),
+      table: ({ children }) => (
+        <div className="overflow-x-auto mb-1 rounded border border-foreground/15">
+          <table className="w-full text-xs border-collapse">{children}</table>
+        </div>
+      ),
+      thead: ({ children }) => (
+        <thead className="bg-black/20">{children}</thead>
+      ),
+      tr: ({ children }) => (
+        <tr className="border-b border-foreground/10 last:border-0">
+          {children}
+        </tr>
+      ),
+      th: ({ children }) => (
+        <th className="px-2 py-1 text-left font-semibold whitespace-nowrap">
+          {children}
+        </th>
+      ),
+      td: ({ children }) => (
+        <td className="px-2 py-1 align-top">{children}</td>
+      ),
     }}
   >
     {content}
