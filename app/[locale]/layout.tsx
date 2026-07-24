@@ -89,7 +89,7 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body suppressHydrationWarning={true}>
-        <ThemeProvider>
+        <ThemeProvider attribute="class">
           <ChatProvider>
             <FloatingChat locale={locale} />
             {children}

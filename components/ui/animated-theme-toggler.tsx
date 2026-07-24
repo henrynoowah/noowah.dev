@@ -17,39 +17,22 @@ export const AnimatedThemeToggler = ({
   duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const [isDark, setIsDark] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const { setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const updateTheme = () => {
-      setTheme(
-        document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-      );
-      setIsDark(document.documentElement.classList.contains('dark'));
-    };
+  // resolvedTheme is only known client-side, after next-themes hydrates
+  useEffect(() => setMounted(true), []);
 
-    updateTheme();
-
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const isDark = mounted && resolvedTheme === 'dark';
 
   const toggleTheme = useCallback(async () => {
     if (!buttonRef.current) return;
+    const nextTheme = isDark ? 'light' : 'dark';
 
     await document.startViewTransition(() => {
       flushSync(() => {
-        const newTheme = !isDark;
-        setIsDark(newTheme);
-        setTheme(newTheme ? 'dark' : 'light');
-        document.documentElement.classList.toggle('dark');
-        localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+        setTheme(nextTheme);
       });
     }).ready;
 
@@ -75,7 +58,7 @@ export const AnimatedThemeToggler = ({
         pseudoElement: '::view-transition-new(root)',
       }
     );
-  }, [isDark, duration]);
+  }, [isDark, duration, setTheme]);
 
   return (
     <button
@@ -84,20 +67,16 @@ export const AnimatedThemeToggler = ({
       className={cn(className)}
       {...props}
     >
-      {isDark !== null && [
-        <IconMoon
-          key="dark-mode-moon"
-          className={`absolute ${
-            isDark ? 'rotate-0 opacity-100' : 'rotate-180 opacity-0'
-          }  transform transition duration-500 ease-in-out`}
-        />,
-        <IconSun
-          key="light-mode-sun"
-          className={`${
-            isDark ? 'rotate-180 opacity-0' : 'rotate-0 opacity-100'
-          }  transform transition duration-500 ease-in-out`}
-        />,
-      ]}
+      <IconMoon
+        className={`absolute ${
+          isDark ? 'rotate-0 opacity-100' : 'rotate-180 opacity-0'
+        }  transform transition duration-500 ease-in-out`}
+      />
+      <IconSun
+        className={`${
+          isDark ? 'rotate-180 opacity-0' : 'rotate-0 opacity-100'
+        }  transform transition duration-500 ease-in-out`}
+      />
     </button>
   );
 };
