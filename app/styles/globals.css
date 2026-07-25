@@ -68,7 +68,8 @@
   --card-foreground: oklch(0.9851 0 0);
   --popover: oklch(0.2686 0 0);
   --popover-foreground: oklch(0.9851 0 0);
-  --primary: oklch(0.4355 0.0499 208.8718);
+  /* Slightly lighter than the light-mode primary so it reads better on dark */
+  --primary: oklch(0.4955 0.0499 208.8718);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.2686 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
@@ -323,6 +324,16 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Smoothly fade theme colors when toggling light/dark. Utilities that set an
+     explicit transition (e.g. `transition-all`) still win over this fallback. */
+  *,
+  *::before,
+  *::after {
+    transition-property: color, background-color, border-color, fill, stroke;
+    transition-duration: 200ms;
+    transition-timing-function: ease;
   }
 }
 

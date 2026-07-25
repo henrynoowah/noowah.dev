@@ -1,23 +1,17 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
+import { useCallback, useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 
-interface AnimatedThemeTogglerProps
-  extends React.ComponentPropsWithoutRef<'button'> {
-  duration?: number;
-}
+type AnimatedThemeTogglerProps = React.ComponentPropsWithoutRef<'button'>;
 
 export const AnimatedThemeToggler = ({
   className,
-  duration = 400,
   ...props
 }: AnimatedThemeTogglerProps) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -26,44 +20,17 @@ export const AnimatedThemeToggler = ({
 
   const isDark = mounted && resolvedTheme === 'dark';
 
-  const toggleTheme = useCallback(async () => {
-    if (!buttonRef.current) return;
-    const nextTheme = isDark ? 'light' : 'dark';
-
-    await document.startViewTransition(() => {
-      flushSync(() => {
-        setTheme(nextTheme);
-      });
-    }).ready;
-
-    const { top, left, width, height } =
-      buttonRef.current.getBoundingClientRect();
-    const x = left + width / 2;
-    const y = top + height / 2;
-    const maxRadius = Math.hypot(
-      Math.max(left, window.innerWidth - left),
-      Math.max(top, window.innerHeight - top)
-    );
-
-    document.documentElement.animate(
-      {
-        clipPath: [
-          `circle(0px at ${x}px ${y}px)`,
-          `circle(${maxRadius}px at ${x}px ${y}px)`,
-        ],
-      },
-      {
-        duration,
-        easing: 'ease-in-out',
-        pseudoElement: '::view-transition-new(root)',
-      }
-    );
-  }, [isDark, duration, setTheme]);
+  // Plain toggle — theme colors transition smoothly via CSS (see globals.css).
+  // The previous view-transition ripple broke after client-side navigation, so
+  // it was removed in favor of a simple, reliable color change.
+  const toggleTheme = useCallback(() => {
+    setTheme(isDark ? 'light' : 'dark');
+  }, [isDark, setTheme]);
 
   return (
     <button
-      ref={buttonRef}
       onClick={toggleTheme}
+      aria-label="Toggle dark mode"
       className={cn(className)}
       {...props}
     >

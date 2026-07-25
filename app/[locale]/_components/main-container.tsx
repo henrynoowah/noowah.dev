@@ -81,30 +81,34 @@ const MainContainer = () => {
       <div className="absolute bottom-4 right-4 md:right-1/2 transform md:translate-x-1/2 z-50">
         <Dock className="bg-primary text-primary-foreground">
           <Tooltip>
-            <TooltipTrigger>
-              <DockIcon title="About">
-                <Link
-                  href={getLocalizedUrl(`/about`, locale)}
-                  hrefLang={locale}
-                >
-                  <IconUserBitcoin className="size-full" />{' '}
-                </Link>
-              </DockIcon>
+            <TooltipTrigger asChild>
+              <Link
+                href={getLocalizedUrl(`/about`, locale)}
+                hrefLang={locale}
+                aria-label={content.about.title.value}
+                className="inline-flex"
+              >
+                <DockIcon>
+                  <IconUserBitcoin className="size-full" />
+                </DockIcon>
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
               <p>{content.about.title}</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger>
-              <DockIcon title="Projects">
-                <Link
-                  href={getLocalizedUrl(`/about#projects`, locale)}
-                  hrefLang={locale}
-                >
-                  <IconLayoutCollage className="size-full" />{' '}
-                </Link>
-              </DockIcon>
+            <TooltipTrigger asChild>
+              <Link
+                href={getLocalizedUrl(`/about#projects`, locale)}
+                hrefLang={locale}
+                aria-label={content.projects.title.value}
+                className="inline-flex"
+              >
+                <DockIcon>
+                  <IconLayoutCollage className="size-full" />
+                </DockIcon>
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
               <p>{content.projects.title}</p>
@@ -112,27 +116,36 @@ const MainContainer = () => {
           </Tooltip>
           <Separator orientation="vertical" className="bg-ring" />
           <Tooltip>
-            <TooltipTrigger>
-              <DockIcon title="Posts">
-                <Link
-                  href={`https://velog.io/@henrynoowah/posts`}
-                  target="_blank"
-                >
+            <TooltipTrigger asChild>
+              <Link
+                href={`https://velog.io/@henrynoowah/posts`}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={content.posts.title.value}
+                className="inline-flex"
+              >
+                <DockIcon>
                   <IconBlockquote className="size-full" />
-                </Link>
-              </DockIcon>
+                </DockIcon>
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
               <p>{content.posts.title}</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
-            <TooltipTrigger>
-              <DockIcon title="Github">
-                <Link href="https://www.github.com/henrynoowah" target="_blank">
-                  <IconBrandGithub className="size-full" />{' '}
-                </Link>
-              </DockIcon>
+            <TooltipTrigger asChild>
+              <Link
+                href="https://www.github.com/henrynoowah"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={content.github.title.value}
+                className="inline-flex"
+              >
+                <DockIcon>
+                  <IconBrandGithub className="size-full" />
+                </DockIcon>
+              </Link>
             </TooltipTrigger>
             <TooltipContent>
               <p>{content.github.title}</p>
@@ -140,17 +153,21 @@ const MainContainer = () => {
           </Tooltip>
           <Separator orientation="vertical" className="bg-ring" />
           <Tooltip>
-            <TooltipTrigger>
-              <DockIcon
-                title="Chat"
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                aria-label={content.chat.title.value}
+                className="inline-flex"
                 onClick={e => {
                   e.stopPropagation();
                   e.preventDefault();
                   setIsOpen(!isOpen);
                 }}
               >
-                <IconMessageCircle className="size-full" />{' '}
-              </DockIcon>
+                <DockIcon>
+                  <IconMessageCircle className="size-full" />
+                </DockIcon>
+              </button>
             </TooltipTrigger>
             <TooltipContent>
               <p>{content.chat.title}</p>

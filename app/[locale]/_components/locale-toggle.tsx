@@ -20,7 +20,7 @@ const LocaleToggle = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger aria-label="Change language">
         <Globe className="size-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent
