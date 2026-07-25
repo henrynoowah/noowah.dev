@@ -240,6 +240,83 @@
   animation: none !important;
 }
 
+/* Shared-element morph between the home "NOOWAH" wordmark and the header "NWH"
+   logo on route navigation (see main-container.tsx / Header.tsx). The shared
+   letters N/W/H glide into place while the O/O/A letters — which only exist on
+   the home wordmark — pop and vanish, emphasizing NOOWAH collapsing into NWH. */
+::view-transition-group(wordmark-n),
+::view-transition-group(wordmark-w),
+::view-transition-group(wordmark-h),
+::view-transition-group(theme-toggle),
+::view-transition-group(locale-toggle) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The two O's — no counterpart in "NWH", so only old (leaving home) or new
+   (returning home) is generated. Emphasize them with a pop-and-vanish / pop-in. */
+::view-transition-old(wordmark-o1),
+::view-transition-old(wordmark-o2) {
+  animation: oo-vanish 0.5s cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+::view-transition-new(wordmark-o1),
+::view-transition-new(wordmark-o2) {
+  animation: oo-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+/* Slight stagger so the two O's read as two distinct beats. */
+::view-transition-old(wordmark-o2),
+::view-transition-new(wordmark-o2) {
+  animation-delay: 0.07s;
+}
+
+/* The "A" also disappears, but plainly — keep the focus on the O's. */
+::view-transition-old(wordmark-a) {
+  animation: letter-fade-out 0.35s ease both;
+}
+::view-transition-new(wordmark-a) {
+  animation: letter-fade-in 0.35s ease both;
+}
+
+@keyframes oo-vanish {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.4) translateY(-12%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateY(-35%);
+  }
+}
+
+@keyframes oo-appear {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(-35%);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes letter-fade-out {
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+@keyframes letter-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

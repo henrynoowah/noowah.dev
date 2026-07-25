@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, ViewTransition } from 'react';
 import ShowSearchButton from './ShowSearchButton';
 import { LocaleToggle } from '@/app/[locale]/_components/locale-toggle';
 import { getLocalizedUrl, Locales, LocalesValues } from 'intlayer';
@@ -10,6 +10,20 @@ import { IconArrowUpRight } from '@tabler/icons-react';
 import { useIntlayer } from 'next-intlayer';
 
 const HEADER_HEIGHT = 56;
+
+// "NWH" logo letters, in NOOWAH order. Names match the home wordmark
+// (main-container.tsx) so every letter is a *shared* View Transition — the
+// reliable path (React doesn't auto-animate unpaired exits on a route swap).
+// The O/O/A partners are rendered zero-width & invisible, so the home O/O/A
+// morph into nothing (pop-and-vanish) while N/W/H glide into the visible logo.
+const LOGO_WORDMARK = [
+  { char: 'N', name: 'wordmark-n' },
+  { char: 'O', name: 'wordmark-o1', hidden: true },
+  { char: 'O', name: 'wordmark-o2', hidden: true },
+  { char: 'W', name: 'wordmark-w' },
+  { char: 'A', name: 'wordmark-a', hidden: true },
+  { char: 'H', name: 'wordmark-h' },
+];
 
 interface Params {
   navOption: Array<{
@@ -52,7 +66,20 @@ const Header = ({ navOption, locale }: Params) => {
             className="group relative z-50"
           >
             <span className="font-serif text-lg font-bold uppercase tracking-wider text-foreground group-hover:text-primary transition-colors duration-200">
-              NWH
+              {LOGO_WORDMARK.map(({ char, name, hidden }, i) => (
+                <ViewTransition key={i} name={name}>
+                  <span
+                    aria-hidden={hidden || undefined}
+                    className={
+                      hidden
+                        ? 'inline-block w-0 opacity-0 overflow-hidden'
+                        : 'inline-block'
+                    }
+                  >
+                    {char}
+                  </span>
+                </ViewTransition>
+              ))}
             </span>
           </Link>
 
@@ -62,12 +89,16 @@ const Header = ({ navOption, locale }: Params) => {
             </Suspense>
 
             <div className="flex items-center">
-              <div className="size-8 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors duration-200">
-                <LocaleToggle />
-              </div>
-              <div className="size-8 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors duration-200">
-                <AnimatedThemeToggler />
-              </div>
+              <ViewTransition name="theme-toggle">
+                <div className="size-8 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors duration-200">
+                  <AnimatedThemeToggler />
+                </div>
+              </ViewTransition>
+              <ViewTransition name="locale-toggle">
+                <div className="size-8 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors duration-200">
+                  <LocaleToggle />
+                </div>
+              </ViewTransition>
             </div>
 
             <button

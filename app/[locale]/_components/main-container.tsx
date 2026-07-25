@@ -18,9 +18,24 @@ import {
 import { useIntlayer, useLocale } from 'next-intlayer';
 import { getLocalizedUrl } from 'intlayer';
 import Link from 'next/link';
+import { ViewTransition } from 'react';
 import { LocaleToggle } from './locale-toggle';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import { useChatContext } from './chat-context';
+
+// The home wordmark, split per letter for the shared-element View Transition to
+// the header "NWH" logo. N/W/H share a name with the header letters so they morph
+// across routes; O/O/A only exist here, so they play a distinct exit animation
+// (the two O's "pop and vanish" — see ::view-transition-old(wordmark-o*) in
+// globals.css) as NOOWAH collapses into NWH.
+const HOME_WORDMARK = [
+  { char: 'N', name: 'wordmark-n' },
+  { char: 'O', name: 'wordmark-o1' },
+  { char: 'O', name: 'wordmark-o2' },
+  { char: 'W', name: 'wordmark-w' },
+  { char: 'A', name: 'wordmark-a' },
+  { char: 'H', name: 'wordmark-h' },
+];
 
 const MainContainer = () => {
   const { ...content } = useIntlayer('home-page');
@@ -41,21 +56,26 @@ const MainContainer = () => {
       </div>
 
       <h1 className="fixed top-4 start-4 z-30 font-display text-sm leading-tight">
-        {content.hero.name}
-        <span className="block text-xs font-normal opacity-60">
-          {content.hero.role}
-        </span>
+        {HOME_WORDMARK.map(({ char, name }, i) => (
+          <ViewTransition key={i} name={name}>
+            <span className="inline-block">{char}</span>
+          </ViewTransition>
+        ))}
       </h1>
 
       <div
         className={`fixed flex gap-2 justify-end z-30 pointer-events-auto top-4 end-4`}
       >
-        <div className="rounded-full bg-primary text-primary-foreground flex items-center justify-center p-2">
-          <AnimatedThemeToggler />
-        </div>
-        <div className="rounded-full bg-primary text-primary-foreground flex items-center justify-center p-2">
-          <LocaleToggle />
-        </div>
+        <ViewTransition name="theme-toggle">
+          <div className="rounded-full bg-primary text-primary-foreground flex items-center justify-center p-2">
+            <AnimatedThemeToggler />
+          </div>
+        </ViewTransition>
+        <ViewTransition name="locale-toggle">
+          <div className="rounded-full bg-primary text-primary-foreground flex items-center justify-center p-2">
+            <LocaleToggle />
+          </div>
+        </ViewTransition>
       </div>
 
       <div className="absolute bottom-4 right-4 md:right-1/2 transform md:translate-x-1/2 z-50">
