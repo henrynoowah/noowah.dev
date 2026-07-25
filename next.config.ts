@@ -4,6 +4,12 @@ import { withIntlayer } from 'next-intlayer/server';
 const nextConfig: NextConfig = {
   experimental: {
     viewTransition: true,
+    optimizePackageImports: [
+      'motion',
+      'lucide-react',
+      '@tabler/icons-react',
+      'lodash',
+    ],
   },
 };
 
