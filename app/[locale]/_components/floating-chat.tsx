@@ -1,6 +1,5 @@
 'use client';
 
-import { motion } from 'motion/react';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -41,24 +40,6 @@ export function FloatingChat({ locale }: { locale: string }) {
   const isHome =
     pathname === '/' || pathname === `/${locale}` || pathname === `/${locale}/`;
 
-  // Spline measures its container once on load and doesn't notice the box
-  // resizing afterward, so cursor-tracking drifts out of sync with the box's
-  // real size (most visible on the small bubble). Force a fresh mount after
-  // each resize settles so Spline re-measures against the correct size.
-  const [reloadKey, setReloadKey] = useState(0);
-
-  // Hidden while the box is resizing (glitchy mid-spring) and while the
-  // reloaded scene boots back up — revealed once the fresh instance loads.
-  const [isSplineHidden, setIsSplineHidden] = useState(false);
-
-  // Last isHome value we've fully reloaded for. `onAnimationStart`/
-  // `onAnimationComplete` also fire for the unrelated whileHover/whileTap
-  // scale animations (and once per animated property, e.g. backgroundColor
-  // resolves instantly while width/height are still springing) — comparing
-  // against isHome lets us ignore those and react only to a real home↔bubble
-  // transition, exactly once.
-  const reloadedForRef = useRef(isHome);
-
   // Defer mounting the Spline scene + chat UI until the page is interactive so
   // the ~2MB THREE.js/WebGL runtime doesn't parse/execute during the load
   // window (it was the dominant Total Blocking Time contributor). Visuals end
@@ -89,27 +70,15 @@ export function FloatingChat({ locale }: { locale: string }) {
 
   const onLoad = (spline: Application) => {
     splineRef.current = spline;
-    setIsSplineHidden(false);
     if (!splitBotId) return;
-    if (isHome && isOpen) {
-      spline.emitEvent('mouseDown', splitBotId);
-    }
+    if (isHome && isOpen) spline.emitEvent('mouseDown', splitBotId);
   };
 
-  const onAnimationStart = () => {
-    if (reloadedForRef.current === isHome) return; // hover/tap, not a real transition
-    setIsSplineHidden(true);
-  };
-
-  const onAnimationComplete = () => {
-    if (reloadedForRef.current === isHome) return;
-    reloadedForRef.current = isHome;
-    setReloadKey(key => key + 1);
-  };
-
-  // Sync Spline bot animation with chat open state (home only)
+  // Sync Spline bot animation with chat open state (home only — the bubble's
+  // instance isn't wired to react to chat open/close, matching the original
+  // pre-refactor behavior).
   useEffect(() => {
-    if (!splineRef.current || !splitBotId || !isHome) return;
+    if (!isHome || !splineRef.current || !splitBotId) return;
     if (isOpen) {
       splineRef.current.emitEvent('mouseDown', splitBotId);
     } else {
@@ -119,73 +88,47 @@ export function FloatingChat({ locale }: { locale: string }) {
 
   return (
     <>
-      {/* Spline scene — morphs between full-screen (home) and bubble (other pages).
-          Reloaded (via `key`) once the resize settles so it re-measures its
-          container at the correct size; hidden until that reload completes. */}
-      <motion.div
-        initial={false}
-        animate={isHome ? 'home' : 'bubble'}
-        variants={{
-          // Anchor from bottom-right so no top/left conflicts during animation
-          home: {
-            right: 0,
-            bottom: 0,
-            width: '100%',
-            height: '100%',
-            borderRadius: 0,
-            zIndex: 30,
-            backgroundColor: 'transparent',
-          },
-          bubble: {
-            right: 24,
-            bottom: 24,
-            width: 64,
-            height: 64,
-            borderRadius: 32,
-            zIndex: 50,
-            backgroundColor: 'var(--accent)',
-          },
-        }}
-        style={{
-          border: '1px solid var(--primary)',
-          position: 'fixed',
-          overflow: 'hidden',
-          filter: 'grayscale(0.5) contrast(1.75)',
-          pointerEvents: isHome ? 'none' : 'auto',
-          cursor: isHome ? 'default' : 'pointer',
-        }}
-        className="shadow-xl"
-        transition={{ type: 'spring', stiffness: 150, damping: 25 }}
-        onAnimationStart={onAnimationStart}
-        onAnimationComplete={onAnimationComplete}
-        onClick={!isHome ? () => setIsOpen(!isOpen) : undefined}
-        whileHover={!isHome ? { scale: 1.1 } : undefined}
-        whileTap={!isHome ? { scale: 0.95 } : undefined}
-      >
-        <div
-          style={{
-            ...(isHome
-              ? { width: '100%', height: '100%' }
-              : {
-                  // Render at 400×400, scale down to fit the 64px bubble
-                  position: 'absolute',
-                  width: 400,
-                  height: 400,
-                  top: '50%',
-                  left: '50%',
-                  transformOrigin: 'center center',
-                  transform: 'translate(-50%, -50%) scale(0.14)',
-                  pointerEvents: 'none',
-                }),
-            opacity: isSplineHidden ? 0 : 1,
-            transition: 'opacity 0.15s ease',
-          }}
-        >
-          {isInteractive && (
-            <Spline key={reloadKey} scene={scene} onLoad={onLoad} />
-          )}
-        </div>
-      </motion.div>
+      {isHome ? (
+        // Home: full-screen interactive 3D scene.
+        isInteractive && (
+          <div
+            className="fixed inset-0 z-30 pointer-events-none"
+            style={{ filter: 'grayscale(0.5) contrast(1.75)' }}
+          >
+            <Spline scene={scene} onLoad={onLoad} />
+          </div>
+        )
+      ) : (
+        // Other pages: the same live scene, shrunk into a bubble. Manual
+        // render mode was tried here to cut the render-loop cost, but it
+        // broke cursor-tracking and didn't actually reduce main-thread work
+        // (measured) — so this accepts the continuous-render cost for a
+        // fully interactive bot.
+        isInteractive && (
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Open chat"
+            style={{ border: '1px solid var(--primary)' }}
+            className="fixed right-6 bottom-6 z-50 size-16 rounded-full bg-accent shadow-xl overflow-hidden hover:scale-110 active:scale-95 transition-transform"
+          >
+            <div
+              style={{
+                position: 'absolute',
+                width: 400,
+                height: 400,
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) scale(0.16)',
+                transformOrigin: 'center center',
+                pointerEvents: 'none',
+              }}
+            >
+              <Spline scene={scene} onLoad={onLoad} />
+            </div>
+          </button>
+        )
+      )}
 
       {/* Chat box */}
       {isHome ? (
