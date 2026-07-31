@@ -147,7 +147,10 @@ export function FloatingChat({ locale }: { locale: string }) {
           },
         }}
         style={{
-          border: '1px solid var(--primary)',
+          // Full-screen on home, so the ring would read as a hairline framing the
+          // viewport — keep the 1px box (no layout jump on morph), hide the colour.
+          border: '1px solid',
+          borderColor: isHome ? 'transparent' : 'var(--primary)',
           position: 'fixed',
           overflow: 'hidden',
           filter: 'grayscale(0.5) contrast(1.75)',
