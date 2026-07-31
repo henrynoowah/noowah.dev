@@ -1,11 +1,12 @@
-# [0.31.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.31.0) (2026-07-31)
+# [0.32.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.32.0) (2026-07-31)
 
 
 ### Bug Fixes
 
 * a11y names + reliable theme toggle with smooth color change ([81b4ecd](https://github.com/henrynoowah/noowah.dev/commit/81b4ecd8141ea25ca4e7fc7a4fa4e7a0f17b6c86))
-* **about:** render intlayer arrays, lift light-mode contrast, drop home spline ring ([742b03c](https://github.com/henrynoowah/noowah.dev/commit/742b03c6f13dbead986f24d1ac49dd888c48df85))
+* **about:** intlayer array rendering, light-mode contrast, home spline ring ([#52](https://github.com/henrynoowah/noowah.dev/issues/52)) ([6dbc033](https://github.com/henrynoowah/noowah.dev/commit/6dbc033bb360200cc486d80781f4d3b17be03cf8))
 * add visible h1 to home page to fix Lighthouse NO_LCP error ([c9b17db](https://github.com/henrynoowah/noowah.dev/commit/c9b17db62d6e08fccb8e93828c16f8a02ea230a3))
+* **chat:** surface dropped streams instead of truncating answers silently ([e56008b](https://github.com/henrynoowah/noowah.dev/commit/e56008bed0d7ca2cfe5795e030981814cbaaebc9))
 * drop bubble morph transition, keep bubble bot inert on chat toggle ([5edd8f3](https://github.com/henrynoowah/noowah.dev/commit/5edd8f31e0082b9666bc36b59a67e0ac8131701a))
 * mobile chat fullscreen, dock overlap, and send button shape ([f53d226](https://github.com/henrynoowah/noowah.dev/commit/f53d22638d2c84e858150c99390276fa51a2c56f))
 * persist dark mode across reloads and navigation ([435f3c5](https://github.com/henrynoowah/noowah.dev/commit/435f3c53f611dbfb08cc3bb2100a9ae6e2e43445))
