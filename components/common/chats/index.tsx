@@ -90,6 +90,7 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
     isLoading,
     setIsLoading,
     inputRef,
+    locale,
   } = useChatContext();
 
   useEffect(() => {
@@ -112,7 +113,7 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: nextMessages }),
+        body: JSON.stringify({ messages: nextMessages, locale }),
       });
 
       if (!res.ok) {

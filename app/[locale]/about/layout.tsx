@@ -13,7 +13,8 @@ import { IntlayerServerProvider } from 'next-intlayer/server';
 import { IntlayerClientProvider } from 'next-intlayer';
 
 const AboutsLayouts: NextLayoutIntlayer = async ({ children, params }) => {
-  const { locale } = await params;
+  // intlayer types `params.locale` as optional; the route only matches with one.
+  const { locale = 'en' } = await params;
 
   const navOption: Array<{
     label: string;
@@ -42,7 +43,7 @@ const AboutsLayouts: NextLayoutIntlayer = async ({ children, params }) => {
       <IntlayerClientProvider locale={locale}>
         <div className="w-full h-screen flex flex-col bg-background transition-colors duration-200 ease-linear overflow-hidden">
           <Header navOption={navOption} locale={locale} />
-          <main className="relative w-full overflow-y-auto">
+          <main className="relative w-full overflow-y-auto scroll-smooth">
             <div className="w-full h-fit flex justify-center">{children}</div>
           </main>
         </div>
