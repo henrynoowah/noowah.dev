@@ -301,8 +301,8 @@ const aboutContent: Dictionary = {
             name: 'inbox.synolink.ai',
             kicker: t({ en: 'Omnichannel messaging', ko: '옴니채널 메시징' }),
             body: t({
-              en: 'A channel provider in the same class as WATI and Dr.Palette — customer conversations from every channel in one inbox.',
-              ko: 'WATI, Dr.Palette와 같은 급의 채널 제공자. 모든 채널의 고객 대화를 하나의 인박스로 모읍니다.',
+              en: 'Customer conversations from every channel in one inbox.',
+              ko: '모든 채널의 고객 대화를 하나의 인박스로 모으는 채널 제공자.',
             }),
             status: t({ en: 'Live', ko: '운영 중' }),
             href: 'https://inbox.synolink.ai',
