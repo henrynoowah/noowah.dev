@@ -58,7 +58,8 @@ export const metadata: Metadata = {
 };
 
 const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
-  const { locale } = await params;
+  // intlayer types `params.locale` as optional; the route only matches with one.
+  const { locale = 'en' } = await params;
 
   return (
     <html
@@ -90,7 +91,7 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
       </head>
       <body suppressHydrationWarning={true}>
         <ThemeProvider attribute="class">
-          <ChatProvider>
+          <ChatProvider locale={locale}>
             <FloatingChat locale={locale} />
             {children}
           </ChatProvider>

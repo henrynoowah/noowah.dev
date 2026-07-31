@@ -68,9 +68,12 @@
   --card-foreground: oklch(0.9851 0 0);
   --popover: oklch(0.2686 0 0);
   --popover-foreground: oklch(0.9851 0 0);
-  /* Slightly lighter than the light-mode primary so it reads better on dark */
-  --primary: oklch(0.4955 0.0499 208.8718);
-  --primary-foreground: oklch(1 0 0);
+  /* Lifted to roughly --accent's lightness: at L≈0.50 the teal sat too close to
+     the L≈0.21 background, so eyebrows, folio numerals and rules in `text-primary`
+     were barely legible. Bright fill now takes dark text, matching how --accent
+     already pairs in this theme. */
+  --primary: oklch(0.7654 0.0699 208.8718);
+  --primary-foreground: oklch(0.2138 0.0019 286.2347);
   --secondary: oklch(0.2686 0 0);
   --secondary-foreground: oklch(0.9851 0 0);
   --muted: oklch(0.2686 0 0);
@@ -79,7 +82,10 @@
   --accent-foreground: oklch(0.2478 0 0);
   --destructive: oklch(0.7032 0.1883 22.8887);
   --destructive-foreground: oklch(0.9851 0 0);
-  --border: oklch(0.2768 0 0);
+  /* Was 0.2768 — only ~0.06 lightness above the 0.2138 background, so borders
+     measured 1.07:1 and read as absent. 0.45 puts a full-opacity border at a
+     healthy 2.36:1; page hairlines that dim it further opt into `dark:` alphas. */
+  --border: oklch(0.45 0 0);
   --input: oklch(0.325 0 0);
   --ring: oklch(0.5555 0 0);
   --chart-1: oklch(0.8072 0.0993 253.068);
@@ -342,6 +348,35 @@
   --font-sans: var(--font-ko), var(--font-body), ui-sans-serif, system-ui,
     sans-serif;
   --font-serif: var(--font-ko), var(--font-display), ui-serif, serif;
+}
+
+/* Outfit and Syne carry no Hangul, so inline Korean on an English page
+   (조하운, 누와, 총괄) would silently fall back to a system face. */
+.font-ko {
+  font-family: var(--font-ko), sans-serif;
+}
+
+/* The inverse: .lang-ko repoints --font-serif at Noto Sans KR for the whole
+   page, which also swaps Latin. Always-Latin display strings (the NOOWAH
+   wordmark) opt back into Syne so they keep their weight in both locales. */
+.font-display {
+  font-family: var(--font-display), ui-serif, serif;
+}
+
+/* Editorial about page. Hangul has no descender/ascender rhythm to tighten
+   and doesn't break on spaces, so the display tracking and balancing that
+   flatter Syne actively damage Noto Sans KR. */
+.display {
+  text-wrap: balance;
+}
+
+.lang-ko .display {
+  letter-spacing: -0.005em;
+  word-break: keep-all;
+}
+
+.lang-ko p {
+  word-break: keep-all;
 }
 
 @keyframes moveHorizontal {
