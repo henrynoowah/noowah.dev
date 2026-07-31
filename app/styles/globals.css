@@ -12,16 +12,16 @@
   --popover-foreground: oklch(0.2138 0.0019 286.2347);
   --primary: oklch(0.4355 0.0499 208.8718);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.9702 0 0);
+  --secondary: oklch(0.9498 0 0);
   --secondary-foreground: oklch(0.2138 0.0019 286.2347);
-  --muted: oklch(0.9702 0 0);
-  --muted-foreground: oklch(0.5555 0 0);
+  --muted: oklch(0.9498 0 0);
+  --muted-foreground: oklch(0.5200 0 0);
   --accent: oklch(0.7654 0.0331 186.6554);
   --accent-foreground: oklch(0.2478 0 0);
   --destructive: oklch(0.5377 0.2188 26.4875);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.9219 0 0);
-  --input: oklch(0.9219 0 0);
+  --border: oklch(0.8850 0 0);
+  --input: oklch(0.8850 0 0);
   --ring: oklch(0.709 0 0);
   --chart-1: oklch(0.8072 0.0993 253.068);
   --chart-2: oklch(0.6145 0.1929 260.7991);
@@ -32,9 +32,9 @@
   --sidebar-foreground: oklch(0.2138 0.0019 286.2347);
   --sidebar-primary: oklch(0.2138 0.0019 286.2347);
   --sidebar-primary-foreground: oklch(0.9851 0 0);
-  --sidebar-accent: oklch(0.9702 0 0);
+  --sidebar-accent: oklch(0.9498 0 0);
   --sidebar-accent-foreground: oklch(0.2138 0.0019 286.2347);
-  --sidebar-border: oklch(0.9219 0 0);
+  --sidebar-border: oklch(0.8850 0 0);
   --sidebar-ring: oklch(0.709 0 0);
   --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
     BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,

@@ -1,9 +1,10 @@
-# [0.30.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.30.0) (2026-07-31)
+# [0.31.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.31.0) (2026-07-31)
 
 
 ### Bug Fixes
 
 * a11y names + reliable theme toggle with smooth color change ([81b4ecd](https://github.com/henrynoowah/noowah.dev/commit/81b4ecd8141ea25ca4e7fc7a4fa4e7a0f17b6c86))
+* **about:** render intlayer arrays, lift light-mode contrast, drop home spline ring ([742b03c](https://github.com/henrynoowah/noowah.dev/commit/742b03c6f13dbead986f24d1ac49dd888c48df85))
 * add visible h1 to home page to fix Lighthouse NO_LCP error ([c9b17db](https://github.com/henrynoowah/noowah.dev/commit/c9b17db62d6e08fccb8e93828c16f8a02ea230a3))
 * drop bubble morph transition, keep bubble bot inert on chat toggle ([5edd8f3](https://github.com/henrynoowah/noowah.dev/commit/5edd8f31e0082b9666bc36b59a67e0ac8131701a))
 * mobile chat fullscreen, dock overlap, and send button shape ([f53d226](https://github.com/henrynoowah/noowah.dev/commit/f53d22638d2c84e858150c99390276fa51a2c56f))
@@ -15,7 +16,7 @@
 
 ### Features
 
-* **about:** editorial redesign with generated chat knowledge ([da73323](https://github.com/henrynoowah/noowah.dev/commit/da73323bdd1d71e7a706ed1ed9758ba36d9281b4))
+* **about:** editorial redesign with chat knowledge from one source ([#51](https://github.com/henrynoowah/noowah.dev/issues/51)) ([dfde15d](https://github.com/henrynoowah/noowah.dev/commit/dfde15d88c1af3baaba8b3d1391a7e35b13838da))
 * add AI chat with Spline bubble and popover UI ([#50](https://github.com/henrynoowah/noowah.dev/issues/50)) ([5fa1275](https://github.com/henrynoowah/noowah.dev/commit/5fa1275b5d5f15df4ba9f04e917756293676f085))
 * add llms.txt for AI crawler discovery ([75c788f](https://github.com/henrynoowah/noowah.dev/commit/75c788f03af9f1332bd6d7b806010db9c7808f9e))
 * add projects section to about page ([c612754](https://github.com/henrynoowah/noowah.dev/commit/c6127549a7bc8507ace3f7b0c18ac68b89e52204))

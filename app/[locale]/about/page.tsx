@@ -189,6 +189,10 @@ type Product = {
 type StackGroup = { label: string; items: string[] };
 type Interest = { title: string; gloss: string };
 
+// ponytail: intlayer array nodes stringify to [object Object]; unwrap to raw strings
+const strings = (v: unknown) =>
+  (v as Array<{ value?: string }>).map((x) => x?.value ?? String(x));
+
 const AboutPage: NextPageIntlayer = () => {
   const c = useIntlayer('about');
 
@@ -346,10 +350,10 @@ const AboutPage: NextPageIntlayer = () => {
               <span className="absolute -left-6 top-10 size-1.5 rounded-full bg-border group-hover:bg-primary transition-colors duration-500 md:hidden" />
 
               <div className="md:col-span-3">
-                {/* Ghost numeral. 15% reads as a pale grey on white but as an
+                {/* Ghost numeral. 25% reads as a pale grey on white but as an
                     unlit smudge on near-black, so dark mode needs more alpha to
                     land in the same visual register. */}
-                <span className="block whitespace-nowrap font-serif text-2xl md:text-4xl font-extrabold tabular-nums tracking-tight text-foreground/15 dark:text-foreground/35 group-hover:text-primary/40 dark:group-hover:text-primary/70 transition-colors duration-500">
+                <span className="block whitespace-nowrap font-serif text-2xl md:text-4xl font-extrabold tabular-nums tracking-tight text-foreground/25 dark:text-foreground/40 group-hover:text-primary/40 dark:group-hover:text-primary/70 transition-colors duration-500">
                   {entry.year}
                 </span>
                 <p className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
@@ -448,7 +452,7 @@ const AboutPage: NextPageIntlayer = () => {
               {c.practice.boxout.body}
             </p>
             <div className="mt-6 pt-4 border-t border-border/40 dark:border-border/80 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground/60">
-              {(c.practice.boxout.stack as unknown as string[]).join(' · ')}
+              {strings(c.practice.boxout.stack).join(' · ')}
             </div>
           </Card>
         </motion.div>
@@ -560,7 +564,7 @@ const AboutPage: NextPageIntlayer = () => {
                 {group.label}
               </h3>
               <p className="text-sm font-light leading-[1.8] text-foreground/70">
-                {(group.items as unknown as string[]).join(', ')}
+                {strings(group.items).join(', ')}
               </p>
             </motion.div>
           ))}
@@ -668,8 +672,8 @@ const AboutPage: NextPageIntlayer = () => {
                   {(item.tags as unknown as string[]).map((tag, ti) => (
                     <Badge
                       key={ti}
-                      variant="outline"
-                      className="text-[10px] font-light border-border/50 dark:border-border/80 text-muted-foreground/60"
+                      variant="secondary"
+                      className="text-[10px] font-light"
                     >
                       {tag}
                     </Badge>
