@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildSystemPrompt } from '@/lib/bio';
+import { sseToText } from '@/lib/sse';
 
 interface ChatMessage {
   role: 'user' | 'model';
@@ -10,7 +11,38 @@ interface ChatMessage {
 // would grow every request without limit.
 const MAX_HISTORY = 12;
 
-const DEFAULT_MODEL = 'cohere/north-mini-code:free';
+/**
+ * Free prose models, best first. OpenRouter walks the list when one is
+ * rate-limited or down, which on `:free` happens most days. Three rules when
+ * editing it:
+ *
+ * 1. Every ID must be valid. An unknown ID is a hard 400 for the whole request,
+ *    not a skip — the fallback only covers *runtime* failures.
+ * 2. No reasoning models. `reasoning: { exclude: true }` merely hides the
+ *    reasoning; the tokens still count against max_tokens. Measured:
+ *    ling-3.0-flash spent 1315 of 1500 tokens thinking and returned "".
+ * 3. OpenRouter rejects more than MAX_CHAIN entries, so adding a fourth here
+ *    silently costs the OPENROUTER_MODEL override its slot.
+ */
+const MODELS = [
+  'google/gemma-4-26b-a4b-it:free',
+  'google/gemma-4-31b-it:free',
+  // Code model, so it garbles long-form Korean — last resort only, but it is
+  // the one that is always up.
+  'cohere/north-mini-code:free',
+];
+
+/** OpenRouter's hard limit: `'models' array must have 3 items or fewer.` */
+const MAX_CHAIN = 3;
+
+const MAX_TOKENS = 1500;
+
+// Under maxDuration, so we return a real message instead of being killed.
+const UPSTREAM_TIMEOUT_MS = 55_000;
+
+export const maxDuration = 60;
+
+const GENERIC_ERROR = 'Something went wrong. Please try again.';
 
 export async function POST(req: NextRequest) {
   const apiKey = process.env.OPENROUTER_API_KEY;
@@ -32,18 +64,34 @@ export async function POST(req: NextRequest) {
     })),
   ];
 
-  const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: process.env.OPENROUTER_MODEL || DEFAULT_MODEL,
-      messages: openaiMessages,
-      stream: true,
-    }),
-  });
+  const override = process.env.OPENROUTER_MODEL;
+  const chain = [...new Set(override ? [override, ...MODELS] : MODELS)].slice(
+    0,
+    MAX_CHAIN
+  );
+
+  let res: Response;
+  try {
+    res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        models: chain,
+        messages: openaiMessages,
+        max_tokens: MAX_TOKENS,
+        stream: true,
+      }),
+      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+    });
+  } catch (err) {
+    // Timeout or network failure. Without this the function would hang until the
+    // platform killed it, and the client would spin on "Thinking…" forever.
+    console.error('[/api/chat] upstream unreachable:', err);
+    return NextResponse.json({ error: GENERIC_ERROR }, { status: 504 });
+  }
 
   if (!res.ok || !res.body) {
     const err = await res.json().catch(() => ({}));
@@ -52,56 +100,11 @@ export async function POST(req: NextRequest) {
     const userMessage =
       status === 429
         ? 'Rate limit reached. Please wait a moment and try again.'
-        : 'Something went wrong. Please try again.';
+        : GENERIC_ERROR;
     return NextResponse.json({ error: userMessage }, { status });
   }
 
-  // Forward the SSE stream, extracting just the text deltas
-  const stream = new ReadableStream({
-    async start(controller) {
-      const reader = res.body!.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-      let errored = false;
-
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() ?? '';
-
-          for (const line of lines) {
-            if (!line.startsWith('data: ')) continue;
-            const data = line.slice(6).trim();
-            if (data === '[DONE]') return;
-            try {
-              const json = JSON.parse(data);
-              if (json.error) {
-                // Provider can fail mid-stream after already sending a 200 —
-                // surface it as a stream error so the client's catch block
-                // shows a real message instead of silently going nowhere.
-                console.error('[/api/chat] mid-stream error:', json.error);
-                errored = true;
-                controller.error(new Error('Something went wrong. Please try again.'));
-                return;
-              }
-              const delta = json.choices?.[0]?.delta?.content;
-              if (delta) controller.enqueue(new TextEncoder().encode(delta));
-            } catch {
-              // skip malformed chunks
-            }
-          }
-        }
-      } finally {
-        if (!errored) controller.close();
-      }
-    },
-  });
-
-  return new Response(stream, {
+  return new Response(sseToText(res.body), {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   });
 }
