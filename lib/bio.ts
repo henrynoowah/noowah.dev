@@ -102,7 +102,7 @@ export function buildBio(locale: LocalesValues): string {
 
 export function buildSystemPrompt(locale: LocalesValues): string {
   // Behaviour, not biography — the facts all come from buildBio.
-  return `You are an AI assistant on Hawoon Joh's personal blog. He goes by the handle "NOOWAH" online, pronounced "누와" (not "노와").
+  return `You are an AI assistant on Hawoon Joh's personal blog. He goes by the handle "NOOWAH" online, pronounced "누와" (not "노와") — it's "Hawoon" spelled backwards.
 
 Everything you know about him is below. It is generated from the same content that renders his about page, so treat it as current and authoritative.
 

@@ -12,10 +12,19 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from '@/components/ui/conversation';
+import { Badge } from '@/components/ui/badge';
 import { Message, MessageContent } from '@/components/ui/message';
 import { ShimmeringText } from '@/components/ui/shimmering-text';
 
 import type { ChatMessage } from '@/app/[locale]/_components/chat-context';
+
+// ponytail: hardcoded suggestions, not from intlayer — matches the rest of
+// this file's chrome text (placeholder, header), which isn't localized either.
+const SUGGESTIONS = [
+  'What does he work on?',
+  "What's NOOWAH mean?",
+  'How did he get into engineering?',
+];
 
 const MarkdownContent = ({ content }: { content: string }) => (
   <ReactMarkdown
@@ -97,8 +106,8 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
     setTimeout(() => inputRef.current?.focus(), 100);
   }, [inputRef]);
 
-  const sendMessage = async () => {
-    const text = input.trim();
+  const sendMessage = async (override?: string) => {
+    const text = (override ?? input).trim();
     if (!text || isLoading) return;
 
     const userMessage: ChatMessage = { role: 'user', content: text };
@@ -190,6 +199,24 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
         <ConversationScrollButton className="bottom-2" />
       </Conversation>
 
+      {/* Suggestions — shown until the visitor sends their first message */}
+      {messages.length === 0 && (
+        <div className="px-4 py-2 flex flex-wrap gap-1.5">
+          {SUGGESTIONS.map(text => (
+            <Badge key={text} variant="outline" asChild>
+              <button
+                type="button"
+                onClick={() => sendMessage(text)}
+                disabled={isLoading}
+                className="cursor-pointer hover:bg-primary/20 transition-colors disabled:opacity-50"
+              >
+                {text}
+              </button>
+            </Badge>
+          ))}
+        </div>
+      )}
+
       {/* Input */}
       <div className="px-4 py-3 border-t border-primary/20 flex gap-2">
         <input
@@ -202,7 +229,7 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
           className="flex-1 bg-primary/20 rounded-full px-4 py-2 text-base outline-none placeholder:text-foreground/40 disabled:opacity-50"
         />
         <button
-          onClick={sendMessage}
+          onClick={() => sendMessage()}
           disabled={isLoading || !input.trim()}
           className="size-9 shrink-0 flex items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40 transition-opacity hover:opacity-80"
         >
