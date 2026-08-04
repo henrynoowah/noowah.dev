@@ -35,7 +35,7 @@ const MODELS = [
 /** OpenRouter's hard limit: `'models' array must have 3 items or fewer.` */
 const MAX_CHAIN = 3;
 
-const MAX_TOKENS = 1500;
+const MAX_TOKENS = 500;
 
 // Under maxDuration, so we return a real message instead of being killed.
 const UPSTREAM_TIMEOUT_MS = 55_000;
