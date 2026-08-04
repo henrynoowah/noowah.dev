@@ -193,6 +193,10 @@ type Interest = { title: string; gloss: string };
 const strings = (v: unknown) =>
   (v as Array<{ value?: string }>).map((x) => x?.value ?? String(x));
 
+// Same intlayer proxy issue as `strings` above, but for a single scalar node
+// used outside JSX children (href attribute, template literal).
+const raw = (v: unknown) => (v as { value?: string })?.value ?? String(v);
+
 const AboutPage: NextPageIntlayer = () => {
   const c = useIntlayer('about');
 
@@ -491,7 +495,7 @@ const AboutPage: NextPageIntlayer = () => {
                   key={key}
                   {...(live
                     ? {
-                        href: p.href,
+                        href: raw(p.href),
                         target: '_blank',
                         rel: 'noopener noreferrer',
                       }
@@ -733,7 +737,7 @@ const AboutPage: NextPageIntlayer = () => {
             className="shrink-0 text-sm font-light tracking-wider rounded-full px-8 h-12"
             asChild
           >
-            <a href={`mailto:${c.meta.email}`}>
+            <a href={`mailto:${raw(c.meta.email)}`}>
               {c.ui.contactButton}
               <IconArrowUpRight size={16} strokeWidth={1.5} />
             </a>
@@ -748,7 +752,7 @@ const AboutPage: NextPageIntlayer = () => {
               {c.ui.sections.contact}
             </p>
             <a
-              href={`mailto:${c.meta.email}`}
+              href={`mailto:${raw(c.meta.email)}`}
               className="block hover:text-primary transition-colors duration-300 normal-case tracking-normal"
             >
               {c.meta.email}
