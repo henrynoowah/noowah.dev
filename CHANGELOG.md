@@ -1,4 +1,4 @@
-# [0.33.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.33.0) (2026-08-12)
+# [0.34.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.34.0) (2026-10-09)
 
 
 ### Bug Fixes
@@ -20,6 +20,7 @@
 ### Features
 
 * **about:** editorial redesign with chat knowledge from one source ([#51](https://github.com/henrynoowah/noowah.dev/issues/51)) ([dfde15d](https://github.com/henrynoowah/noowah.dev/commit/dfde15d88c1af3baaba8b3d1391a7e35b13838da))
+* **about:** update synolink roles, link cms and landing ([d5b6fc5](https://github.com/henrynoowah/noowah.dev/commit/d5b6fc57b72ea98dc8c735b9eaa7c87f3893745d))
 * add AI chat with Spline bubble and popover UI ([#50](https://github.com/henrynoowah/noowah.dev/issues/50)) ([5fa1275](https://github.com/henrynoowah/noowah.dev/commit/5fa1275b5d5f15df4ba9f04e917756293676f085))
 * add llms.txt for AI crawler discovery ([75c788f](https://github.com/henrynoowah/noowah.dev/commit/75c788f03af9f1332bd6d7b806010db9c7808f9e))
 * add projects section to about page ([c612754](https://github.com/henrynoowah/noowah.dev/commit/c6127549a7bc8507ace3f7b0c18ac68b89e52204))
@@ -30,7 +31,7 @@
 * redesign about page hero with GSAP morph and consolidate works ([#48](https://github.com/henrynoowah/noowah.dev/issues/48)) ([b8d37d9](https://github.com/henrynoowah/noowah.dev/commit/b8d37d91d89c34d2fd2308cab69ea07414e1a18c))
 * redesign pages with editorial aesthetic, shadcn/ui, and Korean i18n ([5e17532](https://github.com/henrynoowah/noowah.dev/commit/5e17532841ae5b7c55696dfac6bab562ece07c2e))
 * self-reference canonical domain and add sitemap ([9bb3449](https://github.com/henrynoowah/noowah.dev/commit/9bb3449d92e80d910d5150ba9def384a549ccf91))
-* **seo:** localize site metadata and drop stale blog branding ([f67c0a7](https://github.com/henrynoowah/noowah.dev/commit/f67c0a78dbfa3fa2654c884795063bbcd49b6ebc))
+* **seo:** localize site metadata, drop stale blog branding ([#55](https://github.com/henrynoowah/noowah.dev/issues/55)) ([42eb85f](https://github.com/henrynoowah/noowah.dev/commit/42eb85f22c0a07c2aedd4b40645ac0facd79bdc8))
 * shared-element view transitions for wordmark and header toggles ([9bb9643](https://github.com/henrynoowah/noowah.dev/commit/9bb9643e66c03c9b987af1ae9d8e6bacc46846ce))
 * style markdown tables in chat responses ([80cd4fb](https://github.com/henrynoowah/noowah.dev/commit/80cd4fbc1c9764dbb8bfaa326d3785db86726fbf))
 * view-transition-update ([5e0f744](https://github.com/henrynoowah/noowah.dev/commit/5e0f744bae42a3a36581e0f211ec01edcb54271d))

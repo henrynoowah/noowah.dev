@@ -183,6 +183,8 @@ type Product = {
   name: string;
   kicker: string;
   body: string;
+  /** My part in this product — distinct from the suite-level role. */
+  role: string;
   status: string;
   /** Absent while a product is unlaunched — the row renders inert. */
   href?: string;
@@ -488,6 +490,18 @@ const AboutPage: NextPageIntlayer = () => {
             {c.practice.synolink.role}
           </motion.p>
 
+          <motion.a
+            {...revealUp}
+            transition={{ ...revealUp.transition, delay: 0.16 }}
+            href={raw(c.practice.synolink.href)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground hover:text-primary transition-colors duration-300"
+          >
+            {c.practice.synolink.linkLabel}
+            <IconArrowUpRight size={13} strokeWidth={1.5} />
+          </motion.a>
+
           <div className="mt-10">
             {products.map(([key, p], i) => {
               const live = Boolean(p.href);
@@ -534,6 +548,9 @@ const AboutPage: NextPageIntlayer = () => {
                         />
                         {p.status}
                       </span>
+                    </p>
+                    <p className="mt-2 text-[10px] uppercase tracking-[0.14em] text-muted-foreground/70">
+                      {p.role}
                     </p>
                   </div>
                   <p

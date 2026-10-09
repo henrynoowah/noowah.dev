@@ -167,12 +167,12 @@ const aboutContent: Dictionary = {
           year: t({ en: 'Now', ko: '현재' }),
           place: 'Synolink',
           title: t({
-            en: 'Planning a product line',
-            ko: '제품 라인 기획',
+            en: 'Product owner, Synolink',
+            ko: 'Synolink PO',
           }),
           body: t({
-            en: 'Leading synolink.ai end to end — three products, one modular suite. The largest thing I have been responsible for, and the first where the architecture decisions are mine to make.',
-            ko: 'synolink.ai를 처음부터 끝까지 총괄하고 있습니다. 세 개의 제품, 하나의 모듈형 스위트. 지금까지 맡은 것 중 가장 큰 일이자, 아키텍처 결정이 온전히 제 몫인 첫 번째 일입니다.',
+            en: 'Product owner for synolink.ai — three products, one modular suite. I set direction across the line and lead client development on the CMS; the largest thing I have been responsible for.',
+            ko: 'synolink.ai의 PO로서 세 개의 제품, 하나의 모듈형 스위트의 방향성을 잡고 있습니다. CMS는 클라이언트 개발을 총괄합니다. 지금까지 맡은 것 중 가장 큰 일입니다.',
           }),
         },
       },
@@ -282,9 +282,11 @@ const aboutContent: Dictionary = {
           ko: '온라인 비즈니스를 운영하기 위한 모듈형 SaaS 스위트. 각 제품은 단독으로 쓸 수도, 서로의 확장 기능으로 붙여 쓸 수도 있습니다.',
         }),
         role: t({
-          en: 'Planned and led end to end (총괄).',
-          ko: '기획부터 실행까지 총괄.',
+          en: 'Product owner for the suite — shaping direction across all three products, and leading client development on the CMS.',
+          ko: '스위트 전체의 PO로서 제품 방향성을 함께 설계하고, CMS는 클라이언트 개발을 총괄합니다.',
         }),
+        href: 'https://synolink.ai',
+        linkLabel: t({ en: 'Visit synolink.ai', ko: 'synolink.ai 방문하기' }),
         products: {
           cms: {
             name: 'cms.synolink.ai',
@@ -293,9 +295,12 @@ const aboutContent: Dictionary = {
               en: 'A builder in the Webflow and Squarespace class, with AI-generated content, SEO- and GEO-optimized output, and i18n built in for global leads and marketing.',
               ko: 'Webflow와 Squarespace 급의 빌더. AI 콘텐츠 생성, SEO·GEO에 최적화된 결과물, 그리고 글로벌 리드와 마케팅을 위한 i18n을 기본으로 갖췄습니다.',
             }),
-            // No href while unlaunched: omitting it keeps the bot from handing
-            // visitors a URL that does not resolve.
-            status: t({ en: 'In development', ko: '개발 중' }),
+            role: t({
+              en: 'Client development lead',
+              ko: '클라이언트 개발 총괄',
+            }),
+            status: t({ en: 'Live', ko: '운영 중' }),
+            href: 'https://cms.synolink.ai',
           },
           inbox: {
             name: 'inbox.synolink.ai',
@@ -303,6 +308,10 @@ const aboutContent: Dictionary = {
             body: t({
               en: 'Customer conversations from every channel in one inbox.',
               ko: '모든 채널의 고객 대화를 하나의 인박스로 모으는 채널 제공자.',
+            }),
+            role: t({
+              en: 'Product planning (PO) — not a code contributor',
+              ko: '기획 참여 (PO) — 직접 개발 X',
             }),
             status: t({ en: 'Live', ko: '운영 중' }),
             href: 'https://inbox.synolink.ai',
@@ -314,6 +323,9 @@ const aboutContent: Dictionary = {
               en: 'An electronic health record platform, built to slot into the same suite rather than sit off to the side as a silo.',
               ko: '전자의무기록 플랫폼. 별도의 사일로로 떨어져 있지 않고 같은 스위트 안에 맞물리도록 설계했습니다.',
             }),
+            role: t({ en: 'Product planning (PO)', ko: '기획 참여 (PO)' }),
+            // No href while unlaunched: omitting it keeps the bot from handing
+            // visitors a URL that does not resolve.
             status: t({ en: 'In development', ko: '개발 중' }),
           },
         },
