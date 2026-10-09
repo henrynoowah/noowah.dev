@@ -186,6 +186,8 @@ type Product = {
   status: string;
   /** Absent while a product is unlaunched — the row renders inert. */
   href?: string;
+  /** My part in this product, when it differs from the suite-level role. */
+  role?: string;
 };
 type StackGroup = { label: string; items: string[] };
 type Interest = { title: string; gloss: string };
@@ -480,13 +482,24 @@ const AboutPage: NextPageIntlayer = () => {
             {c.practice.synolink.deck}
           </motion.p>
 
-          <motion.p
+          <motion.div
             {...revealUp}
             transition={{ ...revealUp.transition, delay: 0.12 }}
-            className="mt-4 text-[11px] uppercase tracking-[0.18em] text-muted-foreground"
+            className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2"
           >
-            {c.practice.synolink.role}
-          </motion.p>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+              {c.practice.synolink.role}
+            </p>
+            <a
+              href={raw(c.practice.synolink.href)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-primary hover:text-primary/70 transition-colors duration-300"
+            >
+              synolink.ai
+              <IconArrowUpRight size={13} strokeWidth={1.5} />
+            </a>
+          </motion.div>
 
           <div className="mt-10">
             {products.map(([key, p], i) => {
@@ -536,13 +549,20 @@ const AboutPage: NextPageIntlayer = () => {
                       </span>
                     </p>
                   </div>
-                  <p
-                    className={`md:col-span-6 text-sm font-light leading-[1.7] text-pretty ${
-                      live ? 'text-foreground/70' : 'text-foreground/50'
-                    }`}
-                  >
-                    {p.body}
-                  </p>
+                  <div className="md:col-span-6">
+                    <p
+                      className={`text-sm font-light leading-[1.7] text-pretty ${
+                        live ? 'text-foreground/70' : 'text-foreground/50'
+                      }`}
+                    >
+                      {p.body}
+                    </p>
+                    {p.role && (
+                      <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                        {p.role}
+                      </p>
+                    )}
+                  </div>
                   {live && (
                     <IconArrowUpRight
                       size={16}
