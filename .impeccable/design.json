@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-12T14:50:13.055413+00:00",
+  "title": "Design System: noowah.dev",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Teal-Grey Stock",
+        "canonical": "oklch(0.95 0.009 190)",
+        "tonalRamp": [
+          "oklch(0.15 0.009 190)",
+          "oklch(0.26 0.009 190)",
+          "oklch(0.38 0.009 190)",
+          "oklch(0.50 0.009 190)",
+          "oklch(0.62 0.009 190)",
+          "oklch(0.74 0.009 190)",
+          "oklch(0.85 0.009 190)",
+          "oklch(0.95 0.009 190)"
+        ],
+        "note": "About #e8f0f0. Reference only: the duotone prints no intermediate tints."
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Press Ink",
+        "canonical": "oklch(0.26 0.035 205)",
+        "tonalRamp": [
+          "oklch(0.15 0.035 205)",
+          "oklch(0.26 0.035 205)",
+          "oklch(0.38 0.035 205)",
+          "oklch(0.50 0.035 205)",
+          "oklch(0.62 0.035 205)",
+          "oklch(0.74 0.035 205)",
+          "oklch(0.85 0.035 205)",
+          "oklch(0.95 0.035 205)"
+        ],
+        "note": "About #0b292c. Ink on paper about 13.3:1."
+      },
+      "wash": {
+        "role": "secondary",
+        "displayName": "Teal Wash",
+        "canonical": "oklch(0.66 0.055 195)",
+        "tonalRamp": [
+          "oklch(0.15 0.055 195)",
+          "oklch(0.26 0.055 195)",
+          "oklch(0.38 0.055 195)",
+          "oklch(0.50 0.055 195)",
+          "oklch(0.62 0.055 195)",
+          "oklch(0.74 0.055 195)",
+          "oklch(0.85 0.055 195)",
+          "oklch(0.95 0.055 195)"
+        ],
+        "note": "About #699d9d. The second ink: marks only the part in focus or a built module; ink on wash about 5.05:1; never a running-text ground. Also ::selection ground with ink text."
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Steeped Stock",
+        "canonical": "oklch(0.87 0.03 195)",
+        "tonalRamp": [
+          "oklch(0.15 0.03 195)",
+          "oklch(0.26 0.03 195)",
+          "oklch(0.38 0.03 195)",
+          "oklch(0.50 0.03 195)",
+          "oklch(0.62 0.03 195)",
+          "oklch(0.74 0.03 195)",
+          "oklch(0.85 0.03 195)",
+          "oklch(0.95 0.03 195)"
+        ],
+        "note": "About #bfdbda. Paper steeped in the second ink: the chat panel and inner-page chat popover ground only, so the assistant reads as its own sheet. Ink on panel about 10.5:1. The chat input stays paper. A ground, never a focus mark or highlight."
+      },
+      "error": {
+        "role": "tertiary",
+        "displayName": "Proof Red",
+        "canonical": "oklch(0.52 0.19 28)",
+        "tonalRamp": [
+          "oklch(0.15 0.19 28)",
+          "oklch(0.26 0.19 28)",
+          "oklch(0.38 0.19 28)",
+          "oklch(0.50 0.19 28)",
+          "oklch(0.62 0.19 28)",
+          "oklch(0.74 0.19 28)",
+          "oklch(0.85 0.19 28)",
+          "oklch(0.95 0.19 28)"
+        ],
+        "note": "Reserved for error/destructive states only."
+      },
+      "paper-negative": {
+        "role": "neutral",
+        "displayName": "Negative Stock",
+        "canonical": "oklch(0.2 0.018 210)",
+        "tonalRamp": [
+          "oklch(0.15 0.018 210)",
+          "oklch(0.26 0.018 210)",
+          "oklch(0.38 0.018 210)",
+          "oklch(0.50 0.018 210)",
+          "oklch(0.62 0.018 210)",
+          "oklch(0.74 0.018 210)",
+          "oklch(0.85 0.018 210)",
+          "oklch(0.95 0.018 210)"
+        ],
+        "note": "About #0c181b. Dark theme ground (.dark --paper)."
+      },
+      "ink-negative": {
+        "role": "neutral",
+        "displayName": "Negative Ink",
+        "canonical": "oklch(0.93 0.014 190)",
+        "tonalRamp": [
+          "oklch(0.15 0.014 190)",
+          "oklch(0.26 0.014 190)",
+          "oklch(0.38 0.014 190)",
+          "oklch(0.50 0.014 190)",
+          "oklch(0.62 0.014 190)",
+          "oklch(0.74 0.014 190)",
+          "oklch(0.85 0.014 190)",
+          "oklch(0.95 0.014 190)"
+        ],
+        "note": "About #deebea. Dark theme ink (.dark --ink)."
+      },
+      "wash-negative": {
+        "role": "secondary",
+        "displayName": "Negative Wash",
+        "canonical": "oklch(0.49 0.05 195)",
+        "tonalRamp": [
+          "oklch(0.15 0.05 195)",
+          "oklch(0.26 0.05 195)",
+          "oklch(0.38 0.05 195)",
+          "oklch(0.50 0.05 195)",
+          "oklch(0.62 0.05 195)",
+          "oklch(0.74 0.05 195)",
+          "oklch(0.85 0.05 195)",
+          "oklch(0.95 0.05 195)"
+        ],
+        "note": "About #3c6969. Dark theme wash (.dark --wash); ink-negative on it about 5.2:1."
+      },
+      "panel-negative": {
+        "role": "neutral",
+        "displayName": "Negative Steeped Stock",
+        "canonical": "oklch(0.3 0.035 200)",
+        "tonalRamp": [
+          "oklch(0.15 0.035 200)",
+          "oklch(0.26 0.035 200)",
+          "oklch(0.38 0.035 200)",
+          "oklch(0.50 0.035 200)",
+          "oklch(0.62 0.035 200)",
+          "oklch(0.74 0.035 200)",
+          "oklch(0.85 0.035 200)",
+          "oklch(0.95 0.035 200)"
+        ],
+        "note": "About #163335. Dark theme chat ground (.dark --panel). Ink on panel about 11:1."
+      },
+      "error-negative": {
+        "role": "tertiary",
+        "displayName": "Proof Red (negative)",
+        "canonical": "oklch(0.72 0.16 28)",
+        "tonalRamp": [
+          "oklch(0.15 0.16 28)",
+          "oklch(0.26 0.16 28)",
+          "oklch(0.38 0.16 28)",
+          "oklch(0.50 0.16 28)",
+          "oklch(0.62 0.16 28)",
+          "oklch(0.74 0.16 28)",
+          "oklch(0.85 0.16 28)",
+          "oklch(0.95 0.16 28)"
+        ],
+        "note": "Dark theme error."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Wordmark",
+        "purpose": "The NOOWAH cover wordmark only; always Latin, letters are shared view-transition parts with the running-head NWH."
+      },
+      "numeral": {
+        "displayName": "Step Numeral",
+        "purpose": "The expanded numeral that opens each step; sticky in the 3-column gutter from md."
+      },
+      "headline": {
+        "displayName": "Step Title",
+        "purpose": "Step h2; 30px, 48px at md, 60px at lg; balanced."
+      },
+      "menu-item": {
+        "displayName": "Menu Item",
+        "purpose": "Full-page menu rows; 36px, 48px at sm, 72px at md; balanced."
+      },
+      "statement": {
+        "displayName": "Statement",
+        "purpose": "The single closing line of a Contact step; 36px to 60px at md."
+      },
+      "title": {
+        "displayName": "Item Title",
+        "purpose": "Items inside a step (principles, layers, Experience entries); 24-30px."
+      },
+      "contents-item": {
+        "displayName": "Contents Item",
+        "purpose": "The cover's five contents-row labels; 16px, 18px at sm, 22px (1.375rem) at md; 600."
+      },
+      "body-lead": {
+        "displayName": "Lead",
+        "purpose": "Opening paragraph of a step, max 62ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions and glosses, 15-16px, max 48-62ch."
+      },
+      "data-label": {
+        "displayName": "Data Label",
+        "purpose": "Sub-step numbers, plain counts, statuses, issue and Portfolio lines, locale codes. Never above a heading."
+      },
+      "drawing-label": {
+        "displayName": "Drawing Label",
+        "purpose": "Text inside SVG drawings, in the drawing's user units: 13px callout numerals (always Latin). Archivo 700, ink fill. Plate names on a top face are 11 in the face's 0-100 detail box."
+      },
+      "drawing-caption": {
+        "displayName": "Drawing Caption",
+        "purpose": "15px bold drawing text: suite-drawing module names, origin-drawing captions and its Core callout; localized captions fall through to Noto Sans KR."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-sheet",
+        "value": "0 18px 40px -18px rgb(0 0 0 / 0.45)",
+        "purpose": "Chat panel and chat popover only; nothing printed on the sheet carries a shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-snap",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Snap into place: parts landing, control state changes, view-transition morphs, chat opening."
+      },
+      {
+        "name": "control-state",
+        "value": "150ms ease-snap",
+        "purpose": "Ink-control hover inversion and 1px press."
+      },
+      {
+        "name": "theme-fade",
+        "value": "200ms ease",
+        "purpose": "Global colour/fill/stroke fade when toggling light and dark."
+      },
+      {
+        "name": "part-drop",
+        "value": "700ms ease-snap, 120ms stagger, lift 45% of gap",
+        "purpose": "Exploded-view plates dropping into their slots once 25% in view."
+      },
+      {
+        "name": "origin-drop",
+        "value": "700ms ease-snap, 140ms stagger after 200ms, once 40% in view",
+        "purpose": "Origin drawing's two paper plates dropping onto the washed core; seated under reduced motion."
+      },
+      {
+        "name": "ai-callout-hide",
+        "value": "200ms opacity",
+        "purpose": "Cover AI callout fades out (pointer-events none) while the chat is open; the panel and the zoomed Spline bot cover it."
+      },
+      {
+        "name": "wordmark-morph",
+        "value": "450ms ease-snap",
+        "purpose": "Cover NOOWAH to running-head NWH shared-element view transition; O/O lift out over 400ms cubic-bezier(0.5, 0, 0.75, 0)."
+      },
+      {
+        "name": "chat-open",
+        "value": "450ms ease-snap in, 200ms easeIn out, 24px travel",
+        "purpose": "Chat panel open/close."
+      },
+      {
+        "name": "menu-rows",
+        "value": "500ms ease-snap, 70ms stagger from 80ms, 16px rise with fade",
+        "purpose": "Full-page menu rows entering when the menu opens."
+      },
+      {
+        "name": "menu-bars",
+        "value": "300ms ease-snap",
+        "purpose": "Menu button bars crossing into an X and back."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "All animation and transition durations collapse; drawings render already assembled."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "sheet-max",
+        "value": "1440px"
+      },
+      {
+        "name": "cover-max",
+        "value": "1680px"
+      }
+    ],
+    "stroke": {
+      "value": "1.5px",
+      "token": "--stroke",
+      "purpose": "The one line weight for rules, outlines, underlines and drawings."
+    },
+    "grain": {
+      "selector": "body::after",
+      "value": "SVG feTurbulence fractalNoise data-URI, 220px tile, baseFrequency 0.85, numOctaves 3, mapped to ink-coloured alpha (paper-coloured in dark), no blend mode",
+      "opacity": {
+        "light": "0.45",
+        "dark": "0.2",
+        "token": "--grain"
+      },
+      "zIndex": 200,
+      "purpose": "Static paper grain over the whole viewport, Spline bot and chat included; pointer-events none; hidden in print."
+    }
+  },
+  "components": [
+    {
+      "name": "Solid Ink Control",
+      "kind": "button",
+      "refersTo": "ink-control-solid",
+      "description": "The one committed action on a sheet (Ask the AI assistant on a Contact step, Read the case study, Demo). The cover has none; its committed action is the AI callout. Hover inverts.",
+      "html": "<button type=\"button\" class=\"ds-ink-solid\">Ask the AI assistant</button>",
+      "css": ".ds-ink-solid { display:inline-flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 16px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-size:16px; font-weight:500; line-height:1; background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); border-radius:0; cursor:pointer; transition:background-color 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-ink-solid:hover { background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); } .ds-ink-solid:active { transform:translateY(1px); } .ds-ink-solid:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; } .ds-ink-solid:disabled { border-style:dashed; pointer-events:none; }"
+    },
+    {
+      "name": "Outline Ink Control",
+      "kind": "button",
+      "refersTo": "ink-control-outline",
+      "description": "Every other action; links carry a drawn arrow that nudges right on hover.",
+      "html": "<a href=\"#\" class=\"ds-ink-outline\"><span>GitHub</span><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\" class=\"ds-arrow\"><path d=\"M2 10h15M11 4l6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a>",
+      "css": ".ds-ink-outline { display:inline-flex; align-items:center; justify-content:space-between; gap:16px; padding:12px 16px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-size:16px; font-weight:500; line-height:1; background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); border-radius:0; text-decoration:none; transition:background-color 150ms cubic-bezier(0.16, 1, 0.3, 1), color 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 150ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-ink-outline .ds-arrow { width:0.9em; height:0.9em; transform:rotate(-45deg); transition:translate 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-ink-outline:hover { background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); } .ds-ink-outline:hover .ds-arrow { translate:2px 0; } .ds-ink-outline:active { transform:translateY(1px); } .ds-ink-outline:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "ink",
+      "description": "Inline link with a 1.5px ink underline that thickens to 3px on hover.",
+      "html": "<a href=\"#\" class=\"ds-text-link\">Writing</a>",
+      "css": ".ds-text-link { font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); color:var(--ink, oklch(0.26 0.035 205)); text-decoration:underline; text-decoration-thickness:var(--stroke, 1.5px); text-underline-offset:4px; } .ds-text-link:hover { text-decoration-thickness:3px; } .ds-text-link:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; }"
+    },
+    {
+      "name": "Step Counter",
+      "kind": "nav",
+      "refersTo": "step-box-current",
+      "description": "The running head's position counter: joined 32px boxes, the open step filled, with the open section's label beside it from lg. No remaining count.",
+      "html": "<nav class=\"ds-steps\" aria-label=\"Sections\"><ol><li><a href=\"#\" aria-current=\"step\">1</a></li><li><a href=\"#\">2</a></li><li><a href=\"#\">3</a></li><li><a href=\"#\">4</a></li><li><a href=\"#\">5</a></li></ol><p>Overview</p></nav>",
+      "css": ".ds-steps { display:flex; align-items:center; gap:16px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); color:var(--ink, oklch(0.26 0.035 205)); } .ds-steps ol { display:flex; list-style:none; margin:0; padding:0; } .ds-steps li + li { margin-left:calc(-1 * var(--stroke, 1.5px)); } .ds-steps a { display:grid; place-items:center; width:32px; height:32px; border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; text-decoration:none; transition:background-color 200ms ease, color 200ms ease; } .ds-steps a:hover, .ds-steps a[aria-current=step] { background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); } .ds-steps a:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; } .ds-steps p { margin:0; font-size:14px; font-weight:700; line-height:1.25; }"
+    },
+    {
+      "name": "Menu Button",
+      "kind": "button",
+      "refersTo": "menu-button",
+      "description": "Running-head toggle for the full-page menu: ink-outlined, Menu/Close word from sm, two bars that cross into an X; filled while open.",
+      "html": "<button type=\"button\" class=\"ds-menu-btn\" aria-expanded=\"false\" aria-controls=\"site-menu\" onclick=\"this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') !== 'true'); this.querySelector('.ds-menu-word').textContent = this.getAttribute('aria-expanded') === 'true' ? 'Close' : 'Menu'\"><span class=\"ds-menu-word\">Menu</span><span class=\"ds-menu-bars\" aria-hidden=\"true\"><span></span><span></span></span></button>",
+      "css": ".ds-menu-btn { display:inline-flex; align-items:center; gap:8px; height:32px; padding:0 10px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-size:12px; font-weight:700; text-transform:uppercase; line-height:1; background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); border-radius:0; cursor:pointer; } .ds-menu-btn:hover, .ds-menu-btn[aria-expanded=true] { background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); } .ds-menu-btn:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; } .ds-menu-bars { position:relative; display:flex; flex-direction:column; justify-content:space-between; width:14px; height:10px; } .ds-menu-bars span { display:block; width:100%; height:1.5px; background:currentColor; transform-origin:center; transition:transform 300ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-menu-btn[aria-expanded=true] .ds-menu-bars span:first-child { transform:translateY(4.25px) rotate(45deg); } .ds-menu-btn[aria-expanded=true] .ds-menu-bars span:last-child { transform:translateY(-4.25px) rotate(-45deg); }"
+    },
+    {
+      "name": "Full-Page Menu",
+      "kind": "nav",
+      "refersTo": "menu-row",
+      "description": "The one page-to-page nav: a paper dialog over the viewport with huge ink-ruled rows, expanded numerals, 3px underline on the current page, hover inverts, staggered entry.",
+      "html": "<div class=\"ds-menu\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Menu\"><nav aria-label=\"Site\"><ol><li style=\"animation-delay:80ms\"><a href=\"#\" aria-current=\"page\"><span class=\"ds-menu-n\">01</span><span class=\"ds-menu-label\">Home</span></a></li><li style=\"animation-delay:150ms\"><a href=\"#\"><span class=\"ds-menu-n\">02</span><span class=\"ds-menu-label\">About</span></a></li><li style=\"animation-delay:220ms\"><a href=\"#\"><span class=\"ds-menu-n\">03</span><span class=\"ds-menu-label\">Works</span></a></li><li style=\"animation-delay:290ms\"><a href=\"#\"><span class=\"ds-menu-n\">04</span><span class=\"ds-menu-label\">Side projects</span></a></li><li style=\"animation-delay:360ms\"><a href=\"#\"><span class=\"ds-menu-n\">05</span><span class=\"ds-menu-label\">Writing</span><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\" class=\"ds-menu-arrow\"><path d=\"M2 10h15M11 4l6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a></li><li style=\"animation-delay:430ms\"><a href=\"#\"><span class=\"ds-menu-n\">06</span><span class=\"ds-menu-label\">GitHub</span><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\" class=\"ds-menu-arrow\"><path d=\"M2 10h15M11 4l6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></a></li></ol></nav><div class=\"ds-menu-foot\"><a href=\"#\">henrynoowah@gmail.com</a><span>Portfolio · 2026</span></div></div>",
+      "css": ".ds-menu { display:flex; flex-direction:column; padding:24px 20px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); } .ds-menu ol { list-style:none; margin:0; padding:0; border-bottom:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); } .ds-menu li { border-top:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); animation:ds-menu-in 500ms cubic-bezier(0.16, 1, 0.3, 1) both; } .ds-menu a { display:flex; align-items:center; gap:20px; padding:12px 0; color:inherit; text-decoration:none; } .ds-menu a:hover { background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); } .ds-menu a:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; } .ds-menu-n { width:48px; flex-shrink:0; text-align:right; font-family:'Archivo', ui-sans-serif, sans-serif; font-stretch:125%; font-variant-numeric:tabular-nums; font-size:18px; font-weight:900; } .ds-menu-label { flex:1; font-size:36px; font-weight:700; line-height:1.05; letter-spacing:-0.025em; text-wrap:balance; } .ds-menu a[aria-current=page] .ds-menu-label { text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:0.15em; } .ds-menu-arrow { width:24px; height:24px; margin-right:8px; transform:rotate(-45deg); transition:translate 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-menu a:hover .ds-menu-arrow { translate:4px 0; } .ds-menu-foot { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px; padding-top:24px; font-size:14px; } .ds-menu-foot a { font-weight:600; color:inherit; text-decoration:underline; text-decoration-thickness:var(--stroke, 1.5px); text-underline-offset:4px; } .ds-menu-foot span { font-stretch:75%; font-weight:600; text-transform:uppercase; letter-spacing:0.025em; } @media (min-width:640px) { .ds-menu { padding:32px; } .ds-menu-label { font-size:48px; } } @media (min-width:768px) { .ds-menu a { gap:32px; padding:16px 0; } .ds-menu-n { width:80px; font-size:24px; } .ds-menu-label { font-size:72px; } .ds-menu-arrow { width:36px; height:36px; } } @keyframes ds-menu-in { from { opacity:0; transform:translateY(16px); } } @media (prefers-reduced-motion: reduce) { .ds-menu li { animation-duration:0.01ms; } }"
+    },
+    {
+      "name": "Locale Toggle",
+      "kind": "chip",
+      "refersTo": "step-box",
+      "description": "Joined ink boxes; the current locale is filled.",
+      "html": "<div class=\"ds-locale\" role=\"group\" aria-label=\"Language\"><button aria-pressed=\"true\">en</button><button aria-pressed=\"false\">ko</button></div>",
+      "css": ".ds-locale { display:flex; } .ds-locale button { display:grid; place-items:center; height:32px; min-width:36px; padding:0 8px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-size:12px; font-weight:700; text-transform:uppercase; border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); border-radius:0; cursor:pointer; } .ds-locale button + button { margin-left:calc(-1 * var(--stroke, 1.5px)); } .ds-locale button[aria-pressed=true], .ds-locale button:hover { background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); } .ds-locale button:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; }"
+    },
+    {
+      "name": "Stack Box",
+      "kind": "card",
+      "refersTo": "data-tag",
+      "description": "Outlined box with a zip-seal strip, a group label and a plain item count; items inline without part numbers, under a visible \"Skills & stack\" heading.",
+      "html": "<h3 class=\"ds-stack-title\">Skills &amp; stack</h3><div class=\"ds-bag\"><div class=\"ds-bag-seal\"><span class=\"ds-bag-hole\"></span><span class=\"ds-bag-zip\"></span></div><div class=\"ds-bag-head\"><h4>Frontend</h4><span class=\"ds-tag\">5</span></div><ul><li>Next.js</li><li>TypeScript</li><li>React</li><li>Tailwind CSS</li><li>Motion</li></ul></div>",
+      "css": ".ds-stack-title { margin:0 0 16px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-size:14px; font-weight:700; color:var(--ink, oklch(0.26 0.035 205)); } .ds-bag { font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); color:var(--ink, oklch(0.26 0.035 205)); background:var(--paper, oklch(0.95 0.009 190)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); max-width:340px; } .ds-bag-seal { display:flex; align-items:center; gap:8px; height:20px; padding:0 12px; border-bottom:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); } .ds-bag-hole { width:10px; height:10px; border-radius:9999px; border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); } .ds-bag-zip { flex:1; height:5px; border-top:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); border-bottom:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); } .ds-bag-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:12px 16px 0; } .ds-bag-head h4 { margin:0; font-size:20px; font-weight:700; letter-spacing:-0.025em; } .ds-bag ul { display:flex; flex-wrap:wrap; gap:6px 16px; list-style:none; margin:0; padding:8px 16px 16px; } .ds-bag li { font-size:15px; font-weight:500; } .ds-tag { font-stretch:75%; font-variant-numeric:tabular-nums; font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.025em; }"
+    },
+    {
+      "name": "Spec Table",
+      "kind": "card",
+      "refersTo": "ink",
+      "description": "Outlined definition list with a 7rem label column split by ink rules.",
+      "html": "<dl class=\"ds-spec\"><div><dt>Status</dt><dd>Live</dd></div><div><dt>My role</dt><dd>Led client development</dd></div><div><dt>Suite</dt><dd>synolink.ai</dd></div></dl>",
+      "css": ".ds-spec { font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); color:var(--ink, oklch(0.26 0.035 205)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); margin:0; max-width:320px; font-size:14px; } .ds-spec div { display:grid; grid-template-columns:7rem 1fr; border-bottom:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); } .ds-spec div:last-child { border-bottom:0; } .ds-spec dt { padding:8px 12px; font-weight:600; border-right:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); } .ds-spec dd { margin:0; padding:8px 12px; }"
+    },
+    {
+      "name": "Do / Don't Panel",
+      "kind": "card",
+      "refersTo": "ink",
+      "description": "Square panel headed by a drawn tick or cross; the don't/not-claimed panel is dashed.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-panel-head\"><h3>Did</h3><svg viewBox=\"0 0 28 28\" class=\"ds-mark\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"1\" width=\"26\" height=\"26\"/><path d=\"M7 14.5l4.5 4.5L21 9\" stroke-width=\"2.25\"/></g></svg></div><ul><li>Led client development of cms.synolink.ai.</li><li>Built content-builder, the editor framework underneath it.</li></ul></div><div class=\"ds-panel ds-panel-dashed\"><div class=\"ds-panel-head\"><h3>Not claimed</h3><svg viewBox=\"0 0 28 28\" class=\"ds-mark\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"1\" y=\"1\" width=\"26\" height=\"26\"/><path d=\"M8.5 8.5l11 11M19.5 8.5l-11 11\" stroke-width=\"2.25\"/></g></svg></div><ul><li>No traffic, revenue, or performance figures.</li></ul></div>",
+      "css": ".ds-panel { font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); color:var(--ink, oklch(0.26 0.035 205)); background:var(--paper, oklch(0.95 0.009 190)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); padding:24px; max-width:360px; margin-bottom:16px; } .ds-panel-dashed { border-style:dashed; } .ds-panel-head { display:flex; align-items:center; justify-content:space-between; } .ds-panel-head h3 { margin:0; font-size:20px; font-weight:700; } .ds-mark { width:32px; height:32px; } .ds-panel ul { list-style:none; margin:16px 0 0; padding:0; } .ds-panel li { border-top:var(--stroke, 1.5px) dashed var(--ink, oklch(0.26 0.035 205)); padding:12px 0; font-size:18px; font-weight:600; line-height:1.375; }"
+    },
+    {
+      "name": "Chat Composer",
+      "kind": "input",
+      "refersTo": "chat-panel",
+      "description": "The chat's foot on the panel ground: a borderless paper input under an ink rule with a solid ink send cell.",
+      "html": "<div class=\"ds-chat-panel\"><form class=\"ds-composer\" onsubmit=\"return false\"><input type=\"text\" placeholder=\"Ask about Hawoon\" aria-label=\"Message\"/><button type=\"submit\" aria-label=\"Send\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M12 5v14M18 11l-6-6M6 11l6-6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></button></form></div>",
+      "css": ".ds-chat-panel { max-width:400px; padding-top:48px; background:var(--panel, oklch(0.87 0.03 195)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); box-shadow:0 18px 40px -18px rgb(0 0 0 / 0.45); } .ds-composer { display:flex; border-top:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); max-width:400px; } .ds-composer input { flex:1; min-width:0; padding:12px 16px; font:inherit; font-size:16px; background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); caret-color:var(--ink, oklch(0.26 0.035 205)); border:0; outline:none; } .ds-composer input::placeholder { color:var(--ink, oklch(0.26 0.035 205)); opacity:0.6; } .ds-composer button { display:grid; place-items:center; width:48px; flex-shrink:0; border:0; border-left:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); cursor:pointer; } .ds-composer button:hover { background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); } .ds-composer button:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; } .ds-composer button:disabled { background:var(--paper, oklch(0.95 0.009 190)); color:var(--ink, oklch(0.26 0.035 205)); opacity:0.5; }"
+    },
+    {
+      "name": "Exploded Plate And Callout",
+      "kind": "custom",
+      "refersTo": "callout-active",
+      "description": "Isometric plate with a 1.5px ink outline and paper fill; the active plate's top face takes wash under an ink hatch and its callout fills with wash, numeral in ink. A washed (built) plate takes wash on its top and both side faces, with no hatch.",
+      "html": "<svg class=\"ds-iso\" viewBox=\"0 0 260 150\" aria-hidden=\"true\"><defs><pattern id=\"ds-hatch\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><line x1=\"0\" y1=\"0\" x2=\"0\" y2=\"5\" stroke=\"currentColor\" stroke-width=\"1.1\"/></pattern></defs><g stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linejoin=\"round\"><polygon points=\"20,40 100,80 100,92 20,52\" fill=\"var(--paper, oklch(0.95 0.009 190))\"/><polygon points=\"100,80 180,40 180,52 100,92\" fill=\"var(--paper, oklch(0.95 0.009 190))\"/><polygon points=\"20,40 100,0 180,40 100,80\" fill=\"var(--wash, oklch(0.66 0.055 195))\"/><polygon points=\"20,40 100,0 180,40 100,80\" fill=\"url(#ds-hatch)\" stroke=\"none\"/></g><path d=\"M140 60H217\" stroke=\"currentColor\" stroke-width=\"1.25\" fill=\"none\"/><circle cx=\"140\" cy=\"60\" r=\"2.25\" fill=\"currentColor\"/><circle cx=\"230\" cy=\"60\" r=\"13\" fill=\"var(--wash, oklch(0.66 0.055 195))\" stroke=\"currentColor\" stroke-width=\"1.5\"/><text x=\"230\" y=\"60\" text-anchor=\"middle\" dominant-baseline=\"central\" class=\"ds-iso-n\">2</text></svg>",
+      "css": ".ds-iso { width:260px; height:auto; color:var(--ink, oklch(0.26 0.035 205)); } .ds-iso-n { font-family:'Archivo', ui-sans-serif, sans-serif; font-size:13px; font-weight:700; fill:var(--ink, oklch(0.26 0.035 205)); }"
+    },
+    {
+      "name": "Current Marker",
+      "kind": "chip",
+      "refersTo": "current-marker",
+      "description": "Borderless wash block with ink text marking the current entry on the About page's Experience list (\"Current\", KO 현재).",
+      "html": "<p class=\"ds-here-line\">Now · Synolink <span class=\"ds-here\">Current</span></p>",
+      "css": ".ds-here-line { margin:0; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-size:14px; font-weight:600; color:var(--ink, oklch(0.26 0.035 205)); } .ds-here { margin-left:8px; padding:2px 6px; background:var(--wash, oklch(0.66 0.055 195)); color:var(--ink, oklch(0.26 0.035 205)); }"
+    },
+    {
+      "name": "Recognition Badge",
+      "kind": "chip",
+      "refersTo": "recognition-badge",
+      "description": "An outside recognition of a project in the condensed uppercase data label on a wash block with a 1.5px ink border; sits beside the description, never above a heading.",
+      "html": "<span class=\"ds-recog\">Listed on awesome-shadcn-ui</span>",
+      "css": ".ds-recog { display:inline-flex; align-items:center; gap:8px; padding:4px 8px; font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); font-stretch:75%; font-size:14px; font-weight:600; letter-spacing:0.025em; text-transform:uppercase; background:var(--wash, oklch(0.66 0.055 195)); color:var(--ink, oklch(0.26 0.035 205)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); }"
+    },
+    {
+      "name": "AI Callout",
+      "kind": "button",
+      "refersTo": "ai-callout-label",
+      "description": "The cover's primary action: a leader line, a 36px wash circle reading AI, and an ink-outlined paper label box with an arrow. One button (aria-expanded, name \"Ask the AI assistant\"); hover inverts the box; hidden while the chat is open.",
+      "html": "<button type=\"button\" class=\"ds-ai\" aria-expanded=\"false\" aria-label=\"Ask the AI assistant\"><span class=\"ds-ai-leader\"></span><span class=\"ds-ai-mark\" aria-hidden=\"true\">AI</span><span class=\"ds-ai-label\">Ask about my work, projects, or background<svg viewBox=\"0 0 20 20\" width=\"20\" height=\"20\" aria-hidden=\"true\"><path d=\"M2 10h15M11 4l6 6-6 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span></button>",
+      "css": ".ds-ai { display:inline-flex; align-items:center; padding:0; background:none; border:0; cursor:pointer; color:var(--ink, oklch(0.26 0.035 205)); font-family:var(--font-sans, 'Archivo', 'Noto Sans KR', ui-sans-serif, sans-serif); transition:opacity 200ms; } .ds-ai[aria-expanded=true] { opacity:0; pointer-events:none; } .ds-ai-leader { width:64px; height:1.5px; background:var(--ink, oklch(0.26 0.035 205)); } .ds-ai-mark { display:grid; place-items:center; width:36px; height:36px; flex-shrink:0; border-radius:9999px; border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); background:var(--wash, oklch(0.66 0.055 195)); font-size:14px; font-weight:700; } .ds-ai-label { margin-left:12px; display:flex; align-items:center; gap:12px; max-width:26ch; padding:12px 16px; text-align:left; font-size:16px; font-weight:600; line-height:1.375; background:var(--paper, oklch(0.95 0.009 190)); border:var(--stroke, 1.5px) solid var(--ink, oklch(0.26 0.035 205)); transition:background-color 150ms, color 150ms; } .ds-ai-label svg { flex-shrink:0; transition:transform 200ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-ai:hover .ds-ai-label { background:var(--ink, oklch(0.26 0.035 205)); color:var(--paper, oklch(0.95 0.009 190)); } .ds-ai:hover .ds-ai-label svg { transform:translateX(4px); } .ds-ai:focus-visible { outline:2px solid var(--ink, oklch(0.26 0.035 205)); outline-offset:3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Assembly Manual",
+    "overview": "The site presents one person as a well-made product with clear assembly instructions. Every surface is a printed sheet from that manual: a duotone of two inks on a pale teal-grey stock with fine paper grain, single-weight line drawings, very large step numerals, drawn do and don't panels, a pointing hand, and a \"?\" help figure on the back page. The Spline bot is the product pictured on the box, and its teal body sets the hue of the whole print: paper, ink and the second ink are low-chroma members of its family, so the bot reads as the object the manual was printed for. The grain lies over everything, the bot included, so sheet and product share one stock.\n\nDensity follows a manual, not a magazine. Each step owns one fact and one drawing, and the paper around it stays empty on purpose. Hierarchy comes from size, weight and Archivo's width axis, never from grey. Structure is visible: the running head's step counter shows which section is open, ink rules separate steps edge to edge, a full-page menu carries page-to-page navigation, and the home cover's numbered contents list is its own nav.\n\nThe manual lives in the visuals, never in the words. Numerals, drawings, the duotone and the grain carry the theme; the copy is plain professional portfolio wording in English and Korean.\n\nThe one authored motion is snap into place. Parts start lifted along dashed guides and drop into their slots with a short exponential ease-out once the drawing enters the viewport. Under reduced motion they are drawn already assembled. The second ink, wash, is the manual's highlighter: it marks only the part the text is talking about. Dark mode is the same duotone printed as a negative.\n\nThis system replaces the dev-portfolio default of hero, bento grid and dark neon accent. It is not a parody of any furniture brand's manual.",
+    "keyCharacteristics": [
+      "Two inks on one paper, all in the Spline bot's teal family; the second ink (wash) marks only the part in focus, and the chat sits on its own wash-steeped sheet (panel).",
+      "A static paper grain over the whole viewport, bot included.",
+      "Archivo with its width axis: expanded numerals and wordmark, condensed data labels, normal width for reading. Noto Sans KR carries Hangul.",
+      "One 1.5px stroke for rules, control outlines, underlines and drawings.",
+      "Square, ink-outlined controls whose hover inverts ink and paper.",
+      "Isometric line drawings with paper fills that occlude like real technical drawings.",
+      "Numbered steps as the page structure, a position counter in the running head, and a full-page menu as the nav.",
+      "Snap-into-place motion on `cubic-bezier(0.16, 1, 0.3, 1)`, fully disabled under reduced motion.",
+      "Professional copy in EN and KO; the manual theme is drawn, never written."
+    ],
+    "rules": [
+      {
+        "name": "The Two Inks Rule",
+        "body": "Everything is printed in ink and wash on paper, and nothing else; the chat's panel is that same paper steeped in wash, not a third ink. Secondary text is not greyed or faded: hierarchy comes from size, weight and width. The only reduced-opacity ink is the chat input placeholder and disabled states. Dark mode prints the same duotone as a negative, and layout, weight and drawings stay the same.",
+        "section": "colors"
+      },
+      {
+        "name": "The Bot Sets The Hue Rule",
+        "body": "Paper, ink and wash are low-chroma members of the Spline bot's teal family, and the bot stays the most saturated object on any page. Don't add a brand hue or an accent from outside that family.",
+        "section": "colors"
+      },
+      {
+        "name": "The Second Ink Means Focus Rule",
+        "body": "Wash marks the part being talked about, or a part that is built and in place, and nothing else. It is never decoration, never a hover colour (hover inverts ink and paper), and never a ground for running text; only short ink labels, numerals and a single highlighted line sit on it. The one exception is `panel`: a separate sheet (the chat), not a focus mark, so it may carry running text and never stands in for wash as a highlight.",
+        "section": "colors"
+      },
+      {
+        "name": "The Width Axis Rule",
+        "body": "Width encodes role. Expanded (`font-stretch: 125%`) is for numerals and the wordmark. Condensed (75%) is for sub-step numbers, counts, statuses and issue lines. Normal width is for everything a visitor reads in sentences.",
+        "section": "typography"
+      },
+      {
+        "name": "The Size Is Billing Rule",
+        "body": "What he owns is set largest: step numerals, owned products and product domains outrank every description on the sheet.",
+        "section": "typography"
+      },
+      {
+        "name": "The Data Label Rule",
+        "body": "Uppercase condensed tracked type is data. It labels a sub-step, a count, a status or an issue. It is never a label stacked above a heading.",
+        "section": "typography"
+      },
+      {
+        "name": "The Drawn Not Written Rule",
+        "body": "The manual lives in the visuals (numerals, drawings, duotone, grain), never in the words. Copy is professional portfolio wording in EN and KO: sections are Overview, Experience, Principles, Work and Contact (소개, 경력, 원칙, 프로젝트, 연락처), and the pages are Home, About, the Synolink CMS case study and Side projects (사이드 프로젝트). Don't write assembly, parts, bags, part numbers, \"1×\" counts, \"steps to go\", \"You are here\" or help-desk wording into labels, headings or buttons. Step numerals, sub-step numbers, ✓/✕ marks, the hand pointer, the help figure and the zip seal carry the theme without words.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hangul Rule",
+        "body": "Under `lang-ko`, headings and paragraphs use `word-break: keep-all`, and negative tracking eases to -0.01em. The wordmark stays in Archivo.",
+        "section": "typography"
+      },
+      {
+        "name": "The Empty Paper Rule",
+        "body": "Empty paper is charged, not wasted. Don't fill the cover's centre, the numeral gutter, or the space around a drawing.",
+        "section": "layout"
+      },
+      {
+        "name": "The Counter Shows Position, The Menu Is The Nav Rule",
+        "body": "Every manual page registers its steps with `ManualSteps`, and the running head's counter shows only where the reader is: numbered boxes with the open one filled, plus the open section's label from lg. It never counts down. Page-to-page navigation lives in one place, the full-page menu. Don't add inline header links, a dropdown, or a second in-page navigation.",
+        "section": "layout"
+      },
+      {
+        "name": "The Occlusion Rule",
+        "body": "Depth on the sheet comes from paper fills and drawn thickness, never from drop shadows, gradients or blur.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Floating Layer Rule",
+        "body": "A shadow means \"not printed on this page\". Only the chat layer has one. Cards, controls and drawings sit flat.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Grain Over Everything Rule",
+        "body": "One grain layer covers the whole viewport, bot included, so everything reads as printed on the same stock. Don't add per-component noise, blend modes or a second texture, and don't let anything stack above the grain.",
+        "section": "elevation"
+      },
+      {
+        "name": "The One Stroke Rule",
+        "body": "Structure is drawn at 1.5px. A second weight at rest is a mistake. Weight changes only for drawn detail (thinner) or state (3px underline).",
+        "section": "shapes"
+      },
+      {
+        "name": "The Dashed Means Not-Yet Rule",
+        "body": "Use a dashed line only for a part that does not exist yet, a claim not made, a disabled control, or an assembly guide (the origin drawing's \"became\" arrow is one). It is never decoration.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do print everything in `ink` on `paper`, and build hierarchy from size, weight (400/600/700/900) and Archivo's width axis.",
+      "Do spend `wash` only on the part being talked about (active plate, active callout or layer number, the cover's \"AI\" mark, the \"Current\" marker, a recognition badge, one highlighted line per page) or a built module, always with ink on top.",
+      "Do use `panel` only as the chat's ground, with the input field kept on paper.",
+      "Do keep the one grain layer above everything, the bot included, and hide it in print.",
+      "Do open every manual section with a `StepSection`: an edge-to-edge 1.5px ink rule, an expanded 900 numeral in the 3-column gutter, and one fact or drawing per step.",
+      "Do draw illustrations as authored SVG at the 1.5px stroke with paper fills, so nearer parts occlude farther ones.",
+      "Do make hover invert ink and paper on controls, rows and boxes, and thicken underlines to 3px on links.",
+      "Do use the solid ink control once per sheet for its committed action, and outline controls for everything else.",
+      "Do set sub-step numbers, counts and statuses in the condensed uppercase data label, inline with the thing they label.",
+      "Do write professional portfolio copy in EN and KO, and let numerals, drawings, duotone and grain carry the manual.",
+      "Do put every page link in the full-page menu, and keep the running head's counter to position only.",
+      "Do run motion on `cubic-bezier(0.16, 1, 0.3, 1)` from an already-visible state, and render drawings already assembled under `prefers-reduced-motion`.",
+      "Do ship every string in EN and KO and check the Korean set for `keep-all` wrapping and eased tracking."
+    ],
+    "donts": [
+      "Don't introduce a hue outside the bot's teal family, a grey tint, or opacity-faded text for hierarchy.",
+      "Don't use wash for hover, decoration or a running-text ground. Hover inverts ink and paper.",
+      "Don't round corners on controls, boxes or panels, or add a second stroke weight at rest.",
+      "Don't put shadows, gradients or blur on anything printed on the sheet. Only the chat layer floats.",
+      "Don't put an uppercase label, kicker or eyebrow above a heading. Condensed caps are for data only.",
+      "Don't write the manual into the words: no \"assembly\", \"parts\", \"bag\", part numbers, \"1×\", \"steps to go\" or \"You are here\" in labels, headings or buttons.",
+      "Don't add inline header links, a dropdown, or a countdown to the running head.",
+      "Don't replace drawings with icon tiles, emoji or Unicode glyphs.",
+      "Don't fall back to the dev-portfolio default of hero, bento grid and dark neon accent.",
+      "Don't parody a specific furniture brand's manual (its mascots, tools or naming). The manual is the grammar, not the joke.",
+      "Don't use dashed lines decoratively. Dashed means not built, not claimed, disabled, or an assembly guide.",
+      "Don't fill the cover's centre or the numeral gutter. That empty paper is part of the design."
+    ]
+  }
+}

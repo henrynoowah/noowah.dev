@@ -9,7 +9,6 @@ const nextConfig: NextConfig = {
       'motion',
       'lucide-react',
       '@tabler/icons-react',
-      'lodash',
     ],
   },
 };

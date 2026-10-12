@@ -2,26 +2,23 @@ import { ThemeProvider } from '@/providers/theme-provider';
 import { getHTMLTextDir, getIntlayer } from 'intlayer';
 import { Metadata } from 'next';
 import type { NextLayoutIntlayer } from 'next-intlayer';
-import { Syne, Outfit, Noto_Sans_KR } from 'next/font/google';
+import { Archivo, Noto_Sans_KR } from 'next/font/google';
 import { ChatProvider } from './_components/chat-context';
 import { FloatingChat } from './_components/floating-chat';
 
-const syne = Syne({
+// Archivo carries the manual's voice: its width axis gives expanded step
+// numerals and a condensed running head from one family. It has no Hangul, so
+// Noto Sans KR sits second in the stack and picks up every Korean glyph.
+const archivo = Archivo({
   subsets: ['latin'],
-  variable: '--font-display',
-  weight: ['400', '500', '600', '700', '800'],
-});
-
-const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-body',
-  weight: ['300', '400', '500', '600'],
+  variable: '--font-archivo',
+  axes: ['wdth'],
 });
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],
   variable: '--font-ko',
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '500', '700', '900'],
 });
 
 export const generateMetadata = async ({
@@ -75,7 +72,7 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
       suppressHydrationWarning={true}
       lang={locale}
       dir={getHTMLTextDir(locale)}
-      className={`${syne.variable} ${outfit.variable} ${notoSansKR.variable} ${locale === 'ko' ? 'lang-ko' : ''}`}
+      className={`${archivo.variable} ${notoSansKR.variable} ${locale === 'ko' ? 'lang-ko' : ''}`}
     >
       <head>
         <link

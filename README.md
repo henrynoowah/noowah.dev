@@ -1,36 +1,37 @@
-# Henry's Blog (NoowaH)
+# noowah.dev
 
-Welcome to the GitHub repository for my blog! This platform is a personal project where I share my development notes, studies, and showcase my portfolio. It's built with modern web technologies, focusing on performance, aesthetics, and interactivity.
+Portfolio of Hawoon Joh (NOOWAH), product engineer in Seoul: a home page, an About page, and case studies, with an AI assistant (the Spline bot) that answers questions about the work. The visual style borrows from technical manuals: duotone print, line drawings, paper grain. Writing lives separately at [blog.noowah.dev](https://blog.noowah.dev).
 
-## Website Contents
+## Routes
 
-- **`/posts`**: This section contains my development notes and in-depth studies on various topics within software development. It's a space where I document my learning journey and share insights on complex concepts.
+- **`/[locale]`**: home. The NOOWAH wordmark, role, the products he owns, a numbered menu, and the Spline bot with its AI assistant.
+- **`/[locale]/about`**: overview, experience, principles, work (`#projects`), and contact (`#contact`).
+- **`/[locale]/work/synolink-cms`**: case study of cms.synolink.ai, with a scroll-linked architecture diagram.
+- **`/api/chat`**: the assistant, streaming from OpenRouter.
+- **`/llms.txt`**, **`/sitemap.xml`**, **`/robots.txt`**.
 
-- **`/about`**: Learn more about me, my background in software development, and what drives my passion for technology.
+Locales are `en` (default) and `ko`, via intlayer.
 
-- **`/works`**: A showcase of my portfolio, highlighting projects and works that I've contributed to or developed. This section demonstrates my skills and areas of expertise.
+## Content
+
+Facts live in intlayer dictionaries, and `lib/bio.ts` turns the same dictionaries into the chat bot's system prompt and `/llms.txt`. Add a fact to the dictionary and the page, the bot and the crawlers all pick it up from one place. Keys under `ui` are chrome and are skipped.
+
+- `app/[locale]/(manual)/about/about.content.ts`
+- `app/[locale]/(manual)/work/synolink-cms/synolink-cms.content.ts`
+
+## Design
+
+`PRODUCT.md` records who the site is for and its constraints; `DESIGN.md` records the visual system: a duotone in the bot's teal family with paper grain, Archivo with Noto Sans KR, and isometric line drawings. Shared primitives are in `components/manual/`.
 
 ## Stack
 
-The blog leverages a modern technology stack to deliver a seamless user experience:
+Next.js 16 (App Router), React 19, Tailwind CSS 4, Motion, intlayer, next-themes, Spline.
 
-- **Next.js 14 (App Router)**: Utilizes the latest features of Next.js for efficient, scalable routing, enhancing the performance and SEO of the blog.
-
-- **TailwindCSS & PostCSS**: For styling, the blog uses TailwindCSS along with PostCSS for a utility-first CSS workflow, enabling responsive and customizable design with ease.
-
-- **Markdown**: Content for the blog posts is written in Markdown, allowing for easy formatting and maintenance of the blog's written content.
-
-- **Framer Motion**: This library is used to add smooth, powerful animations throughout the website, enriching the user interaction and visual appeal.
-
-- **SWR**: For data fetching, SWR is implemented to handle caching, revalidation, and fetching data, ensuring up-to-date content is served with minimal loading times.
-
-## Getting Started
-
-To set up the blog locally, follow these steps:
-
-1. Clone the repository:
+## Development
 
 ```bash
-git clone https://github.com/henrynoowah/blog.git
-cd blog
+pnpm install
+pnpm dev
 ```
+
+The bot needs `NEXT_PUBLIC_SPLINE_SCENE` (and optionally `NEXT_PUBLIC_SPLINE_BOT_ID`). The chat needs `OPENROUTER_API_KEY`.

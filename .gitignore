@@ -42,3 +42,8 @@ package-lock.json
 .intlayer
 # Playwright MCP test artifacts
 .playwright-mcp/
+
+# impeccable working files (decision rolls, review captures, mocks)
+.impeccable/questions/
+.impeccable/review/
+.impeccable/mocks/
