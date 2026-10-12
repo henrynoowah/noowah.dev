@@ -206,7 +206,7 @@ export function FloatingChat({ locale }: { locale: string }) {
             side="top"
             align="end"
             sideOffset={16}
-            className="chat-popover-content w-[calc(100vw-3rem)] sm:w-[400px] h-[60vh] sm:h-[480px] max-h-[70vh] p-0 bg-primary/20 backdrop-blur-lg rounded-[24px] shadow-xl overflow-hidden max-sm:!w-full max-sm:!h-full max-sm:!max-h-full max-sm:!rounded-none"
+            className="chat-popover-content w-[calc(100vw-3rem)] sm:w-[400px] h-[60vh] sm:h-[500px] max-h-[70vh] p-0 bg-panel border-[length:var(--stroke)] border-ink rounded-none shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)] overflow-hidden max-sm:!w-full max-sm:!h-full max-sm:!max-h-full max-sm:border-0"
             onOpenAutoFocus={e => e.preventDefault()}
           >
             <ChatBoxContent onClose={() => setIsOpen(false)} />

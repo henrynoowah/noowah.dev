@@ -3,7 +3,8 @@
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
 import { useEffect } from 'react';
-import { IconSend, IconX } from '@tabler/icons-react';
+import { IconArrowUp, IconX } from '@tabler/icons-react';
+import { getIntlayer } from 'intlayer';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { useChatContext } from '@/app/[locale]/_components/chat-context';
@@ -12,19 +13,15 @@ import {
   ConversationContent,
   ConversationScrollButton,
 } from '@/components/ui/conversation';
-import { Badge } from '@/components/ui/badge';
 import { Message, MessageContent } from '@/components/ui/message';
 import { ShimmeringText } from '@/components/ui/shimmering-text';
 
 import type { ChatMessage } from '@/app/[locale]/_components/chat-context';
 
-// ponytail: hardcoded suggestions, not from intlayer — matches the rest of
-// this file's chrome text (placeholder, header), which isn't localized either.
-const SUGGESTIONS = [
-  'What does he work on?',
-  "What's NOOWAH mean?",
-  'How did he get into engineering?',
-];
+// FloatingChat mounts above the pages' IntlayerClientProvider, so read the
+// dictionary directly for the chat's own locale instead of via useIntlayer.
+const useChatCopy = (locale: string) =>
+  getIntlayer('chat', locale as Parameters<typeof getIntlayer>[1]);
 
 const MarkdownContent = ({ content }: { content: string }) => (
   <ReactMarkdown
@@ -44,11 +41,11 @@ const MarkdownContent = ({ content }: { content: string }) => (
       code: ({ children, className }) => {
         const isBlock = className?.includes('language-');
         return isBlock ? (
-          <pre className="bg-black/20 rounded px-2 py-1.5 text-xs overflow-x-auto my-1">
+          <pre className="my-1 overflow-x-auto border-[length:var(--stroke)] border-ink px-2 py-1.5 font-mono text-xs">
             <code>{children}</code>
           </pre>
         ) : (
-          <code className="bg-black/20 rounded px-1 py-0.5 text-xs font-mono">
+          <code className="border-[length:var(--stroke)] border-ink px-1 py-0.5 font-mono text-xs">
             {children}
           </code>
         );
@@ -58,21 +55,21 @@ const MarkdownContent = ({ content }: { content: string }) => (
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:opacity-80"
+          className="font-semibold underline decoration-[length:var(--stroke)] underline-offset-2 hover:decoration-[3px]"
         >
           {children}
         </a>
       ),
       table: ({ children }) => (
-        <div className="overflow-x-auto mb-1 rounded border border-foreground/15">
+        <div className="mb-1 overflow-x-auto border-[length:var(--stroke)] border-ink">
           <table className="w-full text-xs border-collapse">{children}</table>
         </div>
       ),
       thead: ({ children }) => (
-        <thead className="bg-black/20">{children}</thead>
+        <thead className="border-b-[length:var(--stroke)] border-ink">{children}</thead>
       ),
       tr: ({ children }) => (
-        <tr className="border-b border-foreground/10 last:border-0">
+        <tr className="border-b border-dashed border-ink last:border-0">
           {children}
         </tr>
       ),
@@ -101,6 +98,10 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
     inputRef,
     locale,
   } = useChatContext();
+  const copy = useChatCopy(locale);
+  const suggestions = Object.values(copy.suggestions) as string[];
+  // The greeting is always message 0, so "fresh" means nothing sent yet.
+  const isFresh = messages.every(m => m.role === 'model');
 
   useEffect(() => {
     setTimeout(() => inputRef.current?.focus(), 100);
@@ -162,19 +163,21 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col bg-panel text-ink">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-primary/20">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-          <span className="text-sm font-semibold">AI Assistant</span>
+      <div className="flex items-start justify-between gap-4 border-b-[length:var(--stroke)] border-ink px-4 py-3">
+        <div>
+          <p className="text-base font-bold leading-tight">{copy.title}</p>
+          <p className="text-xs leading-snug">{copy.subtitle}</p>
         </div>
         {onClose && (
           <button
+            type="button"
             onClick={onClose}
-            className="p-1 rounded-full hover:bg-primary/20 transition-colors"
+            aria-label={String(copy.close)}
+            className="grid size-8 shrink-0 place-items-center border-[length:var(--stroke)] border-ink hover:bg-ink hover:text-paper"
           >
-            <IconX className="size-4" />
+            <IconX className="size-4" stroke={1.75} />
           </button>
         )}
       </div>
@@ -186,7 +189,7 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
             <Message key={i} from={msg.role === 'user' ? 'user' : 'assistant'}>
               <MessageContent>
                 {msg.role === 'model' && !msg.content && isLoading ? (
-                  <ShimmeringText text="Thinking..." duration={1.5} />
+                  <ShimmeringText text={String(copy.thinking)} duration={1.5} />
                 ) : msg.role === 'model' ? (
                   <MarkdownContent content={msg.content} />
                 ) : (
@@ -196,46 +199,55 @@ const ChatBoxContent = ({ onClose }: { onClose?: () => void }) => {
             </Message>
           ))}
         </ConversationContent>
-        <ConversationScrollButton className="bottom-2" />
+        <ConversationScrollButton
+          className="bottom-2"
+          aria-label={String(copy.scrollDown)}
+        />
       </Conversation>
 
       {/* Suggestions — shown until the visitor sends their first message */}
-      {messages.length === 0 && (
-        <div className="px-4 py-2 flex flex-wrap gap-1.5">
-          {SUGGESTIONS.map(text => (
-            <Badge key={text} variant="outline" asChild>
-              <button
-                type="button"
-                onClick={() => sendMessage(text)}
-                disabled={isLoading}
-                className="cursor-pointer hover:bg-primary/20 transition-colors disabled:opacity-50"
-              >
-                {text}
-              </button>
-            </Badge>
+      {isFresh && (
+        <div className="flex flex-wrap gap-2 px-4 pb-3">
+          {suggestions.map(text => (
+            <button
+              key={text}
+              type="button"
+              onClick={() => sendMessage(text)}
+              disabled={isLoading}
+              className="border-[length:var(--stroke)] border-ink px-2.5 py-1.5 text-left text-sm font-medium leading-tight hover:bg-ink hover:text-paper disabled:border-dashed"
+            >
+              {text}
+            </button>
           ))}
         </div>
       )}
 
       {/* Input */}
-      <div className="px-4 py-3 border-t border-primary/20 flex gap-2">
+      <form
+        className="flex border-t-[length:var(--stroke)] border-ink"
+        onSubmit={e => {
+          e.preventDefault();
+          sendMessage();
+        }}
+      >
         <input
           ref={inputRef}
           value={input}
           onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-          placeholder="Ask me anything..."
+          placeholder={String(copy.placeholder)}
+          aria-label={String(copy.inputLabel)}
           disabled={isLoading}
-          className="flex-1 bg-primary/20 rounded-full px-4 py-2 text-base outline-none placeholder:text-foreground/40 disabled:opacity-50"
+          className="min-w-0 flex-1 bg-paper px-4 py-3 text-base outline-none placeholder:text-ink placeholder:opacity-60 focus-visible:outline-none disabled:opacity-60"
         />
         <button
-          onClick={() => sendMessage()}
+          type="submit"
           disabled={isLoading || !input.trim()}
-          className="size-9 shrink-0 flex items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-40 transition-opacity hover:opacity-80"
+          aria-label={String(copy.send)}
+          className="grid w-12 shrink-0 place-items-center border-l-[length:var(--stroke)] border-ink bg-ink text-paper hover:bg-paper hover:text-ink disabled:bg-paper disabled:text-ink disabled:opacity-50"
         >
-          <IconSend className="size-4" />
+          <IconArrowUp className="size-5" stroke={2} />
         </button>
-      </div>
+      </form>
     </div>
   );
 };
@@ -249,23 +261,23 @@ const ChatBox = ({ isOpen, onClose }: ChatBoxParams) => {
   return (
     <motion.div
       className={cn(
-        'w-[calc(100vw-3rem)] sm:w-[400px] max-w-full h-[60vh] sm:h-[480px] max-h-full bg-primary/20 end-0 rounded-[24px] shadow-xl backdrop-filter backdrop-blur-lg overflow-hidden',
+        'w-[calc(100vw-3rem)] sm:w-[400px] max-w-full h-[60vh] sm:h-[500px] max-h-full end-0 overflow-hidden border-[length:var(--stroke)] border-ink bg-panel shadow-[0_18px_40px_-18px_rgb(0_0_0/0.45)]',
         // Full screen on mobile so the on-screen keyboard doesn't crush the chat into a sliver
         'max-sm:!fixed max-sm:!inset-0 max-sm:!w-full max-sm:!h-dvh max-sm:!max-h-dvh max-sm:!rounded-none',
         isOpen ? 'pointer-events-auto' : 'pointer-events-none'
       )}
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={isOpen ? 'open' : 'closed'}
       variants={{
         open: () => ({
           y: 0,
-          opacity: 100,
-          transition: { ease: 'easeInOut', duration: 0.5 },
+          opacity: 1,
+          transition: { ease: [0.16, 1, 0.3, 1], duration: 0.45 },
         }),
         closed: () => ({
-          y: 80,
+          y: 24,
           opacity: 0,
-          transition: { ease: 'easeOut', duration: 0.5 },
+          transition: { ease: 'easeIn', duration: 0.2 },
         }),
       }}
     >

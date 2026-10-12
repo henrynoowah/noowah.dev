@@ -3,125 +3,62 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Assembly-manual world: two inks on one pale stock, printed as a duotone.
+   The Spline bot sets the hue: paper, ink and the second ink ("wash") are all
+   low-chroma versions of its teal body (h 190–210, C ≤ 0.055). Wash marks only
+   the part being talked about (an active plate, a callout, the current step).
+   Dark mode is the same sheet printed as a negative.
+   Every shadcn token resolves to ink or paper so leftover primitives (popover,
+   button) print in the same inks. */
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.2138 0.0019 286.2347);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2138 0.0019 286.2347);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2138 0.0019 286.2347);
-  --primary: oklch(0.4355 0.0499 208.8718);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.9498 0 0);
-  --secondary-foreground: oklch(0.2138 0.0019 286.2347);
-  --muted: oklch(0.9498 0 0);
-  --muted-foreground: oklch(0.5200 0 0);
-  --accent: oklch(0.7654 0.0331 186.6554);
-  --accent-foreground: oklch(0.2478 0 0);
-  --destructive: oklch(0.5377 0.2188 26.4875);
-  --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.8850 0 0);
-  --input: oklch(0.8850 0 0);
-  --ring: oklch(0.709 0 0);
-  --chart-1: oklch(0.8072 0.0993 253.068);
-  --chart-2: oklch(0.6145 0.1929 260.7991);
-  --chart-3: oklch(0.5438 0.2237 263.5919);
-  --chart-4: oklch(0.484 0.2235 264.4238);
-  --chart-5: oklch(0.4155 0.1827 266.5807);
-  --sidebar: oklch(0.9851 0 0);
-  --sidebar-foreground: oklch(0.2138 0.0019 286.2347);
-  --sidebar-primary: oklch(0.2138 0.0019 286.2347);
-  --sidebar-primary-foreground: oklch(0.9851 0 0);
-  --sidebar-accent: oklch(0.9498 0 0);
-  --sidebar-accent-foreground: oklch(0.2138 0.0019 286.2347);
-  --sidebar-border: oklch(0.8850 0 0);
-  --sidebar-ring: oklch(0.709 0 0);
-  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif: var(--font-display), ui-serif, Georgia, Cambria,
-    'Times New Roman', Times, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
-  --radius: 0.625rem;
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
+  --paper: oklch(0.95 0.009 190);
+  --ink: oklch(0.26 0.035 205);
+  --wash: oklch(0.66 0.055 195);
+  /* The chat's ground: paper steeped in the second ink, so the assistant
+     reads as its own sheet laid on the page. */
+  --panel: oklch(0.87 0.03 195);
+  --error: oklch(0.52 0.19 28);
+  --grain: 0.45;
 }
 
 .dark {
-  --background: oklch(0.2138 0.0019 286.2347);
-  --foreground: oklch(0.9851 0 0);
-  --card: oklch(0.2138 0.0019 286.2347);
-  --card-foreground: oklch(0.9851 0 0);
-  --popover: oklch(0.2686 0 0);
-  --popover-foreground: oklch(0.9851 0 0);
-  /* Lifted to roughly --accent's lightness: at L≈0.50 the teal sat too close to
-     the L≈0.21 background, so eyebrows, folio numerals and rules in `text-primary`
-     were barely legible. Bright fill now takes dark text, matching how --accent
-     already pairs in this theme. */
-  --primary: oklch(0.7654 0.0699 208.8718);
-  --primary-foreground: oklch(0.2138 0.0019 286.2347);
-  --secondary: oklch(0.2686 0 0);
-  --secondary-foreground: oklch(0.9851 0 0);
-  --muted: oklch(0.2686 0 0);
-  --muted-foreground: oklch(0.709 0 0);
-  --accent: oklch(0.7654 0.0331 186.6554);
-  --accent-foreground: oklch(0.2478 0 0);
-  --destructive: oklch(0.7032 0.1883 22.8887);
-  --destructive-foreground: oklch(0.9851 0 0);
-  /* Was 0.2768 — only ~0.06 lightness above the 0.2138 background, so borders
-     measured 1.07:1 and read as absent. 0.45 puts a full-opacity border at a
-     healthy 2.36:1; page hairlines that dim it further opt into `dark:` alphas. */
-  --border: oklch(0.45 0 0);
-  --input: oklch(0.325 0 0);
-  --ring: oklch(0.5555 0 0);
-  --chart-1: oklch(0.8072 0.0993 253.068);
-  --chart-2: oklch(0.6145 0.1929 260.7991);
-  --chart-3: oklch(0.5438 0.2237 263.5919);
-  --chart-4: oklch(0.484 0.2235 264.4238);
-  --chart-5: oklch(0.4155 0.1827 266.5807);
-  --sidebar: oklch(0.2138 0.0019 286.2347);
-  --sidebar-foreground: oklch(0.9851 0 0);
-  --sidebar-primary: oklch(0.483 0.2463 264.642);
-  --sidebar-primary-foreground: oklch(0.9851 0 0);
-  --sidebar-accent: oklch(0.2686 0 0);
-  --sidebar-accent-foreground: oklch(0.9851 0 0);
-  --sidebar-border: oklch(0.2768 0 0);
-  --sidebar-ring: oklch(0.4386 0 0);
-  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-serif: var(--font-display), ui-serif, Georgia, Cambria,
-    'Times New Roman', Times, serif;
+  --paper: oklch(0.2 0.018 210);
+  --ink: oklch(0.93 0.014 190);
+  --wash: oklch(0.49 0.05 195);
+  --panel: oklch(0.3 0.035 200);
+  --error: oklch(0.72 0.16 28);
+  --grain: 0.2;
+}
+
+:root {
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--paper);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper);
+  --muted-foreground: var(--ink);
+  /* floating-chat.tsx fills the bubble with --accent and rings it with
+     --primary: an ink disc with the bot inside. */
+  --accent: var(--ink);
+  --accent-foreground: var(--paper);
+  --destructive: var(--error);
+  --destructive-foreground: var(--paper);
+  --border: var(--ink);
+  --input: var(--ink);
+  --ring: var(--ink);
+  --radius: 0.125rem;
+  /* The one line weight every drawing, rule and control outline uses. */
+  --stroke: 1.5px;
+  --font-sans: var(--font-archivo), var(--font-ko), ui-sans-serif, system-ui,
+    sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
-  --radius: 0.625rem;
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1),
-    0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+    monospace;
 }
 
 @theme inline {
@@ -144,196 +81,39 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-wash: var(--wash);
+  --color-panel: var(--panel);
 
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: var(--radius);
 
-  --shadow-2xs: var(--shadow-2xs);
-  --shadow-xs: var(--shadow-xs);
-  --shadow-sm: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-md: var(--shadow-md);
-  --shadow-lg: var(--shadow-lg);
-  --shadow-xl: var(--shadow-xl);
-  --shadow-2xl: var(--shadow-2xl);
-
-  --animate-first: moveVertical 30s ease infinite;
-  --animate-second: moveInCircle 20s reverse infinite;
-  --animate-third: moveInCircle 40s linear infinite;
-  --animate-fourth: moveHorizontal 40s ease infinite;
-  --animate-fifth: moveInCircle 20s ease infinite;
-}
-
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
-@layer base {
-  input[type='search']::-webkit-search-decoration,
-  input[type='search']::-webkit-search-cancel-button,
-  input[type='search']::-webkit-search-results-button,
-  input[type='search']::-webkit-search-results-decoration {
-    -webkit-appearance: none;
-  }
-
-  /* width height */
-  ::-webkit-scrollbar {
-    opacity: 0;
-    width: 8px;
-    height: 10px;
-  }
-
-  /* Track */
-  ::-webkit-scrollbar-track {
-    @apply bg-background/0;
-  }
-
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    @apply bg-primary;
-    border-radius: 4px;
-    background-clip: padding-box;
-    border: 2px solid transparent;
-  }
-
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary;
-  }
-}
-
-::view-transition-group(root) {
-  z-index: auto !important;
-}
-
-::view-transition-image-pair(root) {
-  isolation: isolate;
-  will-change: transform, opacity, scale;
-  z-index: 1;
-}
-
-::view-transition-new(root) {
-  z-index: 2;
-  animation: none !important;
-}
-
-::view-transition-old(root) {
-  z-index: 1;
-  animation: none !important;
-}
-
-/* Shared-element morph between the home "NOOWAH" wordmark and the header "NWH"
-   logo on route navigation (see main-container.tsx / Header.tsx). The shared
-   letters N/W/H glide into place while the O/O/A letters — which only exist on
-   the home wordmark — pop and vanish, emphasizing NOOWAH collapsing into NWH. */
-::view-transition-group(wordmark-n),
-::view-transition-group(wordmark-w),
-::view-transition-group(wordmark-h),
-::view-transition-group(theme-toggle),
-::view-transition-group(locale-toggle) {
-  animation-duration: 0.45s;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* The two O's — no counterpart in "NWH", so only old (leaving home) or new
-   (returning home) is generated. Emphasize them with a pop-and-vanish / pop-in. */
-::view-transition-old(wordmark-o1),
-::view-transition-old(wordmark-o2) {
-  animation: oo-vanish 0.5s cubic-bezier(0.5, 0, 0.75, 0) both;
-}
-::view-transition-new(wordmark-o1),
-::view-transition-new(wordmark-o2) {
-  animation: oo-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-/* Slight stagger so the two O's read as two distinct beats. */
-::view-transition-old(wordmark-o2),
-::view-transition-new(wordmark-o2) {
-  animation-delay: 0.07s;
-}
-
-/* The "A" also disappears, but plainly — keep the focus on the O's. */
-::view-transition-old(wordmark-a) {
-  animation: letter-fade-out 0.35s ease both;
-}
-::view-transition-new(wordmark-a) {
-  animation: letter-fade-in 0.35s ease both;
-}
-
-@keyframes oo-vanish {
-  0% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-  35% {
-    opacity: 1;
-    transform: scale(1.4) translateY(-12%);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0) translateY(-35%);
-  }
-}
-
-@keyframes oo-appear {
-  0% {
-    opacity: 0;
-    transform: scale(0) translateY(-35%);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes letter-fade-out {
-  to {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-}
-
-@keyframes letter-fade-in {
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring;
   }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'tnum' 0;
   }
 
   /* Smoothly fade theme colors when toggling light/dark. Utilities that set an
-     explicit transition (e.g. `transition-all`) still win over this fallback. */
+     explicit transition still win over this fallback. */
   *,
   *::before,
   *::after {
@@ -341,83 +121,203 @@
     transition-duration: 200ms;
     transition-timing-function: ease;
   }
+
+  /* Browser surfaces print in the same inks as everything else. */
+  ::selection {
+    background: var(--wash);
+    color: var(--ink);
+  }
+
+  input,
+  textarea {
+    caret-color: var(--ink);
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: var(--stroke);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+  }
+
+  html {
+    scrollbar-color: var(--ink) var(--paper);
+    scrollbar-width: thin;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--paper);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--ink);
+    border: 2px solid var(--paper);
+  }
 }
 
-/* Korean locale font override */
+@layer utilities {
+  /* Archivo's width axis: expanded for step numerals and the wordmark,
+     condensed for part numbers and running heads. */
+  .font-wide {
+    font-stretch: 125%;
+  }
+
+  .font-narrow {
+    font-stretch: 75%;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Always-Latin strings (the NOOWAH wordmark) stay in Archivo even when the
+     page is Korean. */
+  .font-latin {
+    font-family: var(--font-archivo), ui-sans-serif, sans-serif;
+  }
+
+  .font-ko {
+    font-family: var(--font-ko), sans-serif;
+  }
+
+  .balance {
+    text-wrap: balance;
+  }
+}
+
+/* Paper grain, over the whole sheet and the bot alike, so everything reads as
+   printed on the same stock. Specks are ink-coloured alpha (no blend mode),
+   which keeps this static layer cheap to composite over the WebGL canvas. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.043 0 0 0 0 0.161 0 0 0 0 0.173 1.9 0 0 0 -0.82'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px;
+  opacity: var(--grain);
+}
+
+.dark body::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.871 0 0 0 0 0.922 0 0 0 0 0.918 1.9 0 0 0 -0.82'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media print {
+  body::after {
+    display: none;
+  }
+}
+
+/* Hangul has no ascender/descender rhythm to tighten and does not break on
+   spaces, so negative display tracking and space-based wrapping damage it. */
 .lang-ko {
-  --font-sans: var(--font-ko), var(--font-body), ui-sans-serif, system-ui,
-    sans-serif;
-  --font-serif: var(--font-ko), var(--font-display), ui-serif, serif;
-}
-
-/* Outfit and Syne carry no Hangul, so inline Korean on an English page
-   (조하운, 누와, 총괄) would silently fall back to a system face. */
-.font-ko {
-  font-family: var(--font-ko), sans-serif;
-}
-
-/* The inverse: .lang-ko repoints --font-serif at Noto Sans KR for the whole
-   page, which also swaps Latin. Always-Latin display strings (the NOOWAH
-   wordmark) opt back into Syne so they keep their weight in both locales. */
-.font-display {
-  font-family: var(--font-display), ui-serif, serif;
-}
-
-/* Editorial about page. Hangul has no descender/ascender rhythm to tighten
-   and doesn't break on spaces, so the display tracking and balancing that
-   flatter Syne actively damage Noto Sans KR. */
-.display {
-  text-wrap: balance;
-}
-
-.lang-ko .display {
-  letter-spacing: -0.005em;
   word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
-.lang-ko p {
-  word-break: keep-all;
+.lang-ko .tracking-tight,
+.lang-ko .tracking-tighter {
+  letter-spacing: -0.01em;
 }
 
-@keyframes moveHorizontal {
-  0% {
-    transform: translateX(-50%) translayteY(-50%);
-  }
-  50% {
-    transform: translateX(50%) translateY(50%);
-  }
-  100% {
-    transform: translateX(-50%) translayteY(-50%);
+/* Route swaps are instant: only the named shared elements below morph. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Shared-element morph between the home "NOOWAH" wordmark and the running-head
+   "NWH" logo (main-container.tsx / Header.tsx). N/W/H glide into place; the
+   O/O/A letters exist only on the cover, so they lift out of the line and
+   vanish. */
+::view-transition-group(wordmark-n),
+::view-transition-group(wordmark-w),
+::view-transition-group(wordmark-h),
+::view-transition-group(theme-toggle),
+::view-transition-group(locale-toggle) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-old(wordmark-o1),
+::view-transition-old(wordmark-o2) {
+  animation: part-lift-out 0.4s cubic-bezier(0.5, 0, 0.75, 0) both;
+}
+::view-transition-new(wordmark-o1),
+::view-transition-new(wordmark-o2) {
+  animation: part-drop-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+::view-transition-old(wordmark-o2),
+::view-transition-new(wordmark-o2) {
+  animation-delay: 0.06s;
+}
+
+::view-transition-old(wordmark-a) {
+  animation: letter-fade-out 0.3s ease both;
+}
+::view-transition-new(wordmark-a) {
+  animation: letter-fade-in 0.3s ease both;
+}
+
+@keyframes part-lift-out {
+  to {
+    opacity: 0;
+    transform: translateY(-40%);
   }
 }
 
-@keyframes moveInCircle {
-  0% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  100% {
-    transform: rotate(360deg);
+@keyframes part-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-40%);
   }
 }
 
-@keyframes moveVertical {
-  0% {
-    transform: translayteY(-50%);
-  }
-  50% {
-    transform: translateY(50%);
-  }
-  100% {
-    transform: translayteY(-50%);
+@keyframes letter-fade-out {
+  to {
+    opacity: 0;
   }
 }
 
-::view-transition-old(root), ::view-transition-new(root) {
-    animation: none;
-    mix-blend-mode: normal;
+@keyframes letter-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 /* Radix positions its popper wrapper via a `transform`, which makes it the

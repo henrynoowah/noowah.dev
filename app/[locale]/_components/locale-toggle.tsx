@@ -1,46 +1,41 @@
 'use client';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Globe } from 'lucide-react';
-import { Locale } from 'intlayer';
-import { useLocale } from 'next-intlayer';
+import { cn } from '@/lib/utils';
+import type { Locale } from 'intlayer';
+import { useIntlayer, useLocale } from 'next-intlayer';
 
-const LocaleToggle = () => {
+/** Both languages printed side by side, the current one inked in. */
+const LocaleToggle = ({ className }: { className?: string }) => {
   const { locale, availableLocales, setLocale } = useLocale();
-
-  const handleLocaleChange = (value: string) => {
-    setLocale(value as Locale);
-  };
+  const { nav } = useIntlayer('home-page');
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger aria-label="Change language">
-        <Globe className="size-6" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className="w-32"
-        side="bottom"
-        sideOffset={10}
-      >
-        <DropdownMenuRadioGroup
-          value={locale}
-          onValueChange={handleLocaleChange}
-        >
-          {availableLocales.map(l => (
-            <DropdownMenuRadioItem key={l} value={l}>
-              {l.toUpperCase()}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div
+      role="group"
+      aria-label={nav.language.value}
+      className={cn('flex', className)}
+    >
+      {availableLocales.map(l => {
+        const isCurrent = l === locale;
+        return (
+          <button
+            key={l}
+            type="button"
+            lang={l}
+            aria-pressed={isCurrent}
+            onClick={() => !isCurrent && setLocale(l as Locale)}
+            className={cn(
+              'font-latin -ml-[var(--stroke)] grid h-8 min-w-9 place-items-center border-[length:var(--stroke)] border-ink px-2 text-xs font-bold uppercase first:ml-0',
+              isCurrent
+                ? 'bg-ink text-paper'
+                : 'bg-paper text-ink hover:bg-ink hover:text-paper'
+            )}
+          >
+            {l}
+          </button>
+        );
+      })}
+    </div>
   );
 };
 

@@ -6,10 +6,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { IconMoon, IconSun } from '@tabler/icons-react';
 
-type AnimatedThemeTogglerProps = React.ComponentPropsWithoutRef<'button'>;
+type AnimatedThemeTogglerProps = React.ComponentPropsWithoutRef<'button'> & {
+  label?: string;
+};
 
+/** Paper / negative switch, drawn as an ink-outlined box like every control. */
 export const AnimatedThemeToggler = ({
   className,
+  label = 'Toggle dark mode',
   ...props
 }: AnimatedThemeTogglerProps) => {
   const { resolvedTheme, setTheme } = useTheme();
@@ -20,29 +24,35 @@ export const AnimatedThemeToggler = ({
 
   const isDark = mounted && resolvedTheme === 'dark';
 
-  // Plain toggle — theme colors transition smoothly via CSS (see globals.css).
-  // The previous view-transition ripple broke after client-side navigation, so
-  // it was removed in favor of a simple, reliable color change.
   const toggleTheme = useCallback(() => {
     setTheme(isDark ? 'light' : 'dark');
   }, [isDark, setTheme]);
 
   return (
     <button
+      type="button"
       onClick={toggleTheme}
-      aria-label="Toggle dark mode"
-      className={cn(className)}
+      aria-label={label}
+      aria-pressed={isDark}
+      className={cn(
+        'relative grid size-8 place-items-center border-[length:var(--stroke)] border-ink bg-paper text-ink hover:bg-ink hover:text-paper',
+        className
+      )}
       {...props}
     >
       <IconMoon
-        className={`absolute ${
-          isDark ? 'rotate-0 opacity-100' : 'rotate-180 opacity-0'
-        }  transform transition duration-500 ease-in-out`}
+        stroke={1.75}
+        className={cn(
+          'absolute size-4 transition-[opacity,rotate] duration-300',
+          isDark ? 'rotate-0 opacity-100' : 'rotate-90 opacity-0'
+        )}
       />
       <IconSun
-        className={`${
-          isDark ? 'rotate-180 opacity-0' : 'rotate-0 opacity-100'
-        }  transform transition duration-500 ease-in-out`}
+        stroke={1.75}
+        className={cn(
+          'size-4 transition-[opacity,rotate] duration-300',
+          isDark ? '-rotate-90 opacity-0' : 'rotate-0 opacity-100'
+        )}
       />
     </button>
   );

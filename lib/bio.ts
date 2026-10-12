@@ -1,5 +1,7 @@
 import { getDictionary, type LocalesValues } from 'intlayer';
-import aboutContent from '@/app/[locale]/about/about.content';
+import aboutContent from '@/app/[locale]/(manual)/about/about.content';
+import synolinkCmsContent from '@/app/[locale]/(manual)/work/synolink-cms/synolink-cms.content';
+import sideProjectsContent from '@/app/[locale]/(manual)/work/side-projects/side-projects.content';
 
 /**
  * Serialises the about-page dictionary into markdown, so the chat bot and
@@ -90,12 +92,22 @@ function walk(node: unknown, label: string, depth: number): string[] {
   return [`- **${label}**: ${String(node)}`];
 }
 
-export function buildBio(locale: LocalesValues): string {
-  const resolved = getDictionary(aboutContent, locale) as Record<string, unknown>;
-  const { ui: _ui, ...facts } = resolved;
+/** Every dictionary whose facts the bot and /llms.txt should know. */
+const SOURCES = [
+  { dictionary: aboutContent },
+  { dictionary: synolinkCmsContent, title: 'Synolink CMS (case study)' },
+  { dictionary: sideProjectsContent, title: 'Side projects' },
+];
 
-  return Object.entries(facts)
-    .flatMap(([key, value]) => walk(value, humanize(key), 2))
+export function buildBio(locale: LocalesValues): string {
+  return SOURCES.flatMap(({ dictionary, title }) => {
+    const resolved = getDictionary(dictionary, locale) as Record<string, unknown>;
+    const { ui: _ui, ...facts } = resolved;
+    const body = Object.entries(facts).flatMap(([key, value]) =>
+      walk(value, humanize(key), title ? 3 : 2)
+    );
+    return title ? ['', `## ${title}`, ...body] : body;
+  })
     .join('\n')
     .trim();
 }

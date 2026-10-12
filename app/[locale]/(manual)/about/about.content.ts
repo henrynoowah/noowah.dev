@@ -12,37 +12,61 @@ const aboutContent: Dictionary = {
   key: 'about',
   content: {
     ui: {
-      sections: {
-        lede: t({ en: 'About', ko: '소개' }),
-        path: t({ en: 'The Path', ko: '지나온 길' }),
-        principles: t({ en: 'Principles', ko: '원칙' }),
-        practice: t({ en: 'The Work', ko: '하는 일' }),
-        projects: t({ en: 'Side Projects', ko: '사이드 프로젝트' }),
-        currently: t({ en: 'Currently', ko: '요즘' }),
-        contact: t({ en: 'Contact', ko: '연락처' }),
+      steps: {
+        box: t({ en: 'Overview', ko: '소개' }),
+        path: t({ en: 'Experience', ko: '경력' }),
+        rules: t({ en: 'Principles', ko: '원칙' }),
+        assemblies: t({ en: 'Work', ko: '프로젝트' }),
+        help: t({ en: 'Contact', ko: '연락처' }),
       },
-      source: t({ en: 'Source', ko: '소스' }),
-      demo: t({ en: 'Demo', ko: '데모' }),
-      boxoutLabel: t({ en: 'Boxout — 01', ko: '박스아웃 — 01' }),
-      figure1: t({
-        en: 'Fig. 1 — Standalone, or composed.',
-        ko: 'Fig. 1 — 단독으로, 또는 조합해서.',
+      asides: {
+        box: t({
+          en: 'Product engineer based in Seoul.',
+          ko: '서울에서 일하는 프로덕트 엔지니어.',
+        }),
+        rules: t({ en: 'How I work.', ko: '일하는 방식.' }),
+        assemblies: t({
+          en: 'Products I have built and led.',
+          ko: '직접 만들고 이끌어 온 제품.',
+        }),
+      },
+      owns: t({ en: 'Responsibilities', ko: '담당 업무' }),
+      ownsSuite: t({
+        en: 'synolink.ai, as product owner',
+        ko: 'synolink.ai 프로덕트 오너',
       }),
-      contactButton: t({ en: 'Get in Touch', ko: '연락하기' }),
-      contactTitle: {
-        line1: t({ en: "Let's build", ko: '함께' }),
-        highlight: t({ en: 'something', ko: '멋진 것을' }),
-        line2: t({ en: 'great.', ko: '만들어요.' }),
-      },
+      spec: t({ en: 'At a glance', ko: '요약' }),
+      stack: t({ en: 'Skills & stack', ko: '기술 스택' }),
+      here: t({ en: 'Current', ko: '현재' }),
+      platformTitle: t({
+        en: 'icloudhospital.com, at CloudHospital',
+        ko: 'CloudHospital의 icloudhospital.com',
+      }),
+      suiteTitle: t({ en: 'synolink.ai, the suite', ko: 'synolink.ai 스위트' }),
+      sideTitle: t({ en: 'Side projects', ko: '사이드 프로젝트' }),
+      readBooklet: t({
+        en: 'Read the case study',
+        ko: '케이스 스터디 보기',
+      }),
+      visit: t({ en: 'Visit {name}', ko: '{name} 방문' }),
+      figure1: t({
+        en: 'Three products on one platform. Each runs on its own or as an extension of the others; EHR (dashed) is in development.',
+        ko: '하나의 플랫폼 위의 세 제품. 단독으로도, 서로의 확장으로도 동작하며, 점선으로 표시된 EHR은 개발 중입니다.',
+      }),
+      contactTitle: t({
+        en: "Let's build something great.",
+        ko: '좋은 제품을 함께 만들고 싶습니다.',
+      }),
+      ask: t({ en: 'Ask the AI assistant', ko: 'AI 어시스턴트에게 물어보기' }),
+      email: t({ en: 'Email', ko: '이메일' }),
       colophon: t({
-        en: 'Set in Syne and Outfit. Built with Next.js, Tailwind CSS, and Motion.',
-        ko: 'Syne와 Outfit으로 조판. Next.js, Tailwind CSS, Motion으로 제작.',
+        en: 'Set in Archivo and Noto Sans KR. Built with Next.js, Tailwind CSS, and Motion.',
+        ko: 'Archivo, Noto Sans KR 사용. Next.js, Tailwind CSS, Motion으로 제작.',
       }),
       issueLine: t({
-        en: 'About — Issue 01 · Seoul · 2026',
-        ko: 'About — Issue 01 · 서울 · 2026',
+        en: '© 2026 Hawoon Joh · Seoul',
+        ko: '© 2026 조하운 · 서울',
       }),
-      end: t({ en: '— END —', ko: '— 끝 —' }),
     },
 
     meta: {
@@ -373,51 +397,6 @@ const aboutContent: Dictionary = {
               '디자인 시스템',
               '팀 리딩',
             ],
-          }),
-        },
-      },
-    },
-
-    projects: {
-      standfirst: t({
-        en: 'P/02 — build the tool that builds the thing. Three receipts.',
-        ko: 'P/02 — 만들 것을 만들어 주는 도구를 만든다. 세 가지 증거.',
-      }),
-      items: {
-        formBuilder: {
-          title: t({
-            en: 'shadcn/ui RJSF Form Builder',
-            ko: 'shadcn/ui RJSF 폼 빌더',
-          }),
-          description: t({
-            en: 'A form builder powered by react-jsonschema-form with shadcn/ui components. Generates dynamic forms from JSON Schema through a visual builder interface.',
-            ko: 'shadcn/ui 컴포넌트와 react-jsonschema-form을 활용한 폼 빌더. JSON Schema로부터 동적 폼을 생성하는 비주얼 빌더 인터페이스를 제공합니다.',
-          }),
-          tags: t({
-            en: ['React', 'JSON Schema', 'shadcn/ui', 'Form Builder'],
-            ko: ['React', 'JSON Schema', 'shadcn/ui', '폼 빌더'],
-          }),
-        },
-        contentBuilder: {
-          title: t({ en: 'CMS Content Builder', ko: 'CMS 콘텐츠 빌더' }),
-          description: t({
-            en: 'A visual UI editor and content builder with a component-driven architecture. Drag and drop to assemble rich content layouts.',
-            ko: '컴포넌트 기반 아키텍처로 설계된 비주얼 UI 에디터 및 콘텐츠 빌더. 드래그 앤 드롭으로 리치 콘텐츠 레이아웃을 구성합니다.',
-          }),
-          tags: t({
-            en: ['UI Editor', 'CMS', 'Storybook', 'Component Library'],
-            ko: ['UI 에디터', 'CMS', 'Storybook', '컴포넌트 라이브러리'],
-          }),
-        },
-        prVersioning: {
-          title: t({ en: 'node-pr-versioning', ko: 'node-pr-versioning' }),
-          description: t({
-            en: 'A GitHub Action that automates Node.js package versioning via PR labels. Supports major/minor/patch bumps, monorepo paths, custom commit messages, tag generation, and dry-run mode.',
-            ko: 'PR 라벨을 통해 Node.js 패키지 버저닝을 자동화하는 GitHub Action. major/minor/patch 버전 업, 모노레포 경로, 커스텀 커밋 메시지, 태그 생성, dry-run 모드를 지원합니다.',
-          }),
-          tags: t({
-            en: ['GitHub Action', 'Node.js', 'Automation', 'CI/CD'],
-            ko: ['GitHub Action', 'Node.js', '자동화', 'CI/CD'],
           }),
         },
       },

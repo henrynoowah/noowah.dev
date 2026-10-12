@@ -1,21 +1,23 @@
 'use client';
 
-import Link from 'next/link';
-import { Suspense, useState, ViewTransition } from 'react';
-import ShowSearchButton from './ShowSearchButton';
 import { LocaleToggle } from '@/app/[locale]/_components/locale-toggle';
-import { getLocalizedUrl, Locales, LocalesValues } from 'intlayer';
+import { ArrowMark } from '@/components/manual/drawings';
+import { StepCounter } from '@/components/manual/steps';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
-import { IconArrowUpRight } from '@tabler/icons-react';
-import { useIntlayer } from 'next-intlayer';
-
-const HEADER_HEIGHT = 56;
+import { getBlogUrl } from '@/lib/blog';
+import { raw } from '@/lib/intlayer-raw';
+import { cn } from '@/lib/utils';
+import { getLocalizedUrl } from 'intlayer';
+import { useIntlayer, useLocale } from 'next-intlayer';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState, ViewTransition } from 'react';
 
 // "NWH" logo letters, in NOOWAH order. Names match the home wordmark
 // (main-container.tsx) so every letter is a *shared* View Transition — the
 // reliable path (React doesn't auto-animate unpaired exits on a route swap).
 // The O/O/A partners are rendered zero-width & invisible, so the home O/O/A
-// morph into nothing (pop-and-vanish) while N/W/H glide into the visible logo.
+// lift out while N/W/H glide into the header.
 const LOGO_WORDMARK = [
   { char: 'N', name: 'wordmark-n' },
   { char: 'O', name: 'wordmark-o1', hidden: true },
@@ -25,178 +27,214 @@ const LOGO_WORDMARK = [
   { char: 'H', name: 'wordmark-h' },
 ];
 
-interface Params {
-  navOption: Array<{
-    label: string;
-    href: string;
-    locale: LocalesValues;
-    external?: boolean;
-  }>;
-  locale?: LocalesValues;
-}
+const MENU_ID = 'site-menu';
 
-const Header = ({ navOption, locale }: Params) => {
+/** Header: logo, section counter, print marks, and the full-page menu. */
+const Header = () => {
+  const { locale } = useLocale();
+  const pathname = usePathname();
+  const { home, about, posts, github, nav } = useIntlayer('home-page');
+  const { meta } = useIntlayer('about');
+  const email = raw(meta.email);
+
   const [isOpen, setIsOpen] = useState(false);
-  const content = useIntlayer('home-page');
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
 
-  const resolveLabel = (key: string): string => {
-    const map: Record<string, string> = {
-      home: content.home.title,
-      about: content.about.title,
-      works: content.works.title,
-      posts: content.posts.title,
-      github: content.github.title,
-      projects: content.projects.title,
-      chat: content.chat.title,
+  const items = [
+    { href: '/', label: home.title },
+    { href: '/about', label: about.title },
+    { href: '/about#projects', label: nav.works },
+    { href: '/work/side-projects', label: nav.side },
+    { href: getBlogUrl(locale), label: posts.title, external: true },
+    { href: 'https://github.com/henrynoowah', label: github.title, external: true },
+  ];
+  const isCurrent = (href: string) => pathname === getLocalizedUrl(href, locale);
+
+  // Any navigation closes the menu.
+  useEffect(() => setIsOpen(false), [pathname]);
+
+  // While open: lock page scroll, make the page inert, move focus into the
+  // menu, and close on Escape. Focus returns to the button on close.
+  useEffect(() => {
+    if (!isOpen) return;
+    const main = document.querySelector('main');
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    main?.setAttribute('inert', '');
+    firstLinkRef.current?.focus();
+
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setIsOpen(false);
+    window.addEventListener('keydown', onKey);
+    const button = buttonRef.current;
+
+    return () => {
+      document.body.style.overflow = overflow;
+      main?.removeAttribute('inert');
+      window.removeEventListener('keydown', onKey);
+      button?.focus();
     };
-    return map[key] ?? key;
-  };
+  }, [isOpen]);
 
   return (
     <>
       <header
-        style={{ height: HEADER_HEIGHT }}
-        className="w-full fixed top-0 z-40"
+        className={cn(
+          'fixed inset-x-0 top-0 border-b-[length:var(--stroke)] border-ink bg-paper',
+          isOpen ? 'z-[46]' : 'z-40'
+        )}
       >
-        <div className="absolute inset-0 bg-background/90 backdrop-blur-lg border-b border-border/30" />
-
-        <div className="relative w-full h-full flex items-center justify-between max-w-[1920px] mx-auto px-5 sm:px-8">
+        <div className="mx-auto flex h-14 max-w-[1680px] items-center gap-2 px-5 sm:gap-4 sm:px-8">
           <Link
-            href={getLocalizedUrl(`/`, locale ?? Locales.ENGLISH)}
-            className="group relative z-50"
+            href={getLocalizedUrl('/', locale)}
+            hrefLang={locale}
+            aria-label={`NOOWAH, ${raw(home.title)}`}
+            className="font-latin font-wide shrink-0 text-xl font-black leading-none tracking-[-0.03em] hover:underline"
           >
-            <span className="font-serif text-lg font-bold uppercase tracking-wider text-foreground group-hover:text-primary transition-colors duration-200">
-              {LOGO_WORDMARK.map(({ char, name, hidden }, i) => (
-                <ViewTransition key={i} name={name}>
-                  <span
-                    aria-hidden={hidden || undefined}
-                    className={
-                      hidden
-                        ? 'inline-block w-0 opacity-0 overflow-hidden'
-                        : 'inline-block'
-                    }
-                  >
-                    {char}
-                  </span>
-                </ViewTransition>
-              ))}
-            </span>
+            {LOGO_WORDMARK.map(({ char, name, hidden }, i) => (
+              <ViewTransition key={i} name={name}>
+                <span
+                  aria-hidden
+                  className={
+                    hidden
+                      ? 'inline-block w-0 overflow-hidden opacity-0'
+                      : 'inline-block'
+                  }
+                >
+                  {char}
+                </span>
+              </ViewTransition>
+            ))}
           </Link>
 
-          <div className="flex items-center gap-3 relative z-50">
-            <Suspense>
-              <ShowSearchButton />
-            </Suspense>
+          <StepCounter
+            className={cn('mx-auto transition-opacity', isOpen && 'invisible')}
+            label={raw(nav.steps)}
+          />
 
-            <div className="flex items-center">
-              <ViewTransition name="theme-toggle">
-                <div className="size-8 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors duration-200">
-                  <AnimatedThemeToggler />
-                </div>
-              </ViewTransition>
-              <ViewTransition name="locale-toggle">
-                <div className="size-8 flex items-center justify-center text-foreground/60 hover:text-foreground transition-colors duration-200">
-                  <LocaleToggle />
-                </div>
-              </ViewTransition>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setIsOpen(!isOpen)}
-              className="flex items-center gap-2 h-8 px-3 rounded-full border border-border/50 hover:border-foreground/30 text-foreground transition-all duration-200 group"
-            >
-              <span className="text-[11px] font-medium uppercase tracking-widest">
-                {isOpen ? content.nav.close : content.nav.menu}
-              </span>
-              <div className="w-3.5 h-2.5 relative flex flex-col justify-between">
-                <span
-                  className={`block w-full h-[1.5px] bg-current rounded-full transition-all duration-300 origin-center ${
-                    isOpen ? 'translate-y-[4.5px] rotate-45' : ''
-                  }`}
-                />
-                <span
-                  className={`block w-full h-[1.5px] bg-current rounded-full transition-all duration-300 origin-center ${
-                    isOpen ? '-translate-y-[4.5px] -rotate-45' : ''
-                  }`}
-                />
+          <div className="flex shrink-0 gap-2">
+            <ViewTransition name="theme-toggle">
+              <div>
+                <AnimatedThemeToggler label={raw(nav.theme)} />
               </div>
-            </button>
+            </ViewTransition>
+            <ViewTransition name="locale-toggle">
+              <div>
+                <LocaleToggle />
+              </div>
+            </ViewTransition>
           </div>
+
+          <button
+            ref={buttonRef}
+            type="button"
+            aria-expanded={isOpen}
+            aria-controls={MENU_ID}
+            onClick={() => setIsOpen(open => !open)}
+            className={cn(
+              'group flex h-8 shrink-0 items-center gap-2 border-[length:var(--stroke)] border-ink px-2.5 text-xs font-bold uppercase',
+              isOpen
+                ? 'bg-ink text-paper'
+                : 'bg-paper text-ink hover:bg-ink hover:text-paper'
+            )}
+          >
+            <span className="hidden sm:inline">
+              {isOpen ? nav.close : nav.menu}
+            </span>
+            <span aria-hidden className="relative flex h-2.5 w-3.5 flex-col justify-between">
+              <span
+                className={cn(
+                  'block h-[1.5px] w-full origin-center bg-current transition-transform duration-300 ease-snap',
+                  isOpen && 'translate-y-[4.5px] rotate-45'
+                )}
+              />
+              <span
+                className={cn(
+                  'block h-[1.5px] w-full origin-center bg-current transition-transform duration-300 ease-snap',
+                  isOpen && '-translate-y-[4.5px] -rotate-45'
+                )}
+              />
+            </span>
+            <span className="sr-only sm:hidden">{isOpen ? nav.close : nav.menu}</span>
+          </button>
         </div>
       </header>
 
-      {/* Full-screen overlay nav */}
+      {/* Full-page menu */}
       <div
-        className={`fixed inset-0 z-30 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-          isOpen
-            ? 'opacity-100 pointer-events-auto'
-            : 'opacity-0 pointer-events-none'
-        }`}
+        id={MENU_ID}
+        role="dialog"
+        aria-modal="true"
+        aria-label={raw(nav.menu)}
+        hidden={!isOpen}
+        className="fixed inset-0 z-[45] flex flex-col bg-paper pt-14"
       >
-        <div
-          className={`absolute inset-0 bg-background/95 backdrop-blur-2xl transition-opacity duration-500 ${
-            isOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-
-        <div className="relative h-full flex flex-col justify-center px-8 sm:px-16 md:px-24">
-          <nav>
-            <ul className="flex flex-col gap-2">
-              {navOption.map((nav, index) => (
+        <nav
+          aria-label={raw(nav.label)}
+          className="mx-auto flex w-full max-w-[1680px] flex-1 flex-col justify-center px-5 sm:px-8"
+        >
+          <ol className="border-b-[length:var(--stroke)] border-ink">
+            {items.map((item, i) => {
+              const current = !item.external && isCurrent(item.href);
+              return (
                 <li
-                  key={`nav-${nav.label}`}
-                  className={`transform transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                    isOpen
-                      ? 'translate-y-0 opacity-100'
-                      : 'translate-y-8 opacity-0'
-                  }`}
-                  style={{
-                    transitionDelay: isOpen ? `${150 + index * 80}ms` : '0ms',
-                  }}
+                  key={item.href}
+                  className={cn(
+                    'border-t-[length:var(--stroke)] border-ink',
+                    isOpen &&
+                      'animate-in fade-in-0 slide-in-from-bottom-4 duration-500 ease-snap'
+                  )}
+                  style={{ animationDelay: `${80 + i * 70}ms`, animationFillMode: 'both' }}
                 >
                   <Link
-                    href={
-                      !nav.external
-                        ? `${nav.locale !== 'en' ? `/${nav.locale}` : ''}${nav.href}`
-                        : nav.href
-                    }
-                    target={nav.external ? '_blank' : undefined}
-                    rel={nav.external ? 'noopener noreferrer' : undefined}
+                    ref={i === 0 ? firstLinkRef : undefined}
+                    href={item.external ? item.href : getLocalizedUrl(item.href, locale)}
+                    hrefLang={item.external ? undefined : locale}
+                    aria-current={current ? 'page' : undefined}
                     onClick={() => setIsOpen(false)}
-                    className="group flex items-center gap-4 py-3"
+                    {...(item.external
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                    className="group flex items-center gap-5 py-3 hover:bg-ink hover:text-paper md:gap-8 md:py-4"
                   >
-                    <span className="text-[10px] font-medium text-muted-foreground/40 tabular-nums">
-                      {String(index + 1).padStart(2, '0')}
+                    <span className="font-latin font-wide tabular w-12 shrink-0 text-right text-lg font-black md:w-20 md:text-2xl">
+                      {String(i + 1).padStart(2, '0')}
                     </span>
-                    <span className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold uppercase tracking-tight text-foreground group-hover:text-primary transition-colors duration-200">
-                      {resolveLabel(nav.label)}
+                    <span
+                      className={cn(
+                        'balance flex-1 text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-7xl',
+                        current &&
+                          'underline decoration-[3px] underline-offset-[0.15em]'
+                      )}
+                    >
+                      {item.label}
                     </span>
-                    {nav.external && (
-                      <IconArrowUpRight
-                        size={20}
-                        strokeWidth={1.5}
-                        className="text-muted-foreground/30 group-hover:text-primary mt-2 transition-all duration-200 group-hover:-translate-y-1 group-hover:translate-x-1"
+                    {item.external && (
+                      <ArrowMark
+                        external
+                        className="mr-2 size-6 transition-transform duration-200 ease-snap group-hover:translate-x-1 md:size-9"
                       />
                     )}
                   </Link>
                 </li>
-              ))}
-            </ul>
-          </nav>
+              );
+            })}
+          </ol>
+        </nav>
 
-          <div
-            className={`absolute bottom-8 left-8 sm:left-16 md:left-24 right-8 sm:right-16 md:right-24 flex items-center justify-between text-[10px] tracking-[0.2em] uppercase text-muted-foreground/30 transition-all duration-700 delay-500 ${
-              isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+        {/* Right padding clears the chat bubble, which floats above the menu. */}
+        <div className="mx-auto flex w-full max-w-[1680px] flex-wrap items-center justify-between gap-3 py-6 pr-24 pl-5 text-sm sm:pr-28 sm:pb-8 sm:pl-8">
+          <a
+            href={`mailto:${email}`}
+            className="font-semibold underline decoration-[length:var(--stroke)] underline-offset-4"
           >
-            <span>henrynoowah@gmail.com</span>
-            <span>{content.nav.portfolio} &mdash; 2024</span>
-          </div>
+            {email}
+          </a>
+          <span className="font-narrow font-semibold uppercase tracking-wide">
+            {nav.portfolio} · {new Date().getFullYear()}
+          </span>
         </div>
       </div>
-
-      <div style={{ height: HEADER_HEIGHT }} className="w-full" />
     </>
   );
 };
