@@ -32,6 +32,11 @@ const ChatBoxContent = dynamic(
 const scene = process.env.NEXT_PUBLIC_SPLINE_SCENE!;
 const splitBotId = process.env.NEXT_PUBLIC_SPLINE_BOT_ID;
 
+// The bot's height plus a little air. Spline draws it at a fixed pixel size
+// whatever the canvas size, so fitting it means scaling the canvas.
+// ponytail: measured by eye for the current scene, remeasure if it changes.
+const BOT_PX = 290;
+
 export function FloatingChat({ locale }: { locale: string }) {
   const pathname = usePathname();
   const { isOpen, setIsOpen } = useChatContext();
@@ -81,6 +86,29 @@ export function FloatingChat({ locale }: { locale: string }) {
     const id = window.setTimeout(() => setIsInteractive(true), 200);
     return () => window.clearTimeout(id);
   }, []);
+
+  // Short phone viewports (iPhone mini, iOS Chrome's toolbars) leave the
+  // cover's empty band shorter than the bot, which then ran over the text
+  // above and the menu below. Below lg, scale the canvas down to fit the band
+  // and centre it there. (The open chat covers the whole phone screen, so the
+  // bot's open zoom needs no room.)
+  const [fit, setFit] = useState<{ y: number; scale: number } | null>(null);
+  useEffect(() => {
+    const slot = document.getElementById('bot-slot');
+    if (!isHome || !slot) return setFit(null);
+    // ponytail: measured at the current scroll position; the fixed bot drifts
+    // off the band if the cover scrolls. Track scroll if that bites.
+    const ro = new ResizeObserver(() => {
+      if (window.matchMedia('(min-width: 1024px)').matches) return setFit(null);
+      const r = slot.getBoundingClientRect();
+      setFit({
+        y: r.top + r.height / 2 - window.innerHeight / 2,
+        scale: Math.min(1, r.height / BOT_PX),
+      });
+    });
+    ro.observe(slot);
+    return () => ro.disconnect();
+  }, [isHome]);
 
   // Close chat immediately when leaving home (don't wait for transition)
   useEffect(() => {
@@ -168,7 +196,13 @@ export function FloatingChat({ locale }: { locale: string }) {
         <div
           style={{
             ...(isHome
-              ? { width: '100%', height: '100%' }
+              ? {
+                  width: '100%',
+                  height: '100%',
+                  transform: fit
+                    ? `translateY(${fit.y}px) scale(${fit.scale})`
+                    : undefined,
+                }
               : {
                   // Render at 400×400, scale down to fit the 64px bubble
                   position: 'absolute',
