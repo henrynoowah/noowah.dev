@@ -126,6 +126,8 @@ const MainContainer = () => {
       {/* Centre: empty paper for the bot. Its "AI" callout is the way into
           the chat; opening it plays the bot's zoom (see floating-chat.tsx). */}
       <div className="relative flex min-h-[40vh] flex-1 flex-col justify-end sm:min-h-[30vh]">
+        {/* The bot's free area, measured by floating-chat.tsx on phones */}
+        <div id="bot-slot" className="flex-1" />
         {/* Phones: the callout drops to a row just under the bot */}
         <button
           type="button"
