@@ -87,27 +87,45 @@ export function FloatingChat({ locale }: { locale: string }) {
     return () => window.clearTimeout(id);
   }, []);
 
-  // Short phone viewports (iPhone mini, iOS Chrome's toolbars) leave the
-  // cover's empty band shorter than the bot, which then ran over the text
-  // above and the menu below. Below lg, scale the canvas down to fit the band
-  // and centre it there. (The open chat covers the whole phone screen, so the
-  // bot's open zoom needs no room.)
-  const [fit, setFit] = useState<{ y: number; scale: number } | null>(null);
+  // Below lg the cover is taller than short phone viewports (iPhone mini, iOS
+  // Chrome's toolbars), so the bot belongs to its band on the page, not to the
+  // screen: scale the canvas down to fit the band and keep it centred there as
+  // the cover scrolls, so it never sits over the text above or the menu below.
+  // (The open chat covers the whole phone screen, so the bot's open zoom needs
+  // no room.) Written straight to the element so scrolling never re-renders.
+  const canvasBoxRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const slot = document.getElementById('bot-slot');
-    if (!isHome || !slot) return setFit(null);
-    // ponytail: measured at the current scroll position; the fixed bot drifts
-    // off the band if the cover scrolls. Track scroll if that bites.
-    const ro = new ResizeObserver(() => {
-      if (window.matchMedia('(min-width: 1024px)').matches) return setFit(null);
+    const box = canvasBoxRef.current;
+    if (!isHome || !slot || !box) return;
+    const wide = window.matchMedia('(min-width: 1024px)');
+    let frame = 0;
+    const place = () => {
+      frame = 0;
+      if (wide.matches) {
+        box.style.transform = '';
+        return;
+      }
       const r = slot.getBoundingClientRect();
-      setFit({
-        y: r.top + r.height / 2 - window.innerHeight / 2,
-        scale: Math.min(1, r.height / BOT_PX),
-      });
-    });
+      const y = r.top + r.height / 2 - window.innerHeight / 2;
+      const scale = Math.min(1, r.height / BOT_PX);
+      box.style.transform = `translateY(${y}px) scale(${scale})`;
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(place);
+    };
+    const ro = new ResizeObserver(place);
     ro.observe(slot);
-    return () => ro.disconnect();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      // No transform reset here: the bubble's own transform is already
+      // committed by the time this runs on the way out of home.
+      cancelAnimationFrame(frame);
+    };
   }, [isHome]);
 
   // Close chat immediately when leaving home (don't wait for transition)
@@ -194,15 +212,10 @@ export function FloatingChat({ locale }: { locale: string }) {
         whileTap={!isHome ? { scale: 0.95 } : undefined}
       >
         <div
+          ref={canvasBoxRef}
           style={{
             ...(isHome
-              ? {
-                  width: '100%',
-                  height: '100%',
-                  transform: fit
-                    ? `translateY(${fit.y}px) scale(${fit.scale})`
-                    : undefined,
-                }
+              ? { width: '100%', height: '100%' }
               : {
                   // Render at 400×400, scale down to fit the 64px bubble
                   position: 'absolute',

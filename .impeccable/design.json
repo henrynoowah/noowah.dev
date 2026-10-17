@@ -312,14 +312,15 @@
     },
     "grain": {
       "selector": "body::after",
-      "value": "SVG feTurbulence fractalNoise data-URI, 220px tile, baseFrequency 0.85, numOctaves 3, mapped to ink-coloured alpha (paper-coloured in dark), no blend mode",
+      "value": "1-bit ordered dither of 5px × marks on a 6px grid: 8×8 Bayer thresholded against tileable value noise (lib/dither-field.mjs), 576px PNG tiles from scripts/dither.mjs drawn pixelated, ink marks (paper-coloured in dark), no blend mode",
       "opacity": {
-        "light": "0.45",
-        "dark": "0.2",
+        "light": "0.28",
+        "dark": "0.18",
         "token": "--grain"
       },
       "zIndex": 200,
-      "purpose": "Static paper grain over the whole viewport, Spline bot and chat included; pointer-events none; hidden in print."
+      "purpose": "Static paper grain over the whole viewport, Spline bot and chat included; pointer-events none; hidden in print.",
+      "interaction": "Ink gathers under the pointer: .dither-cursor canvas (components/manual/dither-cursor.tsx) adds × in empty cells within 120px of a fine pointer, 90ms follow, 650ms wake, gone 900ms after rest; off for touch and reduced motion, hidden in print."
     }
   },
   "components": [
@@ -449,7 +450,7 @@
     "overview": "The site presents one person as a well-made product with clear assembly instructions. Every surface is a printed sheet from that manual: a duotone of two inks on a pale teal-grey stock with fine paper grain, single-weight line drawings, very large step numerals, drawn do and don't panels, a pointing hand, and a \"?\" help figure on the back page. The Spline bot is the product pictured on the box, and its teal body sets the hue of the whole print: paper, ink and the second ink are low-chroma members of its family, so the bot reads as the object the manual was printed for. The grain lies over everything, the bot included, so sheet and product share one stock.\n\nDensity follows a manual, not a magazine. Each step owns one fact and one drawing, and the paper around it stays empty on purpose. Hierarchy comes from size, weight and Archivo's width axis, never from grey. Structure is visible: the running head's step counter shows which section is open, ink rules separate steps edge to edge, a full-page menu carries page-to-page navigation, and the home cover's numbered contents list is its own nav.\n\nThe manual lives in the visuals, never in the words. Numerals, drawings, the duotone and the grain carry the theme; the copy is plain professional portfolio wording in English and Korean.\n\nThe one authored motion is snap into place. Parts start lifted along dashed guides and drop into their slots with a short exponential ease-out once the drawing enters the viewport. Under reduced motion they are drawn already assembled. The second ink, wash, is the manual's highlighter: it marks only the part the text is talking about. Dark mode is the same duotone printed as a negative.\n\nThis system replaces the dev-portfolio default of hero, bento grid and dark neon accent. It is not a parody of any furniture brand's manual.",
     "keyCharacteristics": [
       "Two inks on one paper, all in the Spline bot's teal family; the second ink (wash) marks only the part in focus, and the chat sits on its own wash-steeped sheet (panel).",
-      "A static paper grain over the whole viewport, bot included.",
+      "A paper dither of × marks over the whole viewport, bot included, that thickens under the pointer.",
       "Archivo with its width axis: expanded numerals and wordmark, condensed data labels, normal width for reading. Noto Sans KR carries Hangul.",
       "One 1.5px stroke for rules, control outlines, underlines and drawings.",
       "Square, ink-outlined controls whose hover inverts ink and paper.",

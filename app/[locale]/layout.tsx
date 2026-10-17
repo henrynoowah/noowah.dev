@@ -1,3 +1,4 @@
+import { DitherCursor } from '@/components/manual/dither-cursor';
 import { ThemeProvider } from '@/providers/theme-provider';
 import { getHTMLTextDir, getIntlayer } from 'intlayer';
 import { Metadata } from 'next';
@@ -96,6 +97,7 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
         <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body suppressHydrationWarning={true}>
+        <DitherCursor />
         <ThemeProvider attribute="class">
           <ChatProvider locale={locale}>
             <FloatingChat locale={locale} />

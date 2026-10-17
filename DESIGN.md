@@ -221,13 +221,13 @@ Density follows a manual, not a magazine. Each step owns one fact and one drawin
 
 The manual lives in the visuals, never in the words. Numerals, drawings, the duotone and the grain carry the theme; the copy is plain professional portfolio wording in English and Korean.
 
-The one authored motion is snap into place. Parts start lifted along dashed guides and drop into their slots with a short exponential ease-out once the drawing enters the viewport. Under reduced motion they are drawn already assembled. The second ink, wash, is the manual's highlighter: it marks only the part the text is talking about. Dark mode is the same duotone printed as a negative.
+The authored motion is snap into place, with one ambient response: ink gathers under the pointer (see Texture). Parts start lifted along dashed guides and drop into their slots with a short exponential ease-out once the drawing enters the viewport. Under reduced motion they are drawn already assembled. The second ink, wash, is the manual's highlighter: it marks only the part the text is talking about. Dark mode is the same duotone printed as a negative.
 
 This system replaces the dev-portfolio default of hero, bento grid and dark neon accent. It is not a parody of any furniture brand's manual.
 
 **Key Characteristics:**
 - Two inks on one paper, all in the Spline bot's teal family; the second ink (wash) marks only the part in focus, and the chat sits on its own wash-steeped sheet (panel).
-- A static paper grain over the whole viewport, bot included.
+- A paper dither of × marks over the whole viewport, bot included, that thickens under the pointer.
 - Archivo with its width axis: expanded numerals and wordmark, condensed data labels, normal width for reading. Noto Sans KR carries Hangul.
 - One 1.5px stroke for rules, control outlines, underlines and drawings.
 - Square, ink-outlined controls whose hover inverts ink and paper.
@@ -241,7 +241,7 @@ This system replaces the dev-portfolio default of hero, bento grid and dark neon
 A duotone in the Spline bot's hue family (h 190–210, chroma at most 0.055): a deep teal ink and a mid teal wash on a pale teal-grey stock, with a red held back for errors. Ink on paper measures about 13.3:1; ink on wash about 5.05:1 in light and 5.2:1 in dark; ink on panel about 10.5:1 in light and 11:1 in dark.
 
 ### Primary
-- **Press Ink** (`ink`): text, every rule and outline, drawing strokes and hatching, solid controls, the current step box, the open Menu button, menu-row hover, the visitor's chat lines, the numeral inside a washed callout, focus outlines, the scrollbar thumb, the input caret, and the grain specks.
+- **Press Ink** (`ink`): text, every rule and outline, drawing strokes and hatching, solid controls, the current step box, the open Menu button, menu-row hover, the visitor's chat lines, the numeral inside a washed callout, focus outlines, the scrollbar thumb, the input caret, and the dither's × marks.
 
 ### Secondary
 - **Teal Wash** (`wash`): the second ink. It fills only the part being talked about: the active plate's top face (under an ink hatch), the active callout circle, the active layer number in a case study, built and shipped plates (top and side faces) in the suite and origin drawings, the cover's "AI" mark, the "Current" marker on the Experience list, a recognition badge, and the one highlighted origin line on the side-projects page. It is also the text-selection ground, with ink text. Text on wash is always ink.
@@ -300,7 +300,7 @@ The page is a sheet on a 12-column grid with 24px column gaps. Step sheets are c
 
 Each step is a `StepSection`. A full-width 1.5px ink rule sits on top, with 32px above the content and 56px below it on phones, growing to 48px and 80px from md. The numeral holds columns 1–3 and the content holds 4–12. A short aside can sit flush right beside the heading. Inside a step, items are separated by ink rules, not boxes or gaps alone. One drawing per step is the norm.
 
-The home cover fills the viewport and has three bands, with no running head. The top band holds the wordmark, role and scope, with the theme and locale marks and the owned-products list on the right. The middle band is empty paper reserved for the Spline bot, labelled with the "AI" callout, which is the cover's primary action (see Components). From lg it hangs on a leader line beside the bot; below lg it is a full-width row directly under the bot. The bottom band holds the five numbered contents rows (About, Experience, Works, Side projects, Contact; the cover's nav) on the left, and from sm the help figure with "Email" and the address on the right. Phones reach contact through the last contents row.
+The home cover fills the viewport and has three bands, with no running head. The top band holds the wordmark, role and scope, with the theme and locale marks and the owned-products list on the right. The middle band is empty paper reserved for the Spline bot (below lg the bot is scaled to the band and follows it as the cover scrolls, so it never covers the text above or the rows below), labelled with the "AI" callout, which is the cover's primary action (see Components). From lg it hangs on a leader line beside the bot; below lg it is a full-width row directly under the bot. The bottom band holds the five numbered contents rows (About, Experience, Works, Side projects, Contact; the cover's nav) on the left, and from sm the help figure with "Email" and the address on the right. Phones reach contact through the last contents row.
 
 On every other page the running head is fixed at 56px on paper with an ink rule underneath. It holds the "NWH" logo, the step counter centred, the theme and locale marks, and the Menu button at the right edge. It carries no inline page links and no dropdown: every page link lives in the full-page menu, which covers the viewport beneath the running head.
 
@@ -317,7 +317,9 @@ Manual pages share one order: an Overview step first, one step per subject, and 
 
 The printed page is flat. Depth is drawn, not shaded. Isometric plates have visible side faces, and every drawn shape is filled with paper so nearer parts hide the linework behind them. Exploded views separate parts with dashed vertical guides, and the part the text is talking about gets a wash top face under ink hatching (45°, 5px pitch). Shadow belongs only to the one thing that floats above the sheet: the chat panel. The full-page menu is not a floating layer: it is another sheet of the same paper laid over the page (z-index 45, no shadow, no scrim), with the running head lifted above it (z-index 46) so Close stays in reach.
 
-The stock has a tooth. A static grain layer (`body::after`, fixed, z-index 200, pointer-events none) sits over the whole viewport, the Spline bot and the chat included. It is an SVG `feTurbulence` fractal-noise tile (220px, base frequency 0.85, 3 octaves) mapped to ink-coloured alpha specks (paper-coloured in dark), with no blend mode, at `--grain` opacity (0.45 light, 0.2 dark). It is hidden in print. Grain is material, not depth: it never varies by element and never implies a layer.
+The stock has a tooth, printed as a dither of × marks. A static layer (`body::after`, fixed, z-index 200, pointer-events none) sits over the whole viewport, the Spline bot and the chat included. It is a 1-bit ordered dither: an 8×8 Bayer screen thresholded against a soft, tileable value-noise field, so the tint drifts from bare paper to cross-hatched patches. Each printed cell is a 5px × (two 1px diagonals) in a 6px cell. The field lives in `lib/dither-field.mjs`; `scripts/dither.mjs` (`pnpm dither`, seeded and byte-identical on re-run) rasterises it into `public/dither-light.png` (ink marks) and `public/dither-dark.png` (paper-coloured marks), 96 cells or 576px square, drawn 1 texel to 1 CSS px with `image-rendering: pixelated` so every × stays hard at any DPR. No blend mode; opacity is `--grain` (0.28 light, 0.18 dark). It is hidden in print. Grain is material, not depth: it never varies by element and never implies a layer.
+
+Ink gathers under the pointer. A canvas on the same layer (`.dither-cursor`, `components/manual/dither-cursor.tsx`, same z-index and `--grain` opacity) raises the field's density within 120px of the cursor, so extra × print in the empty cells of the same grid and the patch thickens into a dense hatch. The patch trails the cursor with a 90ms ease, leaves a wake that fades over 650ms, and is gone within 900ms of the mouse resting. It wakes only for a fine hovering pointer (mouse or pen) on first move, runs its frame loop only while ink is fading, and is off under reduced motion and hidden in print; touch screens keep the static sheet.
 
 ### Shadow Vocabulary
 - **Floating sheet** (`box-shadow: 0 18px 40px -18px rgb(0 0 0 / 0.45)`): the chat panel and chat popover only. Phones open the chat full-screen with no border.
@@ -327,7 +329,7 @@ The stock has a tooth. A static grain layer (`body::after`, fixed, z-index 200, 
 
 **The Floating Layer Rule.** A shadow means "not printed on this page". Only the chat layer has one. Cards, controls and drawings sit flat.
 
-**The Grain Over Everything Rule.** One grain layer covers the whole viewport, bot included, so everything reads as printed on the same stock. Don't add per-component noise, blend modes or a second texture, and don't let anything stack above the grain.
+**The Grain Over Everything Rule.** One grain layer covers the whole viewport, bot included, so everything reads as printed on the same stock. The pointer canvas is part of that layer: same grid, same z-index, same opacity. Don't add per-component noise, blend modes or a second texture, and don't let anything stack above the grain.
 
 ## Shapes
 

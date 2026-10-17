@@ -18,7 +18,7 @@
      reads as its own sheet laid on the page. */
   --panel: oklch(0.87 0.03 195);
   --error: oklch(0.52 0.19 28);
-  --grain: 0.45;
+  --grain: 0.28;
 }
 
 .dark {
@@ -27,7 +27,7 @@
   --wash: oklch(0.49 0.05 195);
   --panel: oklch(0.3 0.035 200);
   --error: oklch(0.72 0.16 28);
-  --grain: 0.2;
+  --grain: 0.18;
 }
 
 :root {
@@ -200,26 +200,45 @@
   }
 }
 
-/* Paper grain, over the whole sheet and the bot alike, so everything reads as
-   printed on the same stock. Specks are ink-coloured alpha (no blend mode),
-   which keeps this static layer cheap to composite over the WebGL canvas. */
+/* Paper dither, over the whole sheet and the bot alike, so everything reads as
+   printed on the same stock. A 1-bit ordered (8×8 Bayer) screen thresholded
+   against soft noise, so the tint drifts from bare paper to a hatched patch;
+   each printed cell is a 5px × in a 6px cell. Tiles come from
+   scripts/dither.mjs (pnpm dither), field in lib/dither-field.mjs: 576px,
+   pixelated so every × stays hard at any DPR. Marks are ink-coloured alpha
+   (no blend mode), which keeps this static layer cheap to composite over the
+   WebGL canvas. */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 200;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.043 0 0 0 0 0.161 0 0 0 0 0.173 1.9 0 0 0 -0.82'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 220px;
+  background-image: url('/dither-light.png');
+  background-size: 576px;
+  image-rendering: pixelated;
   opacity: var(--grain);
 }
 
 .dark body::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.871 0 0 0 0 0.922 0 0 0 0 0.918 1.9 0 0 0 -0.82'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url('/dither-dark.png');
+}
+
+/* Extra marks inked under the pointer (dither-cursor.tsx), on the same grid
+   and at the same strength, so they read as the same print. */
+.dither-cursor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 200;
+  pointer-events: none;
+  opacity: var(--grain);
 }
 
 @media print {
-  body::after {
+  body::after,
+  .dither-cursor {
     display: none;
   }
 }
