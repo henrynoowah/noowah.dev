@@ -1,4 +1,4 @@
-# [0.36.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.36.0) (2026-10-17)
+# [0.37.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.37.0) (2026-10-17)
 
 
 ### Bug Fixes
@@ -28,13 +28,14 @@
 * add robots.ts, fix chat pronunciation info and iOS input zoom ([694d50e](https://github.com/henrynoowah/noowah.dev/commit/694d50e71ec07c1e5e2120055dd63fd6f0152e14))
 * **blog:** localize external blog links ([f13144e](https://github.com/henrynoowah/noowah.dev/commit/f13144efc3cc9d6f3a16cfb8ea953f0eccd20e83))
 * **chat:** add suggestion badges and NOOWAH origin fact ([bf7cc88](https://github.com/henrynoowah/noowah.dev/commit/bf7cc88bcb6cbbb4fe498a9bfb024d0bed747721))
-* **design:** print the paper as a × dither that gathers under the cursor ([f1180c0](https://github.com/henrynoowah/noowah.dev/commit/f1180c03f1cc8aae19331af7e0e13ef1b8623a66))
+* **design:** × dither paper that gathers under the cursor ([#59](https://github.com/henrynoowah/noowah.dev/issues/59)) ([8f3aebb](https://github.com/henrynoowah/noowah.dev/commit/8f3aebb96f49c7db0ddc751abbb0ca3a13ea45b5))
 * **design:** redesign site as a duotone assembly manual ([#57](https://github.com/henrynoowah/noowah.dev/issues/57)) ([533f5d2](https://github.com/henrynoowah/noowah.dev/commit/533f5d24c12607def5322e3a5202597e7f3ee198))
 * nextjs 16 update ([025c910](https://github.com/henrynoowah/noowah.dev/commit/025c91084f15468202c1cdcc447d3f3ff446f61b))
 * redesign about page hero with GSAP morph and consolidate works ([#48](https://github.com/henrynoowah/noowah.dev/issues/48)) ([b8d37d9](https://github.com/henrynoowah/noowah.dev/commit/b8d37d91d89c34d2fd2308cab69ea07414e1a18c))
 * redesign pages with editorial aesthetic, shadcn/ui, and Korean i18n ([5e17532](https://github.com/henrynoowah/noowah.dev/commit/5e17532841ae5b7c55696dfac6bab562ece07c2e))
 * self-reference canonical domain and add sitemap ([9bb3449](https://github.com/henrynoowah/noowah.dev/commit/9bb3449d92e80d910d5150ba9def384a549ccf91))
 * **seo:** localize site metadata, drop stale blog branding ([#55](https://github.com/henrynoowah/noowah.dev/issues/55)) ([42eb85f](https://github.com/henrynoowah/noowah.dev/commit/42eb85f22c0a07c2aedd4b40645ac0facd79bdc8))
+* **seo:** per-page canonical, hreflang, JSON-LD, and heading outline ([26309d0](https://github.com/henrynoowah/noowah.dev/commit/26309d0d4f35deedb2c9433db6592668d07a6941))
 * shared-element view transitions for wordmark and header toggles ([9bb9643](https://github.com/henrynoowah/noowah.dev/commit/9bb9643e66c03c9b987af1ae9d8e6bacc46846ce))
 * style markdown tables in chat responses ([80cd4fb](https://github.com/henrynoowah/noowah.dev/commit/80cd4fbc1c9764dbb8bfaa326d3785db86726fbf))
 * view-transition-update ([5e0f744](https://github.com/henrynoowah/noowah.dev/commit/5e0f744bae42a3a36581e0f211ec01edcb54271d))
