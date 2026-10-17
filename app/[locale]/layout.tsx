@@ -1,5 +1,6 @@
 import { DitherCursor } from '@/components/manual/dither-cursor';
 import { ThemeProvider } from '@/providers/theme-provider';
+import { SITE_NAME, SITE_URL } from '@/lib/seo';
 import { getHTMLTextDir, getIntlayer } from 'intlayer';
 import { Metadata } from 'next';
 import type { NextLayoutIntlayer } from 'next-intlayer';
@@ -29,38 +30,25 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const { locale = 'en' } = await params;
   const c = getIntlayer('metadata', locale);
-  const title = String(c.title);
-  const description = String(c.description);
 
   return {
-    metadataBase: new URL('https://noowah.dev'),
-    title,
-    description,
-    alternates: {
-      canonical: 'https://noowah.dev',
+    metadataBase: new URL(SITE_URL),
+    applicationName: SITE_NAME,
+    authors: [{ name: 'Hawoon Joh', url: SITE_URL }],
+    creator: 'Hawoon Joh',
+    icons: {
+      icon: [
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      ],
+      apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
     },
-    openGraph: {
-      title,
-      type: 'website',
-      description,
-      images: {
-        url: `/twitter-card.png`,
-        width: 1200,
-        height: 630,
-        type: 'image/png',
-      },
-    },
-    twitter: {
-      title,
-      card: 'summary_large_image',
-      description,
-      images: {
-        url: `/twitter-card.png`,
-        width: 1200,
-        height: 630,
-        type: 'image/png',
-      },
-    },
+    manifest: '/site.webmanifest',
+    // Fallback only. Each page sets its own canonical, hreflang, and share
+    // card through pageMetadata, so a route that forgets cannot claim to be
+    // the cover.
+    title: String(c.title),
+    description: String(c.description),
   };
 };
 
@@ -75,27 +63,6 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
       dir={getHTMLTextDir(locale)}
       className={`${archivo.variable} ${notoSansKR.variable} ${locale === 'ko' ? 'lang-ko' : ''}`}
     >
-      <head>
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="shortcut icon" href="#" />
-        <link rel="manifest" href="/site.webmanifest" />
-      </head>
       <body suppressHydrationWarning={true}>
         <DitherCursor />
         <ThemeProvider attribute="class">

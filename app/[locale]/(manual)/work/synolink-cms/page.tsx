@@ -67,7 +67,7 @@ const SynolinkCmsPage: NextPageIntlayer = () => {
       <ManualSteps steps={steps} />
 
       {/* 1 — The product */}
-      <StepSection id="product" n={1} title={ui.title} className="border-t-0">
+      <StepSection id="product" n={1} title={ui.title} headingLevel={1} className="border-t-0">
         <div className="grid gap-10 lg:grid-cols-9">
           <div className="lg:col-span-6">
             <p className="font-latin text-2xl font-bold tracking-tight md:text-3xl">
