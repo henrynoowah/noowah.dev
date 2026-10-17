@@ -85,7 +85,23 @@ const AboutPage: NextPageIntlayer = () => {
       <ManualSteps steps={steps} />
 
       {/* 1 — In the box */}
-      <StepSection id="box" n={1} title={ui.steps.box} aside={ui.asides.box} className="border-t-0">
+      <StepSection
+        id="box"
+        n={1}
+        title={
+          <>
+            {ui.steps.box}
+            {/* "Overview" alone says nothing to a crawler or screen reader. */}
+            <span className="sr-only">
+              {' '}
+              — {c.meta.name} ({c.meta.nameKo}), {c.meta.title}
+            </span>
+          </>
+        }
+        headingLevel={1}
+        aside={ui.asides.box}
+        className="border-t-0"
+      >
         <div className="grid grid-cols-9 gap-x-6 gap-y-12">
           <div className="col-span-9 lg:col-span-6">
             <p className="mb-4 text-lg font-semibold">
@@ -144,7 +160,7 @@ const AboutPage: NextPageIntlayer = () => {
                   <span className="h-[5px] flex-1 border-y-[length:var(--stroke)] border-ink" />
                 </div>
                 <div className="flex items-baseline justify-between gap-3 px-4 pt-3">
-                  <h3 className="text-xl font-bold tracking-tight">{group.label}</h3>
+                  <h4 className="text-xl font-bold tracking-tight">{group.label}</h4>
                   <Tag>{items.length}</Tag>
                 </div>
                 <ul className="flex flex-wrap gap-x-4 gap-y-1.5 px-4 pt-2 pb-4">

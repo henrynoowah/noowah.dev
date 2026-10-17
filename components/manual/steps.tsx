@@ -124,45 +124,55 @@ export const StepSection = ({
   children,
   className,
   aside,
+  headingLevel = 2,
 }: {
   id: string;
   n: number;
   title: ReactNode;
+  /** 1 on the page's opening step, so each page has exactly one h1. */
+  headingLevel?: 1 | 2;
   children: ReactNode;
   className?: string;
   /** Short line set beside the heading (a scope note, a count). */
   aside?: ReactNode;
-}) => (
-  <section
-    id={id}
-    aria-labelledby={`${id}-title`}
-    className={cn(
-      'relative scroll-mt-20 border-t-[length:var(--stroke)] border-ink px-5 pt-8 pb-14 sm:px-8 md:pt-12 md:pb-20',
-      className
-    )}
-  >
-    <div className="mx-auto grid max-w-[1440px] grid-cols-12 gap-x-6 gap-y-5 md:gap-y-8">
-      <div className="col-span-3 md:row-span-2">
-        <StepNumeral
-          n={n}
-          className="text-[clamp(3.75rem,11vw,9rem)] md:sticky md:top-24"
-        />
+}) => {
+  const Heading = headingLevel === 1 ? 'h1' : 'h2';
+  return (
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className={cn(
+        'relative scroll-mt-20 border-t-[length:var(--stroke)] border-ink px-5 pt-8 pb-14 sm:px-8 md:pt-12 md:pb-20',
+        className
+      )}
+    >
+      <div className="mx-auto grid max-w-[1440px] grid-cols-12 gap-x-6 gap-y-5 md:gap-y-8">
+        <div className="col-span-3 md:row-span-2">
+          <StepNumeral
+            n={n}
+            className="text-[clamp(3.75rem,11vw,9rem)] md:sticky md:top-24"
+          />
+        </div>
+        <div className="col-span-9 flex flex-col justify-end gap-2 md:flex-row md:items-baseline md:justify-between md:gap-6">
+          <Heading
+            id={`${id}-title`}
+            className="balance text-3xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
+          >
+            {title}
+          </Heading>
+          {aside && (
+            <p className="max-w-[32ch] shrink-0 text-sm md:text-right">
+              {aside}
+            </p>
+          )}
+        </div>
+        <div className="col-span-12 md:col-span-9 md:col-start-4">
+          {children}
+        </div>
       </div>
-      <div className="col-span-9 flex flex-col justify-end gap-2 md:flex-row md:items-baseline md:justify-between md:gap-6">
-        <h2
-          id={`${id}-title`}
-          className="balance text-3xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
-        >
-          {title}
-        </h2>
-        {aside && (
-          <p className="max-w-[32ch] shrink-0 text-sm md:text-right">{aside}</p>
-        )}
-      </div>
-      <div className="col-span-12 md:col-span-9 md:col-start-4">{children}</div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 /** The running-head counter: numbered boxes, the open one filled. */
 export function StepCounter({
@@ -182,7 +192,10 @@ export function StepCounter({
   );
 
   return (
-    <nav aria-label={label} className={cn('flex items-center gap-4', className)}>
+    <nav
+      aria-label={label}
+      className={cn('flex items-center gap-4', className)}
+    >
       {/* Phones: one box, current/total, tapping it advances a step. */}
       <a
         href={`#${steps[Math.min(index + 1, steps.length - 1)].id}`}
@@ -213,7 +226,10 @@ export function StepCounter({
           );
         })}
       </ol>
-      <p className="hidden text-sm font-bold leading-tight lg:block" aria-live="polite">
+      <p
+        className="hidden text-sm font-bold leading-tight lg:block"
+        aria-live="polite"
+      >
         {steps[index]?.label}
       </p>
     </nav>

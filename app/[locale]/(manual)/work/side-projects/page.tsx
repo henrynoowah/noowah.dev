@@ -38,7 +38,7 @@ const SideProjectsPage: NextPageIntlayer = () => {
       <ManualSteps steps={steps} />
 
       {/* 1 — Overview */}
-      <StepSection id="overview" n={1} title={ui.title} className="border-t-0">
+      <StepSection id="overview" n={1} title={ui.title} headingLevel={1} className="border-t-0">
         <p className="balance max-w-[30ch] text-3xl font-bold leading-[1.15] tracking-tight md:text-4xl">
           {ui.lead}
         </p>
