@@ -1,4 +1,4 @@
-# [0.37.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.37.0) (2026-10-17)
+# [0.38.0](https://github.com/henrynoowah/noowah.dev/compare/v0.23.0...v0.38.0) (2026-11-09)
 
 
 ### Bug Fixes
@@ -35,7 +35,7 @@
 * redesign pages with editorial aesthetic, shadcn/ui, and Korean i18n ([5e17532](https://github.com/henrynoowah/noowah.dev/commit/5e17532841ae5b7c55696dfac6bab562ece07c2e))
 * self-reference canonical domain and add sitemap ([9bb3449](https://github.com/henrynoowah/noowah.dev/commit/9bb3449d92e80d910d5150ba9def384a549ccf91))
 * **seo:** localize site metadata, drop stale blog branding ([#55](https://github.com/henrynoowah/noowah.dev/issues/55)) ([42eb85f](https://github.com/henrynoowah/noowah.dev/commit/42eb85f22c0a07c2aedd4b40645ac0facd79bdc8))
-* **seo:** per-page canonical, hreflang, JSON-LD, and heading outline ([26309d0](https://github.com/henrynoowah/noowah.dev/commit/26309d0d4f35deedb2c9433db6592668d07a6941))
+* **seo:** per-page canonical, hreflang, JSON-LD, and heading outline ([#60](https://github.com/henrynoowah/noowah.dev/issues/60)) ([98cf1d9](https://github.com/henrynoowah/noowah.dev/commit/98cf1d9ebf67a18de6f6d479896d07bcbc1b6710))
 * shared-element view transitions for wordmark and header toggles ([9bb9643](https://github.com/henrynoowah/noowah.dev/commit/9bb9643e66c03c9b987af1ae9d8e6bacc46846ce))
 * style markdown tables in chat responses ([80cd4fb](https://github.com/henrynoowah/noowah.dev/commit/80cd4fbc1c9764dbb8bfaa326d3785db86726fbf))
 * view-transition-update ([5e0f744](https://github.com/henrynoowah/noowah.dev/commit/5e0f744bae42a3a36581e0f211ec01edcb54271d))
